@@ -8,8 +8,6 @@
 package x11key
 
 import (
-	"unicode"
-
 	"golang.org/x/mobile/event/key"
 )
 
@@ -33,61 +31,21 @@ const (
 type KeysymTable [256][2]uint32
 
 func (t *KeysymTable) Lookup(detail uint8, state uint16, numLockMod uint16) (rune, key.Code) {
+	_ = "STUB: not implemented"
 	// The key event's rune depends on whether the shift key is down.
-	unshifted := rune(t[detail][0])
-	r := unshifted
-	if state&numLockMod != 0 && isKeypad(t[detail][1]) {
-		if state&ShiftMask == 0 {
-			r = rune(t[detail][1])
-		}
-	} else if state&ShiftMask != 0 {
-		r = rune(t[detail][1])
-		// In X11, a zero keysym when shift is down means to use what the
-		// keysym is when shift is up.
-		if r == 0 {
-			r = unshifted
-		}
-	}
-
-	// The key event's code is independent of whether the shift key is down.
-	var c key.Code
-	if 0 <= unshifted && unshifted < 0x80 {
-		c = asciiKeycodes[unshifted]
-		if state&LockMask != 0 {
-			r = unicode.ToUpper(r)
-		}
-	} else if kk, isKeypad := keypadKeysyms[r]; isKeypad {
-		r, c = kk.rune, kk.code
-	} else if nuk := nonUnicodeKeycodes[unshifted]; nuk != key.CodeUnknown {
-		r, c = -1, nuk
-	} else {
-		r = keysymCodePoints[r]
-		if state&LockMask != 0 {
-			r = unicode.ToUpper(r)
-		}
-	}
-
-	return r, c
+	return 0, *new(key.Code)
 }
 
-func isKeypad(keysym uint32) bool {
-	return keysym >= 0xff80 && keysym <= 0xffbd
-}
+// In X11, a zero keysym when shift is down means to use what the
+// keysym is when shift is up.
+
+// The key event's code is independent of whether the shift key is down.
+
+func isKeypad(keysym uint32) bool { _ = "STUB: not implemented"; return false }
 
 func KeyModifiers(state uint16) (m key.Modifiers) {
-	if state&ShiftMask != 0 {
-		m |= key.ModShift
-	}
-	if state&ControlMask != 0 {
-		m |= key.ModControl
-	}
-	if state&Mod1Mask != 0 {
-		m |= key.ModAlt
-	}
-	if state&Mod4Mask != 0 {
-		m |= key.ModMeta
-	}
-	return m
+	_ = "STUB: not implemented"
+	return *new(key.Modifiers)
 }
 
 // These constants come from /usr/include/X11/{keysymdef,XF86keysym}.h

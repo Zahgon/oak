@@ -14,87 +14,26 @@ import (
 
 type Option func(Generator) Generator
 
-func WithPosition(v floatgeom.Point2) Option {
-	return func(s Generator) Generator {
-		s.Position = v
-		return s
-	}
-}
+func WithPosition(v floatgeom.Point2) Option { _ = "STUB: not implemented"; return *new(Option) }
 
-func WithDimensions(v floatgeom.Point2) Option {
-	return func(s Generator) Generator {
-		s.Dimensions = v
-		return s
-	}
-}
+func WithDimensions(v floatgeom.Point2) Option { _ = "STUB: not implemented"; return *new(Option) }
 
-func WithSpeed(v floatgeom.Point2) Option {
-	return func(s Generator) Generator {
-		s.Speed = v
-		return s
-	}
-}
+func WithSpeed(v floatgeom.Point2) Option { _ = "STUB: not implemented"; return *new(Option) }
 
-func WithParent(v event.Caller) Option {
-	return func(s Generator) Generator {
-		s.Parent = v
-		return s
-	}
-}
+func WithParent(v event.Caller) Option { _ = "STUB: not implemented"; return *new(Option) }
 
-func WithColor(v color.Color) Option {
-	return func(s Generator) Generator {
-		s.Color = v
-		return s
-	}
-}
+func WithColor(v color.Color) Option { _ = "STUB: not implemented"; return *new(Option) }
 
-func WithRenderable(v render.Renderable) Option {
-	return func(s Generator) Generator {
-		s.Renderable = v
-		return s
-	}
-}
+func WithRenderable(v render.Renderable) Option { _ = "STUB: not implemented"; return *new(Option) }
 
-func WithMod(v mod.Mod) Option {
-	return func(s Generator) Generator {
-		s.Mod = v
-		return s
-	}
-}
+func WithMod(v mod.Mod) Option { _ = "STUB: not implemented"; return *new(Option) }
 
-func WithLabel(v collision.Label) Option {
-	return func(s Generator) Generator {
-		s.Label = v
-		return s
-	}
-}
+func WithLabel(v collision.Label) Option { _ = "STUB: not implemented"; return *new(Option) }
 
-func WithDrawLayers(v []int) Option {
-	return func(s Generator) Generator {
-		s.DrawLayers = v
-		return s
-	}
-}
+func WithDrawLayers(v []int) Option { _ = "STUB: not implemented"; return *new(Option) }
 
-func WithUseMouseTree(v bool) Option {
-	return func(s Generator) Generator {
-		s.UseMouseTree = v
-		return s
-	}
-}
+func WithUseMouseTree(v bool) Option { _ = "STUB: not implemented"; return *new(Option) }
 
-func WithWithoutCollision(v bool) Option {
-	return func(s Generator) Generator {
-		s.WithoutCollision = v
-		return s
-	}
-}
+func WithWithoutCollision(v bool) Option { _ = "STUB: not implemented"; return *new(Option) }
 
-func WithChildren(v [][]Option) Option {
-	return func(s Generator) Generator {
-		s.Children = v
-		return s
-	}
-}
- 
+func WithChildren(v [][]Option) Option { _ = "STUB: not implemented"; return *new(Option) }

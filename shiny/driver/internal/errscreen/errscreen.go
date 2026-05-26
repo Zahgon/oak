@@ -12,14 +12,21 @@ import (
 )
 
 // Stub returns a Screen whose methods all return the given error.
-func Stub(err error) screen.Screen {
-	return stub{err}
-}
+func Stub(err error) screen.Screen { _ = "STUB: not implemented"; return *new(screen.Screen) }
 
 type stub struct {
 	err error
 }
 
-func (s stub) NewImage(size image.Point) (screen.Image, error)              { return nil, s.err }
-func (s stub) NewTexture(size image.Point) (screen.Texture, error)          { return nil, s.err }
-func (s stub) NewWindow(opts screen.WindowGenerator) (screen.Window, error) { return nil, s.err }
+func (s stub) NewImage(size image.Point) (screen.Image, error) {
+	_ = "STUB: not implemented"
+	return *new(screen.Image), nil
+}
+func (s stub) NewTexture(size image.Point) (screen.Texture, error) {
+	_ = "STUB: not implemented"
+	return *new(screen.Texture), nil
+}
+func (s stub) NewWindow(opts screen.WindowGenerator) (screen.Window, error) {
+	_ = "STUB: not implemented"
+	return *new(screen.Window), nil
+}

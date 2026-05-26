@@ -43,41 +43,14 @@ var upEventsLock sync.Mutex
 var upEvents = map[Code]event.EventID[Event]{}
 
 // Up checks
-func Up(code Code) event.EventID[Event] {
-	upEventsLock.Lock()
-	defer upEventsLock.Unlock()
-	if ev, ok := upEvents[code]; ok {
-		return ev
-	}
-	ev := event.RegisterEvent[Event]()
-	upEvents[code] = ev
-	return ev
-}
+func Up(code Code) event.EventID[Event] { _ = "STUB: not implemented"; return nil }
 
 var downEventsLock sync.Mutex
 var downEvents = map[Code]event.EventID[Event]{}
 
-func Down(code Code) event.EventID[Event] {
-	downEventsLock.Lock()
-	defer downEventsLock.Unlock()
-	if ev, ok := downEvents[code]; ok {
-		return ev
-	}
-	ev := event.RegisterEvent[Event]()
-	downEvents[code] = ev
-	return ev
-}
+func Down(code Code) event.EventID[Event] { _ = "STUB: not implemented"; return nil }
 
 var heldEventsLock sync.Mutex
 var heldEvents = map[Code]event.EventID[Event]{}
 
-func Held(code Code) event.EventID[Event] {
-	heldEventsLock.Lock()
-	defer heldEventsLock.Unlock()
-	if ev, ok := heldEvents[code]; ok {
-		return ev
-	}
-	ev := event.RegisterEvent[Event]()
-	heldEvents[code] = ev
-	return ev
-}
+func Held(code Code) event.EventID[Event] { _ = "STUB: not implemented"; return nil }

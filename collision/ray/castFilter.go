@@ -11,75 +11,36 @@ import (
 type CastFilter func(*collision.Space) bool
 
 // AddFilter is a utility to convert a CastFilter to a CastOption.
-func AddFilter(cf CastFilter) CastOption {
-	return func(c *Caster) {
-		c.Filters = append(c.Filters, cf)
-	}
-}
+func AddFilter(cf CastFilter) CastOption { _ = "STUB: not implemented"; return *new(CastOption) }
 
 // AcceptLabels signals to a Caster to only return spaces that have
 // a space in the set of input labels. If anything in ls is also
 // contained by an IgnoreLabels filter on the applied Caster, Ignore
 // will dominate.
 func AcceptLabels(ls ...collision.Label) CastOption {
-	return AddFilter(func(s *collision.Space) bool {
-		for _, l := range ls {
-			if s.Label == l {
-				return true
-			}
-		}
-		return false
-	})
+	_ = "STUB: not implemented"
+	return *new(CastOption)
 }
 
 // IgnoreLabels signals to a Caster to not return spaces that have
 // spaces with labels in the set of input labels.
 func IgnoreLabels(ls ...collision.Label) CastOption {
-	return AddFilter(func(s *collision.Space) bool {
-		for _, l := range ls {
-			if s.Label == l {
-				return false
-			}
-		}
-		return true
-	})
+	_ = "STUB: not implemented"
+	return *new(CastOption)
 }
 
 // AcceptIDs is equivalent to AcceptLabels, but for CIDs.
 func AcceptIDs(ids ...event.CallerID) CastOption {
-	return AddFilter(func(s *collision.Space) bool {
-		for _, id := range ids {
-			if s.CID == id {
-				return true
-			}
-		}
-		return false
-	})
+	_ = "STUB: not implemented"
+	return *new(CastOption)
 }
 
 // IgnoreIDs is equivalent to IgnoreLabels, but for CIDs.
 func IgnoreIDs(ids ...event.CallerID) CastOption {
-	return AddFilter(func(s *collision.Space) bool {
-		for _, id := range ids {
-			if s.CID == id {
-				return false
-			}
-		}
-		return true
-	})
+	_ = "STUB: not implemented"
+	return *new(CastOption)
 }
 
 // Pierce signals to a Caster to ignore the first n spaces its rays
 // collide with, regardless of their composition.
-func Pierce(n int) CastOption {
-
-	pierced := 0
-
-	return AddFilter(func(s *collision.Space) bool {
-		if pierced < n {
-			pierced++
-			return false
-		}
-		return true
-	})
-}
+func Pierce(n int) CastOption { _ = "STUB: not implemented"; return *new(CastOption) }

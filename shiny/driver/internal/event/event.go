@@ -18,42 +18,10 @@ type Deque struct {
 	front []interface{} // LIFO.
 }
 
-func (q *Deque) lockAndInit() {
-	q.mu.Lock()
-	if q.cond.L == nil {
-		q.cond.L = &q.mu
-	}
-}
+func (q *Deque) lockAndInit() { _ = "STUB: not implemented"; return }
 
 // NextEvent implements the screen.EventDeque interface.
-func (q *Deque) NextEvent() interface{} {
-	q.lockAndInit()
-	defer q.mu.Unlock()
-
-	for {
-		if n := len(q.front); n > 0 {
-			e := q.front[n-1]
-			q.front[n-1] = nil
-			q.front = q.front[:n-1]
-			return e
-		}
-
-		if n := len(q.back); n > 0 {
-			e := q.back[0]
-			q.back[0] = nil
-			q.back = q.back[1:]
-			return e
-		}
-
-		q.cond.Wait()
-	}
-}
+func (q *Deque) NextEvent() interface{} { _ = "STUB: not implemented"; return nil }
 
 // Send implements the screen.EventDeque interface.
-func (q *Deque) Send(event interface{}) {
-	q.lockAndInit()
-	defer q.mu.Unlock()
-
-	q.back = append(q.back, event)
-	q.cond.Signal()
-}
+func (q *Deque) Send(event interface{}) { _ = "STUB: not implemented"; return }

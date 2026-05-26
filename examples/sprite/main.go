@@ -4,7 +4,6 @@ import (
 	"embed"
 	"fmt"
 	"image"
-	"math/rand"
 	"path/filepath"
 
 	oak "github.com/oakmound/oak/v4"
@@ -78,35 +77,12 @@ type Gopher struct {
 }
 
 // NewGopher creates a gopher sprite to bounce around
-func NewGopher(ctx *scene.Context, layer int) {
-	goph := new(Gopher)
-
-	goph.Switch = render.NewSwitch("goph", map[string]render.Modifiable{"goph": render.EmptyRenderable()})
-	goph.Switch.SetLayer(layer)
-	goph.Switch.SetPos(
-		rand.Float64()*576,
-		rand.Float64()*416,
-	)
-	goph.CallerID = ctx.Register(goph)
-	event.Bind(ctx, event.Enter, goph, gophEnter)
-	goph.deltaX = 4 * float64(rand.Intn(2)*2-1)
-	goph.deltaY = 4 * float64(rand.Intn(2)*2-1)
-	goph.rotation = rand.Intn(360)
-	render.Draw(goph.Switch, 0)
-}
+func NewGopher(ctx *scene.Context, layer int) { _ = "STUB: not implemented"; return }
 
 func gophEnter(goph *Gopher, ev event.EnterPayload) event.Response {
+	_ = "STUB: not implemented"
 	// Compare against this version of rotation
 	// (also swap the comments on lines in goph.Doodad's renderable)
 	//goph.R.(*render.Reverting).RevertAndModify(1, render.Rotate(goph.rotation))
-	goph.Switch.Add("goph", render.NewSprite(0, 0, cache[goph.rotation]))
-	if goph.X() < minX || goph.X() > maxX {
-		goph.deltaX *= -1
-	}
-	if goph.Y() < minY || goph.Y() > maxY {
-		goph.deltaY *= -1
-	}
-	goph.SetPos(goph.deltaX+goph.X(), goph.deltaY+goph.Y())
-	goph.rotation = (goph.rotation + 1) % 360
-	return 0
+	return *new(event.Response)
 }

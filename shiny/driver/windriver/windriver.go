@@ -8,8 +8,6 @@
 package windriver
 
 import (
-	"github.com/oakmound/oak/v4/shiny/driver/internal/errscreen"
-	"github.com/oakmound/oak/v4/shiny/driver/internal/win32"
 	"github.com/oakmound/oak/v4/shiny/screen"
 )
 
@@ -19,14 +17,4 @@ import (
 // It calls f on the Screen, possibly in a separate goroutine, as some OS-
 // specific libraries require being on 'the main thread'. It returns when f
 // returns.
-func Main(f func(screen.Screen)) {
-	screenHWND, err := win32.NewScreen()
-	if err != nil {
-		f(errscreen.Stub(err))
-		return
-	}
-	screen := newScreen(screenHWND)
-	if err := win32.Main(screenHWND, func() { f(screen) }); err != nil {
-		f(errscreen.Stub(err))
-	}
-}
+func Main(f func(screen.Screen)) { _ = "STUB: not implemented"; return }

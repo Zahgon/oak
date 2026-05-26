@@ -17,14 +17,10 @@ const (
 type Radian float64
 
 // Degrees converts a Radian to Degrees.
-func (r Radian) Degrees() Degree {
-	return Degree(r * RadToDeg)
-}
+func (r Radian) Degrees() Degree { _ = "STUB: not implemented"; return *new(Degree) }
 
 // A Degree value is a float that specifies it should be in degrees.
 type Degree float64
 
 // Radians converts a Degree to Radians.
-func (d Degree) Radians() Radian {
-	return Radian(d * DegToRad)
-}
+func (d Degree) Radians() Radian { _ = "STUB: not implemented"; return *new(Radian) }

@@ -7,8 +7,4 @@ type Colorer func(float64) color.Color
 
 // IdentityColorer returns the same color it was given at initialization,
 // regardless of progress.
-func IdentityColorer(c color.Color) Colorer {
-	return func(float64) color.Color {
-		return c
-	}
-}
+func IdentityColorer(c color.Color) Colorer { _ = "STUB: not implemented"; return *new(Colorer) }

@@ -8,10 +8,6 @@
 package windriver
 
 import (
-	"fmt"
-	"runtime"
-
-	"github.com/oakmound/oak/v4/shiny/driver/internal/errscreen"
 	"github.com/oakmound/oak/v4/shiny/screen"
 )
 
@@ -21,7 +17,4 @@ import (
 // It calls f on the Screen, possibly in a separate goroutine, as some OS-
 // specific libraries require being on 'the main thread'. It returns when f
 // returns.
-func Main(f func(screen.Screen)) {
-	f(errscreen.Stub(fmt.Errorf(
-		"windriver: unsupported GOOS/GOARCH %s/%s", runtime.GOOS, runtime.GOARCH)))
-}
+func Main(f func(screen.Screen)) { _ = "STUB: not implemented"; return }

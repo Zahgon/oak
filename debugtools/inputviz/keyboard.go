@@ -29,48 +29,25 @@ type LayoutPosition struct {
 
 type gap float64
 
-func (g gap) Pos() LayoutPosition {
-	return LayoutPosition{
-		Gap:   true,
-		Width: float64(g),
-	}
-}
+func (g gap) Pos() LayoutPosition { _ = "STUB: not implemented"; return *new(LayoutPosition) }
 
 type standardKey key.Code
 
-func (s standardKey) Pos() LayoutPosition {
-	return LayoutPosition{
-		Key:    key.Code(s),
-		Width:  1,
-		Height: 1,
-	}
-}
+func (s standardKey) Pos() LayoutPosition { _ = "STUB: not implemented"; return *new(LayoutPosition) }
 
 type wideKey struct {
 	k key.Code
 	w float64
 }
 
-func (w wideKey) Pos() LayoutPosition {
-	return LayoutPosition{
-		Key:    w.k,
-		Width:  w.w,
-		Height: 1,
-	}
-}
+func (w wideKey) Pos() LayoutPosition { _ = "STUB: not implemented"; return *new(LayoutPosition) }
 
 type tallKey struct {
 	k key.Code
 	h float64
 }
 
-func (h tallKey) Pos() LayoutPosition {
-	return LayoutPosition{
-		Key:    h.k,
-		Width:  1,
-		Height: h.h,
-	}
-}
+func (h tallKey) Pos() LayoutPosition { _ = "STUB: not implemented"; return *new(LayoutPosition) }
 
 type LayoutQWERTY struct {
 	Bounds    floatgeom.Rect2
@@ -112,30 +89,12 @@ func (l *LayoutQWERTY) init() {
 }
 
 func (l *LayoutQWERTY) KeyRect(k key.Code) floatgeom.Rect2 {
-	l.init()
-
-	pos, ok := l.layoutMap[k]
-	if !ok {
-		return floatgeom.Rect2{}
-	}
-	row := pos.Row
-	col := pos.Col
-	width := pos.Width
-	height := pos.Height
-
-	w, h := l.Bounds.W(), l.Bounds.H()
-	// max row = 5.1, drawn down to 6
-	// max col = 21.2, drawn right to 22.1
-	rowHeight := h / 6.0
-	colWidth := w / 22.1
-
-	x := col * colWidth
-	y := row * rowHeight
-	keyHeight := height * rowHeight
-	keyWidth := width * colWidth
-
-	return floatgeom.NewRect2WH(x, y, keyWidth, keyHeight)
+	_ = "STUB: not implemented"
+	return *new(floatgeom.Rect2)
 }
+
+// max row = 5.1, drawn down to 6
+// max col = 21.2, drawn right to 22.1
 
 var defaultColors = map[key.Code]color.Color{}
 
@@ -156,94 +115,13 @@ type Keyboard struct {
 	bindings []event.Binding
 }
 
-func (k *Keyboard) CID() event.CallerID {
-	return k.CallerID
-}
+func (k *Keyboard) CID() event.CallerID { _ = "STUB: not implemented"; return *new(event.CallerID) }
 
 func (k *Keyboard) RenderAndListen(ctx *scene.Context, layer int) error {
-	k.ctx = ctx
-	k.CallerID = k.ctx.CallerMap.Register(k)
-
-	if k.Rect.W() == 0 || k.Rect.H() == 0 {
-		k.Rect.Max = k.Rect.Min.Add(floatgeom.Point2{320, 180})
-	}
-	if k.KeyboardLayout == nil {
-		k.KeyboardLayout = &LayoutQWERTY{
-			Bounds: k.Rect,
-		}
-	}
-	if k.Colors == nil {
-		k.Colors = defaultColors
-	}
-	if k.Font == nil {
-		k.Font = render.DefaultFont()
-	}
-
-	k.rs = make(map[key.Code]*render.Switch)
-
-	for kv, kstr := range key.AllKeys {
-		rect := k.KeyboardLayout.KeyRect(kv)
-		if rect == (floatgeom.Rect2{}) {
-			continue
-		}
-		pressedColor := color.RGBA{255, 255, 255, 255}
-		var unpressedColor color.Color = color.RGBA{160, 160, 160, 255}
-		if c, ok := k.Colors[kv]; ok {
-			unpressedColor = c
-		}
-		r := render.NewSwitch("released", map[string]render.Modifiable{
-			"pressed":  render.NewColorBox(int(rect.W()), int(rect.H()), pressedColor),
-			"released": render.NewColorBox(int(rect.W()), int(rect.H()), unpressedColor),
-		})
-		r.SetPos(rect.Min.X(), rect.Min.Y())
-		k.rs[kv] = r
-		if k.RenderCharacters {
-			x, y := rect.Min.X(), rect.Min.Y()
-			txt := k.Font.NewText(kstr, x, y)
-			tw, th := txt.GetDims()
-			xBuffer := rect.W() - float64(tw)
-			yBuffer := rect.H() - float64(th)
-			// Only render strings that will stay inside their boundaries
-			if xBuffer >= 0 {
-				txt.ShiftX(xBuffer / 2)
-				txt.ShiftY(yBuffer / 2)
-				if k.BaseLayer == -1 {
-					ctx.DrawStack.Draw(txt, layer+1)
-				} else {
-					ctx.DrawStack.Draw(txt, k.BaseLayer, layer+1)
-				}
-			}
-		}
-		if k.BaseLayer == -1 {
-			ctx.DrawStack.Draw(r, layer)
-		} else {
-			ctx.DrawStack.Draw(r, k.BaseLayer, layer)
-		}
-	}
-
-	b1 := event.Bind(ctx, key.AnyDown, k, func(kb *Keyboard, ev key.Event) event.Response {
-		if kb.rs[ev.Code] == nil {
-			return 0
-		}
-		kb.rs[ev.Code].Set("pressed")
-		return 0
-	})
-	b2 := event.Bind(ctx, key.AnyUp, k, func(kb *Keyboard, ev key.Event) event.Response {
-		if kb.rs[ev.Code] == nil {
-			return 0
-		}
-		kb.rs[ev.Code].Set("released")
-		return 0
-	})
-	k.bindings = []event.Binding{b1, b2}
+	_ = "STUB: not implemented"
 	return nil
 }
 
-func (k *Keyboard) Destroy() {
-	for _, b := range k.bindings {
-		b.Unbind()
-	}
-	for _, r := range k.rs {
-		r.Undraw()
-	}
-}
+// Only render strings that will stay inside their boundaries
+
+func (k *Keyboard) Destroy() { _ = "STUB: not implemented"; return }

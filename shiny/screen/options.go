@@ -39,57 +39,28 @@ type WindowOption func(*WindowGenerator)
 // Title sets a sanitized form of the input string. In particular, its length will
 // not exceed 4096, and it may be further truncated so that it is valid UTF-8
 // and will not contain the NUL byte.
-func Title(s string) WindowOption {
-	return func(g *WindowGenerator) {
-		g.Title = sanitizeUTF8(s, 4096)
-	}
-}
+func Title(s string) WindowOption { _ = "STUB: not implemented"; return *new(WindowOption) }
 
 // Dimensions sets the width and height of new windows
-func Dimensions(w, h int) WindowOption {
-	return func(g *WindowGenerator) {
-		g.Width = w
-		g.Height = h
-	}
-}
+func Dimensions(w, h int) WindowOption { _ = "STUB: not implemented"; return *new(WindowOption) }
 
 // Position sets the starting position of the new window
-func Position(x, y int) WindowOption {
-	return func(g *WindowGenerator) {
-		g.X = x
-		g.Y = y
-	}
-}
+func Position(x, y int) WindowOption { _ = "STUB: not implemented"; return *new(WindowOption) }
 
 // Fullscreen sets the starting fullscreen boolean of the new window
-func Fullscreen(on bool) WindowOption {
-	return func(g *WindowGenerator) {
-		g.Fullscreen = on
-	}
-}
+func Fullscreen(on bool) WindowOption { _ = "STUB: not implemented"; return *new(WindowOption) }
 
 // Borderless sets the starting borderless boolean of the new window
 // defaults to borders on.
-func Borderless(on bool) WindowOption {
-	return func(g *WindowGenerator) {
-		g.Borderless = on
-	}
-}
+func Borderless(on bool) WindowOption { _ = "STUB: not implemented"; return *new(WindowOption) }
 
 // TopMost sets the starting topmost boolean of the new window, determining
 // whether the window should appear above other windows even when unfocused.
-func TopMost(on bool) WindowOption {
-	return func(g *WindowGenerator) {
-		g.TopMost = on
-	}
-}
+func TopMost(on bool) WindowOption { _ = "STUB: not implemented"; return *new(WindowOption) }
 
 // NewWindowGenerator creates a window generator with zero values,
 // then calls all options passed in on it.
 func NewWindowGenerator(opts ...WindowOption) WindowGenerator {
-	wg := &WindowGenerator{}
-	for _, o := range opts {
-		o(wg)
-	}
-	return *wg
+	_ = "STUB: not implemented"
+	return *new(WindowGenerator)
 }

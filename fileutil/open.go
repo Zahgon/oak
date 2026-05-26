@@ -4,7 +4,6 @@ import (
 	"io"
 	"io/fs"
 	"os"
-	"strings"
 )
 
 var (
@@ -25,38 +24,14 @@ var (
 // embedded data. The intended use is to use the an embedding library to create an
 // Asset function that matches this signature.
 func Open(file string) (io.ReadCloser, error) {
-	fixedPath := fixWindowsPath(file)
-	f, readErr := FS.Open(fixedPath)
-	if readErr != nil && OSFallback {
-		osFile, err := os.Open(file)
-		if err != nil {
-			return nil, err
-		}
-		return osFile, nil
-	}
-	return f, readErr
+	_ = "STUB: not implemented"
+	return *new(io.ReadCloser), nil
 }
 
 // ReadFile replaces ioutil.ReadFile, trying to use FS.
-func ReadFile(file string) ([]byte, error) {
-	fixedPath := fixWindowsPath(file)
-	data, readErr := fs.ReadFile(FS, fixedPath)
-	if readErr != nil && OSFallback {
-		return os.ReadFile(file)
-	}
-	return data, readErr
-}
+func ReadFile(file string) ([]byte, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // ReadDir replaces ioutil.ReadDir, trying to use FS.
-func ReadDir(file string) ([]fs.DirEntry, error) {
-	fixedPath := fixWindowsPath(file)
-	return fs.ReadDir(FS, fixedPath)
-}
+func ReadDir(file string) ([]fs.DirEntry, error) { _ = "STUB: not implemented"; return nil, nil }
 
-func fixWindowsPath(file string) string {
-	if !FixWindowsPaths {
-		return file
-	}
-	file = strings.Replace(file, "\\", "/", -1)
-	return file
-}
+func fixWindowsPath(file string) string { _ = "STUB: not implemented"; return "" }

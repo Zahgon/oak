@@ -10,7 +10,6 @@ package mtldriver
 import (
 	"image"
 
-	"github.com/go-gl/glfw/v3.3/glfw"
 	"github.com/oakmound/oak/v4/shiny/screen"
 )
 
@@ -20,24 +19,18 @@ type screenImpl struct {
 }
 
 func (*screenImpl) NewImage(size image.Point) (screen.Image, error) {
-	return &bufferImpl{
-		rgba: image.NewRGBA(image.Rectangle{Max: size}),
-	}, nil
+	_ = "STUB: not implemented"
+	return *new(screen.Image), nil
 }
 
 func (*screenImpl) NewTexture(size image.Point) (screen.Texture, error) {
-	return &textureImpl{
-		rgba: image.NewRGBA(image.Rectangle{Max: size}),
-	}, nil
+	_ = "STUB: not implemented"
+	return *new(screen.Texture), nil
 }
 
 func (s *screenImpl) NewWindow(opts screen.WindowGenerator) (screen.Window, error) {
-	respCh := make(chan newWindowResp)
-	s.newWindowCh <- newWindowReq{
-		opts:   opts,
-		respCh: respCh,
-	}
-	glfw.PostEmptyEvent() // Break main loop out of glfw.WaitEvents so it can receive on newWindowCh.
-	resp := <-respCh
-	return resp.w, resp.err
+	_ = "STUB: not implemented"
+	return *new(screen.Window), nil
 }
+
+// Break main loop out of glfw.WaitEvents so it can receive on newWindowCh.

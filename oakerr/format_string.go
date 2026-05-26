@@ -1,7 +1,5 @@
 package oakerr
 
-import "fmt"
-
 type errCode int
 
 const (
@@ -16,13 +14,7 @@ const (
 	codeUnsupportedPlatform
 )
 
-func errorString(code errCode, inputs ...interface{}) string {
-	format, ok := errFmtStrings[CurrentLanguage][code]
-	if !ok {
-		format = errFmtStrings[ENG][code]
-	}
-	return fmt.Sprintf(format, inputs...)
-}
+func errorString(code errCode, inputs ...interface{}) string { _ = "STUB: not implemented"; return "" }
 
 var errFmtStrings = map[Language]map[errCode]string{
 	ENG: {

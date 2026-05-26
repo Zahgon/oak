@@ -11,11 +11,7 @@ type Point struct {
 }
 
 // NewPoint creates a new point
-func NewPoint(s *Space, x, y float64) Point {
-	return Point{floatgeom.Point3{x, y, 0}, s}
-}
+func NewPoint(s *Space, x, y float64) Point { _ = "STUB: not implemented"; return *new(Point) }
 
 // IsNil returns whether the underlying zone of a Point is nil
-func (cp Point) IsNil() bool {
-	return cp.Zone == nil
-}
+func (cp Point) IsNil() bool { _ = "STUB: not implemented"; return false }

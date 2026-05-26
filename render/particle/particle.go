@@ -29,27 +29,17 @@ type baseParticle struct {
 	pID       int
 }
 
-func (bp *baseParticle) GetLayer() int {
-	if bp == nil {
-		return render.Undraw
-	}
-	return bp.LayeredPoint.GetLayer()
-}
+func (bp *baseParticle) GetLayer() int { _ = "STUB: not implemented"; return 0 }
 
-func (bp *baseParticle) GetBaseParticle() *baseParticle {
-	return bp
-}
+func (bp *baseParticle) GetBaseParticle() *baseParticle { _ = "STUB: not implemented"; return nil }
 
 func (bp *baseParticle) GetPos() physics.Vector {
-	return bp.Vector
+	_ = "STUB: not implemented"
+	return *new(physics.Vector)
 }
 
-func (bp *baseParticle) GetDims() (int, int) {
-	return 0, 0
-}
+func (bp *baseParticle) GetDims() (int, int) { _ = "STUB: not implemented"; return 0, 0 }
 
-func (bp *baseParticle) Cycle(gen Generator) {}
+func (bp *baseParticle) Cycle(gen Generator) { _ = "STUB: not implemented"; return }
 
-func (bp *baseParticle) setPID(pid int) {
-	bp.pID = pid
-}
+func (bp *baseParticle) setPID(pid int) { _ = "STUB: not implemented"; return }

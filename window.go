@@ -4,7 +4,7 @@
 //
 // A minimal oak app follows:
 //
-// 	func main() {
+//	func main() {
 //		oak.AddScene("myApp", scene.Scene{Start: func(ctx *scene.Context) {
 //			// ... ctx.Draw(...), event.Bind(ctx, ...)
 //		}})
@@ -16,13 +16,10 @@ import (
 	"context"
 	"image"
 	"io"
-	"sort"
-	"sync/atomic"
 	"time"
 
 	"github.com/oakmound/oak/v4/alg/intgeom"
 	"github.com/oakmound/oak/v4/collision"
-	"github.com/oakmound/oak/v4/debugstream"
 	"github.com/oakmound/oak/v4/event"
 	"github.com/oakmound/oak/v4/key"
 	"github.com/oakmound/oak/v4/mouse"
@@ -36,15 +33,8 @@ import (
 var _ window.App = &Window{}
 
 func (w *Window) windowController(s screen.Screen, x, y, width, height int) (*driver.Window, error) {
-	dwin, err := s.NewWindow(screen.NewWindowGenerator(
-		screen.Dimensions(width, height),
-		screen.Title(w.config.Title),
-		screen.Position(x, y),
-		screen.Fullscreen(w.config.Fullscreen),
-		screen.Borderless(w.config.Borderless),
-		screen.TopMost(w.config.TopMost),
-	))
-	return dwin.(*driver.Window), err
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // the number of rgba buffers oak's draw loop swaps between
@@ -183,160 +173,78 @@ var (
 )
 
 // NewWindow creates a window with default settings.
-func NewWindow() *Window {
-	return &Window{
-		State:         key.NewState(),
-		transitionCh:  make(chan struct{}),
-		skipSceneCh:   make(chan string),
-		quitCh:        make(chan struct{}),
-		drawCh:        make(chan struct{}),
-		betweenDrawCh: make(chan func()),
-		SceneMap:      scene.NewMap(),
-		Driver:        driver.Main,
-		prePublish:    func(*image.RGBA) {},
-		bkgFn: func() image.Image {
-			return image.Black
-		},
-		eventHandler:  event.DefaultBus,
-		MouseTree:     mouse.DefaultTree,
-		CollisionTree: collision.DefaultTree,
-		CallerMap:     event.DefaultCallerMap,
-		DrawStack:     render.GlobalDrawStack,
-		ControllerID:  atomic.AddInt32(nextControllerID, 1),
-		ParentContext: context.Background(),
-	}
-}
+func NewWindow() *Window { _ = "STUB: not implemented"; return nil }
 
 // Propagate triggers direct mouse events on entities which are clicked
 func (w *Window) Propagate(ev event.EventID[*mouse.Event], me mouse.Event) {
-	hits := w.MouseTree.SearchIntersect(me.ToSpace().Bounds())
-	sort.Slice(hits, func(i, j int) bool {
-		return hits[i].Location.Min.Z() > hits[j].Location.Max.Z()
-	})
-	for _, sp := range hits {
-		<-event.TriggerForCallerOn(w.eventHandler, sp.CID, ev, &me)
-		if me.StopPropagation {
-			break
-		}
-	}
-	me.StopPropagation = false
-
-	if ev == mouse.RelativePressOn {
-		w.lastRelativePress = me
-	} else if ev == mouse.PressOn {
-		w.LastMousePress = me
-	} else if ev == mouse.ReleaseOn {
-		if me.Button == w.LastMousePress.Button {
-			event.TriggerOn(w.eventHandler, mouse.Click, &me)
-
-			pressHits := w.MouseTree.SearchIntersect(w.LastMousePress.ToSpace().Bounds())
-			sort.Slice(pressHits, func(i, j int) bool {
-				return pressHits[i].Location.Min.Z() > pressHits[j].Location.Max.Z()
-			})
-			for _, sp1 := range pressHits {
-				for _, sp2 := range hits {
-					if sp1.CID == sp2.CID {
-						<-event.TriggerForCallerOn(w.eventHandler, sp1.CID, mouse.ClickOn, &me)
-						if me.StopPropagation {
-							return
-						}
-					}
-				}
-			}
-		}
-	} else if ev == mouse.RelativeReleaseOn {
-		if me.Button == w.lastRelativePress.Button {
-			pressHits := w.MouseTree.SearchIntersect(w.lastRelativePress.ToSpace().Bounds())
-			sort.Slice(pressHits, func(i, j int) bool {
-				return pressHits[i].Location.Min.Z() > pressHits[j].Location.Max.Z()
-			})
-			for _, sp1 := range pressHits {
-				for _, sp2 := range hits {
-					if sp1.CID == sp2.CID {
-						<-event.TriggerForCallerOn(w.eventHandler, sp1.CID, mouse.RelativeClickOn, &me)
-						if me.StopPropagation {
-							return
-						}
-					}
-				}
-			}
-		}
-	}
+	_ = "STUB: not implemented"
+	return
 }
 
 // Width returns the absolute bounds of a window in pixels. It does not include window elements outside
 // of the client area (OS provided title bars).
-func (w *Window) Bounds() intgeom.Point2 {
-	return intgeom.Point2{w.ScreenWidth, w.ScreenHeight}
-}
+func (w *Window) Bounds() intgeom.Point2 { _ = "STUB: not implemented"; return *new(intgeom.Point2) }
 
 // SetLoadingRenderable sets what renderable should display between scenes
 // during loading phases.
 func (w *Window) SetLoadingRenderable(r render.Renderable) {
-	w.LoadingR = r
+	_ = "STUB: not implemented"
+
+	// SetBackground sets this window's background.
+	return
 }
 
-// SetBackground sets this window's background.
-func (w *Window) SetBackground(b Background) {
-	w.bkgFn = func() image.Image {
-		return b.GetRGBA()
-	}
-}
+func (w *Window) SetBackground(b Background) { _ = "STUB: not implemented"; return }
 
 // SetColorBackground sets this window's background to be a standard image.Image,
 // commonly a uniform color.
-func (w *Window) SetColorBackground(img image.Image) {
-	w.bkgFn = func() image.Image {
-		return img
-	}
-}
+func (w *Window) SetColorBackground(img image.Image) { _ = "STUB: not implemented"; return }
 
 // GetBackgroundImage returns the image this window will display as its background
 func (w *Window) GetBackgroundImage() image.Image {
-	return w.bkgFn()
+	_ = "STUB: not implemented"
+
+	// SetLogicHandler swaps the logic system of the engine with some other
+	// implementation. If this is never called, it will use event.DefaultBus
+	return *new(image.Image)
 }
 
-// SetLogicHandler swaps the logic system of the engine with some other
-// implementation. If this is never called, it will use event.DefaultBus
 func (w *Window) SetLogicHandler(h event.Handler) {
-	w.eventHandler = h
+	_ = "STUB: not implemented"
+
+	// NextScene  causes this window to immediately end the current scene.
+	return
 }
 
-// NextScene  causes this window to immediately end the current scene.
 func (w *Window) NextScene() {
-	w.GoToScene("")
+	_ = "STUB: not implemented"
+
+	// GoToScene causes this window to skip directly to the given scene.
+	return
 }
 
-// GoToScene causes this window to skip directly to the given scene.
-func (w *Window) GoToScene(nextScene string) {
-	go func() {
-		w.skipSceneCh <- nextScene
-	}()
-}
+func (w *Window) GoToScene(nextScene string) { _ = "STUB: not implemented"; return }
 
 // InFocus returns whether this window is currently in focus.
 func (w *Window) InFocus() bool {
-	return w.inFocus
+	_ = "STUB: not implemented"
+
+	// EventHandler returns this window's event handler.
+	return false
 }
 
-// EventHandler returns this window's event handler.
 func (w *Window) EventHandler() event.Handler {
-	return w.eventHandler
+	_ = "STUB: not implemented"
+	return *
+
+	// MostRecentInput returns the most recent input type (e.g keyboard/mouse or joystick)
+	// recognized by the window. This value will only change if the window is
+	// set to TrackInputChanges
+	new(event.Handler)
 }
 
-// MostRecentInput returns the most recent input type (e.g keyboard/mouse or joystick)
-// recognized by the window. This value will only change if the window is
-// set to TrackInputChanges
-func (w *Window) MostRecentInput() InputType {
-	return InputType(w.mostRecentInput)
-}
+func (w *Window) MostRecentInput() InputType { _ = "STUB: not implemented"; return *new(InputType) }
 
-func (w *Window) exitWithError(err error) {
-	w.exitError = err
-	w.Quit()
-}
+func (w *Window) exitWithError(err error) { _ = "STUB: not implemented"; return }
 
-func (w *Window) debugConsole(input io.Reader, output io.Writer) {
-	debugstream.AttachToStream(w.ParentContext, input, output)
-	debugstream.AddDefaultsForScope(w.ControllerID, w)
-}
+func (w *Window) debugConsole(input io.Reader, output io.Writer) { _ = "STUB: not implemented"; return }

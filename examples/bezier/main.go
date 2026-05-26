@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"image/color"
 	"strconv"
 
 	oak "github.com/oakmound/oak/v4"
@@ -18,17 +17,7 @@ var (
 	cmp *render.CompositeM
 )
 
-func renderCurve(floats []float64) {
-	bz, err := shape.BezierCurve(floats...)
-	if err != nil {
-		fmt.Println(err)
-	}
-	if cmp != nil {
-		cmp.Undraw()
-	}
-	cmp = bezierDraw(bz)
-	render.Draw(cmp, 0)
-}
+func renderCurve(floats []float64) { _ = "STUB: not implemented"; return }
 
 func main() {
 
@@ -77,27 +66,9 @@ func main() {
 	})
 }
 
-func bezierDraw(b shape.Bezier) *render.CompositeM {
-	list := render.NewCompositeM()
-	bezierDrawRec(b, list, 255)
-	return list
-}
+func bezierDraw(b shape.Bezier) *render.CompositeM { _ = "STUB: not implemented"; return nil }
 
 func bezierDrawRec(b shape.Bezier, list *render.CompositeM, alpha uint8) {
-	switch bzn := b.(type) {
-	case shape.BezierNode:
-		c := color.RGBA{0, alpha, 0, alpha}
-		if alpha == 255 {
-			c = color.RGBA{alpha, 0, 0, alpha}
-		}
-		sp := render.BezierLine(b, c)
-		list.Append(sp)
-
-		bezierDrawRec(bzn.Left, list, uint8(float64(alpha)*.5))
-		bezierDrawRec(bzn.Right, list, uint8(float64(alpha)*.5))
-	case shape.BezierPoint:
-		sp := render.NewColorBox(5, 5, color.RGBA{255, 255, 255, 255})
-		sp.SetPos(bzn[0]-2, bzn[1]-2)
-		list.Append(sp)
-	}
+	_ = "STUB: not implemented"
+	return
 }

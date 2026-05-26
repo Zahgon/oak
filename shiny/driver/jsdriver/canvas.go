@@ -4,7 +4,6 @@
 package jsdriver
 
 import (
-	"image"
 	"syscall/js"
 )
 
@@ -23,26 +22,12 @@ type Canvas2D struct {
 	copybuff js.Value
 }
 
-func NewCanvas2d(width int, height int) *Canvas2D {
-	var c Canvas2D
-	c.window = js.Global()
-	c.doc = c.window.Get("document")
-	c.body = c.doc.Get("body")
+func NewCanvas2d(width int, height int) *Canvas2D { _ = "STUB: not implemented"; return nil }
 
-	canvas := c.doc.Call("createElement", "canvas")
+// TODO: screen position
 
-	canvas.Set("height", height)
-	canvas.Set("width", width)
-	// TODO: screen position
-	c.body.Call("appendChild", canvas)
+// Setup the 2D Drawing context
 
-	c.canvas = canvas
+// Note Width, then Height
 
-	// Setup the 2D Drawing context
-	c.ctx = c.canvas.Call("getContext", "2d", map[string]interface{}{"alpha": false})
-	c.imgData = c.ctx.Call("createImageData", width, height) // Note Width, then Height
-	img := image.NewRGBA(image.Rect(0, 0, width, height))
-	c.copybuff = js.Global().Get("Uint8Array").New(len(img.Pix)) // Static JS buffer for copying data out to JS. Defined once and re-used to save on un-needed allocations
-
-	return &c
-}
+// Static JS buffer for copying data out to JS. Defined once and re-used to save on un-needed allocations

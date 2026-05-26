@@ -6,14 +6,11 @@ import (
 
 // NewWriter returns a writer which can accept audio streamed matching the given format
 func NewWriter(f pcm.Format) (pcm.Writer, error) {
-	return newWriter(f)
+	_ = "STUB: not implemented"
+	return *
+
+	// MustNewWriter calls NewWriter and panics if an error is returned.
+	new(pcm.Writer), nil
 }
 
-// MustNewWriter calls NewWriter and panics if an error is returned.
-func MustNewWriter(f pcm.Format) pcm.Writer {
-	w, err := NewWriter(f)
-	if err != nil {
-		panic(err)
-	}
-	return w
-}
+func MustNewWriter(f pcm.Format) pcm.Writer { _ = "STUB: not implemented"; return *new(pcm.Writer) }

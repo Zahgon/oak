@@ -63,39 +63,15 @@ type BaseGenerator struct {
 }
 
 // GetBaseGenerator returns this
-func (bg *BaseGenerator) GetBaseGenerator() *BaseGenerator {
-	return bg
-}
+func (bg *BaseGenerator) GetBaseGenerator() *BaseGenerator { _ = "STUB: not implemented"; return nil }
 
-func (bg *BaseGenerator) setDefaults() {
-	*bg = BaseGenerator{
-		Vector:      physics.NewVector(0, 0),
-		DrawStack:   nil,
-		NewPerFrame: span.NewConstant(1.0),
-		LifeSpan:    span.NewConstant(60.0),
-		Angle:       span.NewConstant(0.0),
-		Speed:       span.NewConstant(1.0),
-		Spread:      physics.NewVector(0, 0),
-		Duration:    Inf,
-		Rotation:    nil,
-		Gravity:     physics.NewVector(0, 0),
-		SpeedDecay:  physics.NewVector(0, 0),
-		EndFunc:     nil,
-		LayerFunc:   func(physics.Vector) int { return 1 },
-	}
-}
+func (bg *BaseGenerator) setDefaults() { _ = "STUB: not implemented"; return }
 
 // ShiftX moves a base generator by an x value
-func (bg *BaseGenerator) ShiftX(x float64) {
-	bg.Vector = bg.Vector.ShiftX(x)
-}
+func (bg *BaseGenerator) ShiftX(x float64) { _ = "STUB: not implemented"; return }
 
 // ShiftY moves a base generator by a y value
-func (bg *BaseGenerator) ShiftY(y float64) {
-	bg.Vector = bg.Vector.ShiftY(y)
-}
+func (bg *BaseGenerator) ShiftY(y float64) { _ = "STUB: not implemented"; return }
 
 // SetPos sets the position of a base generator
-func (bg *BaseGenerator) SetPos(x, y float64) {
-	bg.Vector = bg.Vector.SetPos(x, y)
-}
+func (bg *BaseGenerator) SetPos(x, y float64) { _ = "STUB: not implemented"; return }

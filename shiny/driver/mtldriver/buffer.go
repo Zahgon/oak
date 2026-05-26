@@ -14,7 +14,10 @@ type bufferImpl struct {
 	rgba *image.RGBA
 }
 
-func (*bufferImpl) Release()                  {}
-func (b *bufferImpl) Size() image.Point       { return b.rgba.Rect.Max }
-func (b *bufferImpl) Bounds() image.Rectangle { return b.rgba.Rect }
-func (b *bufferImpl) RGBA() *image.RGBA       { return b.rgba }
+func (*bufferImpl) Release()            { _ = "STUB: not implemented"; return }
+func (b *bufferImpl) Size() image.Point { _ = "STUB: not implemented"; return *new(image.Point) }
+func (b *bufferImpl) Bounds() image.Rectangle {
+	_ = "STUB: not implemented"
+	return *new(image.Rectangle)
+}
+func (b *bufferImpl) RGBA() *image.RGBA { _ = "STUB: not implemented"; return nil }

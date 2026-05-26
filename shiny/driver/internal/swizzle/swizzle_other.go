@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
+//go:build !amd64
 // +build !amd64
 
 package swizzle
@@ -11,5 +12,5 @@ const (
 	useBGRA4  = false
 )
 
-func bgra16(p []byte) { panic("unreachable") }
-func bgra4(p []byte)  { panic("unreachable") }
+func bgra16(p []byte) { _ = "STUB: not implemented"; return }
+func bgra4(p []byte)  { _ = "STUB: not implemented"; return }

@@ -1,8 +1,6 @@
 package synth
 
 import (
-	"sort"
-
 	"github.com/oakmound/oak/v4/audio/pcm"
 )
 
@@ -506,9 +504,7 @@ var (
 	}
 )
 
-func (p Pitch) String() string {
-	return pitchStrings[p]
-}
+func (p Pitch) String() string { _ = "STUB: not implemented"; return "" }
 
 var accidentals = map[Pitch]struct{}{
 	C0s: {},
@@ -570,28 +566,13 @@ const (
 )
 
 // Up raises a pitch s steps
-func (p Pitch) Up(s Step) Pitch {
-	i := noteIndices[p]
-	if i+int(s) >= len(allPitches) {
-		return allPitches[len(allPitches)-1]
-	}
-	return allPitches[i+int(s)]
-}
+func (p Pitch) Up(s Step) Pitch { _ = "STUB: not implemented"; return *new(Pitch) }
 
 // Down lowers a pitch s steps
-func (p Pitch) Down(s Step) Pitch {
-	i := noteIndices[p]
-	if i-int(s) < 0 {
-		return allPitches[0]
-	}
-	return allPitches[i-int(s)]
-}
+func (p Pitch) Down(s Step) Pitch { _ = "STUB: not implemented"; return *new(Pitch) }
 
 // IsAccidental reports true if this pitch is represented with a single sharp or a flat, usually.
-func (p Pitch) IsAccidental() bool {
-	_, ok := accidentals[p]
-	return ok
-}
+func (p Pitch) IsAccidental() bool { _ = "STUB: not implemented"; return false }
 
 type PitchDetector struct {
 	pcm.Reader
@@ -608,76 +589,33 @@ type PitchDetector struct {
 	crossedZero []bool
 }
 
-func NewPitchDetector(r pcm.Reader) *PitchDetector {
-	return &PitchDetector{
-		Reader:             r,
-		format:             r.PCMFormat(),
-		DetectedPitches:    make([]Pitch, r.PCMFormat().Channels),
-		DetectedRawPitches: make([]float64, r.PCMFormat().Channels),
-		indices:            make([]int, r.PCMFormat().Channels),
-		lastValues:         make([]float64, r.PCMFormat().Channels),
-		crossedZero:        make([]bool, r.PCMFormat().Channels),
-	}
-}
+func NewPitchDetector(r pcm.Reader) *PitchDetector { _ = "STUB: not implemented"; return nil }
 
 func (pd *PitchDetector) ReadPCM(b []byte) (n int, err error) {
-	n, err = pd.Reader.ReadPCM(b)
-	if err != nil {
-		return n, err
-	}
-	var read int
-	sampleSize := pd.format.SampleSize()
-	for len(b[read:]) > sampleSize {
-		vals, valReadBytes, err := pd.format.SampleFloat(b[read:])
-		if err != nil {
-			break
-		}
-		read += valReadBytes
-		for i, val := range vals {
-			pd.indices[i]++
-			if pd.lastValues[i] < 0 && val > 0 || val < 0 && pd.lastValues[i] > 0 {
-				// we've crossed zero
-				if !pd.crossedZero[i] {
-					pd.crossedZero[i] = true
-				} else {
-					// assuming this is pitched audio (if it isn't we can't give a correct answer),
-					// pd.index is now the number of samples since the last time this audio
-					// stream crossed zero. The second last time this audio stream crossed zero defines how
-					// frequently this audio is cycling-- the speed the audio cycles at defines the pitch
-					// of the audio in hertz; our pitch constants above are also defined in hertz.
-					periodLength := pd.indices[i] * 2
-					samplesPerSecond := pd.format.SampleRate
-					periodHz := 1 / (float64(periodLength) / float64(samplesPerSecond))
-					pd.DetectedRawPitches[i] = periodHz
-					pd.DetectedPitches[i] = Pitch(periodHz).Round()
-				}
-				pd.indices[i] = 0
-			}
-			pd.lastValues[i] = val
-		}
-	}
-	return
+	_ = "STUB: not implemented"
+	return 0, nil
 }
 
+// we've crossed zero
+
+// assuming this is pitched audio (if it isn't we can't give a correct answer),
+// pd.index is now the number of samples since the last time this audio
+// stream crossed zero. The second last time this audio stream crossed zero defines how
+// frequently this audio is cycling-- the speed the audio cycles at defines the pitch
+// of the audio in hertz; our pitch constants above are also defined in hertz.
+
 // Round rounds a pitch value to the closest predefined pitch value in hertz:
+//
 //	func main() {
 //		hz := synth.Pitch(1024)
-// 		hz2 := hz.Round()
-// 		fmt.Println(hz2, int(hz2))) // "C6", 1047
+//		hz2 := hz.Round()
+//		fmt.Println(hz2, int(hz2))) // "C6", 1047
 //	}
-//
 func (p Pitch) Round() Pitch {
+	_ = "STUB: not implemented"
 	// binary search
-	i := sort.Search(len(allPitches)-1, func(i int) bool {
-		return p < allPitches[i]
-	})
-	// adjust for near matches
-	// we know hz < allPitches[i]
-	if i == 0 {
-		return allPitches[i]
-	}
-	if p-allPitches[i-1] < allPitches[i]-p {
-		return allPitches[i-1]
-	}
-	return allPitches[i]
+	return *new(Pitch)
 }
+
+// adjust for near matches
+// we know hz < allPitches[i]

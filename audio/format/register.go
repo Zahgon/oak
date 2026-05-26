@@ -16,16 +16,10 @@ var fileLoadersLock sync.RWMutex
 var fileLoaders = map[string]func(r io.Reader) (pcm.Reader, error){}
 
 // Register registers a format by file extension (eg '.mp3') with its parsing function.
-func Register(extension string, fn Loader) {
-	fileLoadersLock.Lock()
-	fileLoaders[extension] = fn
-	fileLoadersLock.Unlock()
-}
+func Register(extension string, fn Loader) { _ = "STUB: not implemented"; return }
 
 // LoaderForExtension returns a previously registered loader.
 func LoaderForExtension(extension string) (Loader, bool) {
-	fileLoadersLock.RLock()
-	defer fileLoadersLock.RUnlock()
-	loader, ok := fileLoaders[extension]
-	return loader, ok
+	_ = "STUB: not implemented"
+	return *new(Loader), false
 }

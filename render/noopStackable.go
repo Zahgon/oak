@@ -11,23 +11,39 @@ import (
 type NoopStackable struct{}
 
 // PreDraw on a NoopStackable does nothing.
-func (ns NoopStackable) PreDraw() {}
+func (ns NoopStackable) PreDraw() {
+	_ = "STUB: not implemented"
 
-// Add on a NoopStackable does nothing. The input Renderable is still returned.
+	// Add on a NoopStackable does nothing. The input Renderable is still returned.
+	return
+}
+
 func (ns NoopStackable) Add(r Renderable, _ ...int) Renderable {
-	return r
+	_ = "STUB: not implemented"
+
+	// Replace on a NoopStackable does nothing.
+	return *new(Renderable)
 }
 
-// Replace on a NoopStackable does nothing.
-func (ns NoopStackable) Replace(Renderable, Renderable, int) {}
+func (ns NoopStackable) Replace(Renderable, Renderable, int) {
+	_ = "STUB: not implemented"
 
-// Copy on a NoopStackable returns itself.
+	// Copy on a NoopStackable returns itself.
+	return
+}
+
 func (ns NoopStackable) Copy() Stackable {
-	return ns
+	_ = "STUB: not implemented"
+
+	// DrawToScreen on a NoopStackable does nothing.
+	return *new(Stackable)
 }
 
-// DrawToScreen on a NoopStackable does nothing.
-func (ns NoopStackable) DrawToScreen(draw.Image, *intgeom.Point2, int, int) {}
+func (ns NoopStackable) DrawToScreen(draw.Image, *intgeom.Point2, int, int) {
+	_ = "STUB: not implemented"
 
-// Clear on a NoopStackable does nothing.
-func (ns NoopStackable) Clear() {}
+	// Clear on a NoopStackable does nothing.
+	return
+}
+
+func (ns NoopStackable) Clear() { _ = "STUB: not implemented"; return }

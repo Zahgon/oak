@@ -10,10 +10,6 @@ type pauseBool struct {
 	playing bool
 }
 
-func (p *pauseBool) Pause() {
-	p.playing = false
-}
+func (p *pauseBool) Pause() { _ = "STUB: not implemented"; return }
 
-func (p *pauseBool) Unpause() {
-	p.playing = true
-}
+func (p *pauseBool) Unpause() { _ = "STUB: not implemented"; return }

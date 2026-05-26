@@ -5,9 +5,7 @@ import (
 	"fmt"
 	"image/color"
 	"image/draw"
-	"math"
 	"os"
-	"strconv"
 	"sync"
 	"time"
 
@@ -42,93 +40,18 @@ type keyColor int
 const keyColorWhite keyColor = 0
 const keyColorBlack keyColor = 1
 
-func (kc keyColor) Width() float64 {
-	if kc == keyColorBlack {
-		return blackKeyWidth
-	}
-	return whiteKeyWidth
-}
+func (kc keyColor) Width() float64 { _ = "STUB: not implemented"; return 0 }
 
-func (kc keyColor) Height() float64 {
-	if kc == keyColorBlack {
-		return blackKeyHeight
-	}
-	return whiteKeyHeight
-}
+func (kc keyColor) Height() float64 { _ = "STUB: not implemented"; return 0 }
 
-func (kc keyColor) Color() color.RGBA {
-	if kc == keyColorBlack {
-		return color.RGBA{60, 60, 60, 255}
-	}
-	return color.RGBA{255, 255, 255, 255}
-}
+func (kc keyColor) Color() color.RGBA { _ = "STUB: not implemented"; return *new(color.RGBA) }
 
 func newKey(ctx *scene.Context, note synth.Pitch, c keyColor, k key.Code) *entities.Entity {
-	w := c.Width()
-	h := c.Height()
-	clr := c.Color()
-	downClr := clr
-	downClr.R -= 60
-	downClr.B -= 60
-	downClr.G -= 60
-	sw := render.NewSwitch("up", map[string]render.Modifiable{
-		"up": render.NewCompositeM(
-			render.NewColorBox(int(w), int(h), clr),
-			render.NewLine(0, 0, 0, h, color.RGBA{0, 0, 0, 255}),
-			render.NewLine(0, h, w, h, color.RGBA{0, 0, 0, 255}),
-			render.NewLine(w, h, w, 0, color.RGBA{0, 0, 0, 255}),
-			render.NewLine(w, 0, 0, 0, color.RGBA{0, 0, 0, 255}),
-		).ToSprite(),
-		"down": render.NewCompositeM(
-			render.NewColorBox(int(w), int(h), downClr),
-			render.NewLine(0, 0, 0, h, color.RGBA{0, 0, 0, 255}),
-			render.NewLine(0, h, w, h, color.RGBA{0, 0, 0, 255}),
-			render.NewLine(w, h, w, 0, color.RGBA{0, 0, 0, 255}),
-			render.NewLine(w, 0, 0, 0, color.RGBA{0, 0, 0, 255}),
-		).ToSprite(),
-	})
-	s := entities.New(ctx,
-		entities.WithUseMouseTree(true),
-		entities.WithDimensions(floatgeom.Point2{w, h}),
-		entities.WithRenderable(sw),
-	)
-	if c == keyColorBlack {
-		s.Space.SetZLayer(1)
-		s.Space.Label = labelBlackKey
-	} else {
-		s.Space.SetZLayer(2)
-		s.Space.Label = labelWhiteKey
-	}
-	event.GlobalBind(ctx, key.Down(k), func(ev key.Event) event.Response {
-		// TODO: add helper function for this?
-		if ev.Modifiers&key.ModShift == key.ModShift {
-			return 0
-		}
-		playPitch(ctx, note)
-		sw.Set("down")
-		return 0
-	})
-	event.GlobalBind(ctx, key.Up(k), func(ev key.Event) event.Response {
-		if ev.Modifiers&key.ModShift == key.ModShift {
-			return 0
-		}
-		releasePitch(note)
-		sw.Set("up")
-		return 0
-	})
-	event.Bind(ctx, mouse.PressOn, s, func(_ *entities.Entity, me *mouse.Event) event.Response {
-		playPitch(ctx, note)
-		me.StopPropagation = true
-		sw.Set("down")
-		return 0
-	})
-	event.Bind(ctx, mouse.Release, s, func(_ *entities.Entity, me *mouse.Event) event.Response {
-		releasePitch(note)
-		sw.Set("up")
-		return 0
-	})
-	return s
+	_ = "STUB: not implemented"
+	return nil
 }
+
+// TODO: add helper function for this?
 
 type keyDef struct {
 	color keyColor
@@ -150,50 +73,21 @@ var cancelFuncs = map[synth.Pitch]func(){}
 
 var makeSynth func(ctx context.Context, pitch synth.Pitch)
 
-func playPitch(ctx *scene.Context, pitch synth.Pitch) {
-	playLock.Lock()
-	defer playLock.Unlock()
-	if cancel, ok := cancelFuncs[pitch]; ok {
-		cancel()
-	}
+func playPitch(ctx *scene.Context, pitch synth.Pitch) { _ = "STUB: not implemented"; return }
 
-	gctx, cancel := context.WithCancel(ctx)
-	go func() {
-		makeSynth(gctx, pitch)
-	}()
-	cancelFuncs[pitch] = cancel
-}
-
-func releasePitch(pitch synth.Pitch) {
-	playLock.Lock()
-	defer playLock.Unlock()
-	if cancel, ok := cancelFuncs[pitch]; ok {
-		cancel()
-		delete(cancelFuncs, pitch)
-	}
-}
+func releasePitch(pitch synth.Pitch) { _ = "STUB: not implemented"; return }
 
 type pitchText struct {
 	pitch *synth.Pitch
 }
 
-func (pt *pitchText) String() string {
-	if pt.pitch == nil {
-		return ""
-	}
-	return pt.pitch.String() + " - " + strconv.Itoa(int(*pt.pitch))
-}
+func (pt *pitchText) String() string { _ = "STUB: not implemented"; return "" }
 
 type f64Text struct {
 	f64 *float64
 }
 
-func (ft *f64Text) String() string {
-	if ft.f64 == nil {
-		return ""
-	}
-	return fmt.Sprint(*ft.f64)
-}
+func (ft *f64Text) String() string { _ = "STUB: not implemented"; return "" }
 
 func main() {
 	err := audio.InitDefault()
@@ -377,70 +271,21 @@ type pcmMonitor struct {
 var globalMagnification float64 = 1
 
 func newPCMMonitor(ctx *scene.Context, w pcm.Writer) *pcmMonitor {
-	fmt := w.PCMFormat()
-	pm := &pcmMonitor{
-		Writer:       w,
-		Format:       w.PCMFormat(),
-		LayeredPoint: render.NewLayeredPoint(0, 0, 0),
-		written:      make([]byte, int(float64(fmt.BytesPerSecond())*audio.WriterBufferLengthInSeconds)),
-	}
-	return pm
+	_ = "STUB: not implemented"
+	return nil
 }
 
-func (pm *pcmMonitor) CID() event.CallerID {
-	return pm.CallerID
-}
+func (pm *pcmMonitor) CID() event.CallerID { _ = "STUB: not implemented"; return *new(event.CallerID) }
 
-func (pm *pcmMonitor) PCMFormat() pcm.Format {
-	return pm.Format
-}
+func (pm *pcmMonitor) PCMFormat() pcm.Format { _ = "STUB: not implemented"; return *new(pcm.Format) }
 
 func (pm *pcmMonitor) WritePCM(b []byte) (n int, err error) {
-	copy(pm.written[pm.at:], b)
-	if len(b) > len(pm.written[pm.at:]) {
-		copy(pm.written[0:], b[len(pm.written[pm.at:]):])
-	}
-	pm.at += len(b)
-	pm.at %= len(pm.written)
-	return pm.Writer.WritePCM(b)
+	_ = "STUB: not implemented"
+	return 0, nil
 }
 
-func (pm *pcmMonitor) Draw(buf draw.Image, xOff, yOff float64) {
-	const width = 640
-	const height = 200.0
-	xJump := len(pm.written) / width
-	xJump = int(float64(xJump) / globalMagnification)
-	c := color.RGBA{255, 255, 255, 255}
-	for x := 0.0; x < width; x++ {
-		wIndex := int(x) * xJump
+func (pm *pcmMonitor) Draw(buf draw.Image, xOff, yOff float64) { _ = "STUB: not implemented"; return }
 
-		var val int16
-		switch pm.Format.Bits {
-		case 8:
-			val8 := pm.written[wIndex]
-			val = int16(val8) << 8
-		case 16:
-			wIndex -= wIndex % 2
-			val = int16(pm.written[wIndex+1])<<8 +
-				int16(pm.written[wIndex])
-		case 32:
-			wIndex = wIndex - wIndex%4
-			val32 := int32(pm.written[wIndex+3])<<24 +
-				int32(pm.written[wIndex+2])<<16 +
-				int32(pm.written[wIndex+1])<<8 +
-				int32(pm.written[wIndex])
-			val = int16(val32 / int32(math.Pow(2, 16)))
-		}
-
-		// -32768 -> 200
-		// 0 -> 100
-		// 32768 -> 0
-		var y float64
-		if val < 0 {
-			y = height/2 + float64(val)*float64(height/2/-32768.0)
-		} else {
-			y = height/2 + -(float64(val) * float64(height/2/32768.0))
-		}
-		buf.Set(int(x+xOff+pm.X()), int(y+yOff+pm.Y()), c)
-	}
-}
+// -32768 -> 200
+// 0 -> 100
+// 32768 -> 0

@@ -1,11 +1,9 @@
 package main
 
 import (
-	"image"
 	"image/color"
 
 	"github.com/oakmound/oak/v4"
-	"github.com/oakmound/oak/v4/collision"
 	"github.com/oakmound/oak/v4/event"
 	"github.com/oakmound/oak/v4/mouse"
 	"github.com/oakmound/oak/v4/render"
@@ -48,37 +46,9 @@ type hoverButton struct {
 	*render.ColorBoxR
 }
 
-func (hb *hoverButton) CID() event.CallerID {
-	return hb.id
-}
+func (hb *hoverButton) CID() event.CallerID { _ = "STUB: not implemented"; return *new(event.CallerID) }
 
 func newHoverButton(ctx *scene.Context, x, y, w, h float64, clr color.RGBA, layer int) {
-	hb := &hoverButton{}
-	hb.id = ctx.Register(hb)
-	hb.ColorBoxR = render.NewColorBoxR(int(w), int(h), clr)
-	hb.ColorBoxR.SetPos(x, y)
-
-	sp := collision.NewSpace(x, y, w, h, hb.id)
-	sp.SetZLayer(float64(layer))
-
-	mouse.Add(sp)
-	mouse.PhaseCollision(sp, ctx.Handler)
-
-	render.Draw(hb.ColorBoxR, layer)
-
-	event.Bind(ctx, mouse.ClickOn, hb, func(box *hoverButton, me *mouse.Event) event.Response {
-		box.ColorBoxR.Color = image.NewUniform(color.RGBA{128, 128, 128, 128})
-		me.StopPropagation = true
-		return 0
-	})
-	event.Bind(ctx, mouse.Start, hb, func(box *hoverButton, me *mouse.Event) event.Response {
-		box.ColorBoxR.Color = image.NewUniform(color.RGBA{50, 50, 50, 50})
-		me.StopPropagation = true
-		return 0
-	})
-	event.Bind(ctx, mouse.Stop, hb, func(box *hoverButton, me *mouse.Event) event.Response {
-		box.ColorBoxR.Color = image.NewUniform(clr)
-		me.StopPropagation = true
-		return 0
-	})
+	_ = "STUB: not implemented"
+	return
 }

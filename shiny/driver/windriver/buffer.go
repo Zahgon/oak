@@ -9,12 +9,8 @@ package windriver
 
 import (
 	"image"
-	"image/draw"
 	"sync"
 	"syscall"
-
-	"github.com/oakmound/oak/v4/shiny/driver/internal/swizzle"
-	"github.com/oakmound/oak/v4/shiny/driver/internal/win32"
 )
 
 type bufferImpl struct {
@@ -29,75 +25,31 @@ type bufferImpl struct {
 	cleanedUp bool
 }
 
-func (b *bufferImpl) Size() image.Point       { return b.size }
-func (b *bufferImpl) Bounds() image.Rectangle { return image.Rectangle{Max: b.size} }
-func (b *bufferImpl) RGBA() *image.RGBA       { return &b.rgba }
+func (b *bufferImpl) Size() image.Point { _ = "STUB: not implemented"; return *new(image.Point) }
+func (b *bufferImpl) Bounds() image.Rectangle {
+	_ = "STUB: not implemented"
+	return *new(image.Rectangle)
+}
+func (b *bufferImpl) RGBA() *image.RGBA { _ = "STUB: not implemented"; return nil }
 
 func (b *bufferImpl) preUpload() {
+	_ = "STUB: not implemented"
 	// Check that the program hasn't tried to modify the rgba field via the
 	// pointer returned by the bufferImpl.RGBA method. This check doesn't catch
 	// 100% of all cases; it simply tries to detect some invalid uses of a
 	// screen.Image such as:
+	//
 	//	*buffer.RGBA() = anotherImageRGBA
-	if len(b.buf) != 0 && len(b.rgba.Pix) != 0 && &b.buf[0] != &b.rgba.Pix[0] {
-		panic("windriver: invalid Buffer.RGBA modification")
-	}
-
-	b.mu.Lock()
-	defer b.mu.Unlock()
-
-	if b.released {
-		panic("windriver: Buffer.Upload called after Buffer.Release")
-	}
-	if b.nUpload == 0 {
-		swizzle.BGRA(b.buf)
-	}
-	b.nUpload++
+	return
 }
 
-func (b *bufferImpl) postUpload() {
-	b.mu.Lock()
-	defer b.mu.Unlock()
+func (b *bufferImpl) postUpload() { _ = "STUB: not implemented"; return }
 
-	b.nUpload--
-	if b.nUpload != 0 {
-		return
-	}
+func (b *bufferImpl) Release() { _ = "STUB: not implemented"; return }
 
-	if b.released {
-		go b.cleanUp()
-	} else {
-		swizzle.BGRA(b.buf)
-	}
-}
-
-func (b *bufferImpl) Release() {
-	b.mu.Lock()
-	defer b.mu.Unlock()
-
-	if !b.released && b.nUpload == 0 {
-		go b.cleanUp()
-	}
-	b.released = true
-}
-
-func (b *bufferImpl) cleanUp() {
-	b.mu.Lock()
-	if b.cleanedUp {
-		b.mu.Unlock()
-		panic("windriver: Buffer clean-up occurred twice")
-	}
-	b.cleanedUp = true
-	b.mu.Unlock()
-
-	b.rgba.Pix = nil
-	_DeleteObject(b.hbitmap)
-}
+func (b *bufferImpl) cleanUp() { _ = "STUB: not implemented"; return }
 
 func (b *bufferImpl) blitToDC(dc syscall.Handle, dp image.Point, sr image.Rectangle) error {
-	b.preUpload()
-	defer b.postUpload()
-
-	dr := sr.Add(dp.Sub(sr.Min))
-	return copyBitmapToDC(win32.HDC(dc), dr, b.hbitmap, sr, draw.Src)
+	_ = "STUB: not implemented"
+	return nil
 }

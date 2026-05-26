@@ -16,9 +16,7 @@ type NotFound struct {
 	InputName string
 }
 
-func (nf NotFound) Error() string {
-	return errorString(codeNotFound, nf.InputName)
-}
+func (nf NotFound) Error() string { _ = "STUB: not implemented"; return "" }
 
 // ExistingElement is an alternative to ExistingFont, where in this case the
 // existing element is -not- overwritten.
@@ -28,12 +26,7 @@ type ExistingElement struct {
 	Overwritten bool
 }
 
-func (ee ExistingElement) Error() string {
-	if ee.Overwritten {
-		return errorString(codeExistingElementOverwritten, ee.InputName, ee.InputType)
-	}
-	return errorString(codeExistingElement, ee.InputName, ee.InputType)
-}
+func (ee ExistingElement) Error() string { _ = "STUB: not implemented"; return "" }
 
 // InsufficientInputs is returned when something requires at least some number
 // of inputs in a variadic argument, but that minimum was not supplied.
@@ -42,9 +35,7 @@ type InsufficientInputs struct {
 	InputName string
 }
 
-func (ii InsufficientInputs) Error() string {
-	return errorString(codeInsufficientInputs, ii.AtLeast, ii.InputName)
-}
+func (ii InsufficientInputs) Error() string { _ = "STUB: not implemented"; return "" }
 
 // UnsupportedFormat is returned by functions expecting formatted data or
 // files which received a format they can't use.
@@ -52,9 +43,7 @@ type UnsupportedFormat struct {
 	Format string
 }
 
-func (uf UnsupportedFormat) Error() string {
-	return errorString(codeUnsupportedFormat, uf.Format)
-}
+func (uf UnsupportedFormat) Error() string { _ = "STUB: not implemented"; return "" }
 
 // NilInput is returned from functions expecting a non-nil pointer which
 // receive a nil pointer.
@@ -62,9 +51,7 @@ type NilInput struct {
 	InputName string
 }
 
-func (ni NilInput) Error() string {
-	return errorString(codeNilInput, ni.InputName)
-}
+func (ni NilInput) Error() string { _ = "STUB: not implemented"; return "" }
 
 // IndivisibleInput is returned from functions expecting a count of inputs
 // in a slice or variadic argument divisible by some integer, or an integer
@@ -74,18 +61,14 @@ type IndivisibleInput struct {
 	MustDivideBy int
 }
 
-func (ii IndivisibleInput) Error() string {
-	return errorString(codeIndivisibleInput, ii.InputName, ii.MustDivideBy)
-}
+func (ii IndivisibleInput) Error() string { _ = "STUB: not implemented"; return "" }
 
 // InvalidInput is a generic struct returned for otherwise invalid input.
 type InvalidInput struct {
 	InputName string
 }
 
-func (ii InvalidInput) Error() string {
-	return errorString(codeInvalidInput, ii.InputName)
-}
+func (ii InvalidInput) Error() string { _ = "STUB: not implemented"; return "" }
 
 // UnsupportedPlatform is returned when functionality isn't supported
 // on the hardware or operating system used.
@@ -93,6 +76,4 @@ type UnsupportedPlatform struct {
 	Operation string
 }
 
-func (up UnsupportedPlatform) Error() string {
-	return errorString(codeUnsupportedPlatform, up.Operation)
-}
+func (up UnsupportedPlatform) Error() string { _ = "STUB: not implemented"; return "" }

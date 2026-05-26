@@ -14,21 +14,14 @@
 package mtldriver
 
 import (
-	"image"
 	"runtime"
 	"sync"
-	"unsafe"
 
 	"dmitri.shuralyov.com/gpu/mtl"
 	"github.com/go-gl/glfw/v3.3/glfw"
-	"github.com/oakmound/oak/v4/shiny/driver/internal/errscreen"
-	"github.com/oakmound/oak/v4/shiny/driver/mtldriver/internal/appkit"
-	"github.com/oakmound/oak/v4/shiny/driver/mtldriver/internal/coreanim"
 	"github.com/oakmound/oak/v4/shiny/screen"
 	"golang.org/x/mobile/event/key"
 	"golang.org/x/mobile/event/mouse"
-	"golang.org/x/mobile/event/paint"
-	"golang.org/x/mobile/event/size"
 )
 
 // Main is called by the program's main function to run the graphical
@@ -37,11 +30,7 @@ import (
 // It calls f on the Screen, possibly in a separate goroutine, as some OS-
 // specific libraries require being on 'the main thread'. It returns when f
 // returns.
-func Main(f func(screen.Screen)) {
-	if err := main(f); err != nil {
-		f(errscreen.Stub(err))
-	}
-}
+func Main(f func(screen.Screen)) { _ = "STUB: not implemented"; return }
 
 var initLock sync.Mutex
 
@@ -181,164 +170,47 @@ type windowRequestChannels struct {
 // newWindow creates a new GLFW window.
 // It must be called on the main thread.
 func newWindow(device mtl.Device, chans windowRequestChannels, opts screen.WindowGenerator) (screen.Window, error) {
-	width, height := optsSize(opts)
-	// TODO: explicit monitor choice
-	var monitor *glfw.Monitor
-	if opts.Fullscreen {
-		monitor = glfw.GetPrimaryMonitor()
-	}
-	window, err := glfw.CreateWindow(width, height, opts.Title, monitor, nil)
-	if err != nil {
-		return nil, err
-	}
-
-	ml := coreanim.MakeMetalLayer()
-	ml.SetDevice(device)
-	// Newer (m1) macs appear to not support rgba window formats.
-	// See bgra.go for the consequences of this.
-	ml.SetPixelFormat(mtl.PixelFormatBGRA8UNorm)
-	ml.SetMaximumDrawableCount(3)
-	ml.SetDisplaySyncEnabled(true)
-	cv := appkit.NewWindow(unsafe.Pointer(window.GetCocoaWindow())).ContentView()
-	cv.SetLayer(ml)
-	cv.SetWantsLayer(true)
-	if opts.Borderless {
-		window.SetAttrib(glfw.Decorated, 0)
-	}
-
-	w := &Window{
-		device: device,
-		window: window,
-		chans:  chans,
-		ml:     ml,
-		cq:     device.MakeCommandQueue(),
-		bgra:   NewBGRA(image.Rectangle{Max: image.Point{X: opts.Width, Y: opts.Height}}),
-		texture: device.MakeTexture(mtl.TextureDescriptor{
-			PixelFormat: mtl.PixelFormatRGBA8UNorm,
-			Width:       opts.Width,
-			Height:      opts.Height,
-			StorageMode: mtl.StorageModeManaged,
-		}),
-		title:      opts.Title,
-		w:          opts.Width,
-		h:          opts.Height,
-		borderless: opts.Borderless,
-	}
-
-	// Set callbacks.
-	framebufferSizeCallback := func(_ *glfw.Window, width, height int) {
-		w.Send(size.Event{
-			WidthPx:  width,
-			HeightPx: height,
-			// TODO(dmitshur): ppp,
-		})
-		w.Send(paint.Event{External: true})
-	}
-	window.SetFramebufferSizeCallback(framebufferSizeCallback)
-	window.SetCursorPosCallback(func(_ *glfw.Window, x, y float64) {
-		const scale = 2 // TODO(dmitshur): compute dynamically
-		w.Send(mouse.Event{X: float32(x * scale), Y: float32(y * scale)})
-	})
-	window.SetScrollCallback(func(_ *glfw.Window, xoff float64, yoff float64) {
-		// TODO horizontal scrolling
-		var btn mouse.Button
-		if yoff < 0 {
-			btn = mouse.ButtonWheelDown
-		} else {
-			btn = mouse.ButtonWheelUp
-		}
-		w.Send(mouse.Event{
-			Button:    btn,
-			Direction: mouse.DirNone,
-		})
-	})
-	window.SetMouseButtonCallback(func(_ *glfw.Window, b glfw.MouseButton, a glfw.Action, mods glfw.ModifierKey) {
-		btn := glfwMouseButton(b)
-		if btn == mouse.ButtonNone {
-			return
-		}
-		const scale = 2 // TODO(dmitshur): compute dynamically
-		x, y := window.GetCursorPos()
-		w.Send(mouse.Event{
-			X: float32(x * scale), Y: float32(y * scale),
-			Button:    btn,
-			Direction: glfwMouseDirection(a),
-			Modifiers: glfwKeyMods(mods),
-		})
-	})
-	// TODO: can we combine the following two callbacks into a single event? Signs point to no.
-	window.SetKeyCallback(func(_ *glfw.Window, k glfw.Key, _ int, a glfw.Action, mods glfw.ModifierKey) {
-		code := glfwKeyCode(k)
-		if code == key.CodeUnknown {
-			return
-		}
-		ev := key.Event{
-			Code:      code,
-			Direction: glfwKeyDirection(a),
-			Modifiers: glfwKeyMods(mods),
-		}
-		w.Send(ev)
-	})
-	// TODO: some characters will repeat when held down, but not all of them,
-	// and not any consistent type of character (e.g. 'n' will repeat, 'b' will not)
-	window.SetCharCallback(func(_ *glfw.Window, char rune) {
-		w.Send(key.Event{
-			Rune: char,
-		})
-	})
-	window.SetCloseCallback(func(*glfw.Window) {
-		w.lifecycler.SetDead(true)
-		w.lifecycler.SendEvent(w, nil)
-	})
-
-	// TODO(dmitshur): more fine-grained tracking of whether window is visible and/or focused
-	w.lifecycler.SetDead(false)
-	w.lifecycler.SetVisible(true)
-	w.lifecycler.SetFocused(true)
-	w.lifecycler.SendEvent(w, nil)
-
-	// Send the initial size and paint events.
-	width, height = window.GetFramebufferSize()
-	framebufferSizeCallback(window, width, height)
-
-	w.x, w.y = window.GetPos()
-
-	return w, nil
+	_ = "STUB: not implemented"
+	return *new(screen.Window), nil
 }
 
+// TODO: explicit monitor choice
+
+// Newer (m1) macs appear to not support rgba window formats.
+// See bgra.go for the consequences of this.
+
+// Set callbacks.
+
+// TODO(dmitshur): ppp,
+
+// TODO(dmitshur): compute dynamically
+
+// TODO horizontal scrolling
+
+// TODO(dmitshur): compute dynamically
+
+// TODO: can we combine the following two callbacks into a single event? Signs point to no.
+
+// TODO: some characters will repeat when held down, but not all of them,
+// and not any consistent type of character (e.g. 'n' will repeat, 'b' will not)
+
+// TODO(dmitshur): more fine-grained tracking of whether window is visible and/or focused
+
+// Send the initial size and paint events.
+
 func optsSize(opts screen.WindowGenerator) (width, height int) {
-	width, height = 1024/2, 768/2
-	if opts.Width > 0 {
-		width = opts.Width
-	}
-	if opts.Height > 0 {
-		height = opts.Height
-	}
-	return width, height
+	_ = "STUB: not implemented"
+	return 0, 0
 }
 
 func glfwMouseButton(button glfw.MouseButton) mouse.Button {
-	switch button {
-	case glfw.MouseButtonLeft:
-		return mouse.ButtonLeft
-	case glfw.MouseButtonRight:
-		return mouse.ButtonRight
-	case glfw.MouseButtonMiddle:
-		return mouse.ButtonMiddle
-	default:
-		return mouse.ButtonNone
-	}
+	_ = "STUB: not implemented"
+	return *new(mouse.Button)
 }
 
 func glfwMouseDirection(action glfw.Action) mouse.Direction {
-	switch action {
-	case glfw.Press:
-		return mouse.DirPress
-	case glfw.Release:
-		return mouse.DirRelease
-	default:
-		panic("unreachable")
-	}
+	_ = "STUB: not implemented"
+	return *new(mouse.Direction)
 }
 
 var keyMap = map[glfw.Key]key.Code{
@@ -461,38 +333,14 @@ var keyMap = map[glfw.Key]key.Code{
 	glfw.KeyKPEqual:      key.CodeKeypadEqualSign,
 }
 
-func glfwKeyCode(k glfw.Key) key.Code {
-	if kc, ok := keyMap[k]; ok {
-		return kc
-	}
-	return key.CodeUnknown
-}
+func glfwKeyCode(k glfw.Key) key.Code { _ = "STUB: not implemented"; return *new(key.Code) }
 
 func glfwKeyDirection(action glfw.Action) key.Direction {
-	switch action {
-	case glfw.Press:
-		return key.DirPress
-	case glfw.Release:
-		return key.DirRelease
-	case glfw.Repeat:
-		return key.DirNone
-	default:
-		panic("unreachable")
-	}
+	_ = "STUB: not implemented"
+	return *new(key.Direction)
 }
 
 func glfwKeyMods(m glfw.ModifierKey) (mod key.Modifiers) {
-	if m&glfw.ModAlt == glfw.ModAlt {
-		mod |= key.ModAlt
-	}
-	if m&glfw.ModShift == glfw.ModShift {
-		mod |= key.ModShift
-	}
-	if m&glfw.ModControl == glfw.ModControl {
-		mod |= key.ModControl
-	}
-	if m&glfw.ModSuper == glfw.ModSuper {
-		mod |= key.ModMeta
-	}
-	return mod
+	_ = "STUB: not implemented"
+	return *new(key.Modifiers)
 }

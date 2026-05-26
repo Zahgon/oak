@@ -4,15 +4,9 @@
 
 package windriver
 
-import (
-	"unsafe"
-)
-
 type _COLORREF uint32
 
-func _RGB(r, g, b byte) _COLORREF {
-	return _COLORREF(r) | _COLORREF(g)<<8 | _COLORREF(b)<<16
-}
+func _RGB(r, g, b byte) _COLORREF { _ = "STUB: not implemented"; return *new(_COLORREF) }
 
 type _POINT struct {
 	X int32
@@ -60,9 +54,7 @@ type _BLENDFUNCTION struct {
 }
 
 // ToUintptr helps to pass bf to syscall.Syscall.
-func (bf _BLENDFUNCTION) ToUintptr() uintptr {
-	return *((*uintptr)(unsafe.Pointer(&bf)))
-}
+func (bf _BLENDFUNCTION) ToUintptr() uintptr { _ = "STUB: not implemented"; return 0 }
 
 type _XFORM struct {
 	eM11 float32
@@ -129,21 +121,13 @@ const (
 	_MWT_IDENTITY = 1
 )
 
-func _GET_X_LPARAM(lp uintptr) int32 {
-	return int32(_LOWORD(lp))
-}
+func _GET_X_LPARAM(lp uintptr) int32 { _ = "STUB: not implemented"; return 0 }
 
-func _GET_Y_LPARAM(lp uintptr) int32 {
-	return int32(_HIWORD(lp))
-}
+func _GET_Y_LPARAM(lp uintptr) int32 { _ = "STUB: not implemented"; return 0 }
 
-func _LOWORD(l uintptr) uint16 {
-	return uint16(uint32(l))
-}
+func _LOWORD(l uintptr) uint16 { _ = "STUB: not implemented"; return 0 }
 
-func _HIWORD(l uintptr) uint16 {
-	return uint16(uint32(l >> 16))
-}
+func _HIWORD(l uintptr) uint16 { _ = "STUB: not implemented"; return 0 }
 
 // notes to self
 // UINT = uint32

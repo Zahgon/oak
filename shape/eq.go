@@ -10,34 +10,13 @@ type Eq func(x float64) (y float64)
 
 // Below returns an In which reports true for all x,y coordinates below
 // the equation curve.
-func (eq Eq) Below() In {
-	return func(x, y int, sizes ...int) bool {
-		w := sizes[0]
-		h := sizes[0]
-		if len(sizes) > 1 {
-			h = sizes[1]
-		}
-		// shift from 0 to size to -1 to 1
-		x2 := float64(x-w/2) / float64(w/2)
-		y2 := (float64(y-h/2) / float64(h/2)) * -1
-		return eq(x2) > y2
-	}
-}
+func (eq Eq) Below() In { _ = "STUB: not implemented"; return *new(In) }
+
+// shift from 0 to size to -1 to 1
 
 // Above returns an In which reports true for all x,y coordinates above
 // the equation curve.
-func (eq Eq) Above() In {
-	return func(x, y int, sizes ...int) bool {
-		w := sizes[0]
-		h := sizes[0]
-		if len(sizes) > 1 {
-			h = sizes[1]
-		}
-		x2 := float64(x-w/2) / float64(w/2)
-		y2 := (float64(y-h/2) / float64(h/2)) * -1
-		return eq(x2) < y2
-	}
-}
+func (eq Eq) Above() In { _ = "STUB: not implemented"; return *new(In) }
 
 var (
 	// Top half of heart

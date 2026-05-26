@@ -3,8 +3,6 @@ package render
 import (
 	"image"
 	"io"
-
-	"github.com/oakmound/oak/v4/oakerr"
 )
 
 // Decoder functions convert arbitrary readers to images.
@@ -24,29 +22,10 @@ var (
 // RegisterDecoder adds a decoder to the set of image decoders
 // for file loading. If the extension string is already set,
 // the existing decoder will not be overwritten.
-func RegisterDecoder(ext string, decoder Decoder) error {
-	_, ok := fileDecoders[ext]
-	if ok {
-		return oakerr.ExistingElement{
-			InputName:   "ext",
-			InputType:   "string",
-			Overwritten: false,
-		}
-	}
-	fileDecoders[ext] = decoder
-	return nil
-}
+func RegisterDecoder(ext string, decoder Decoder) error { _ = "STUB: not implemented"; return nil }
 
 // RegisterCfgDecoder acts like RegisterDecoder for CfgDecoders
 func RegisterCfgDecoder(ext string, decoder CfgDecoder) error {
-	_, ok := cfgDecoders[ext]
-	if ok {
-		return oakerr.ExistingElement{
-			InputName:   "ext",
-			InputType:   "string",
-			Overwritten: false,
-		}
-	}
-	cfgDecoders[ext] = decoder
+	_ = "STUB: not implemented"
 	return nil
 }

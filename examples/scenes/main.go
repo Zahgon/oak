@@ -22,19 +22,9 @@ const (
 	Both
 )
 
-func center(ctx *scene.Context, obj render.Renderable, ax Axes) {
-	objWidth, objHeight := obj.GetDims()
-	wbds := ctx.Window.Bounds()
-	switch ax {
-	case Both:
-		obj.SetPos(float64(wbds.X()/2-objWidth/2),
-			float64(wbds.Y()-objHeight)/2) //distributive property
-	case X:
-		obj.SetPos(float64(wbds.X()-objWidth)/2, obj.Y())
-	case Y:
-		obj.SetPos(obj.X(), float64(wbds.Y()-objHeight)/2)
-	}
-}
+func center(ctx *scene.Context, obj render.Renderable, ax Axes) { _ = "STUB: not implemented"; return }
+
+//distributive property
 
 func main() {
 	win := oak.NewWindow()

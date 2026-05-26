@@ -3,22 +3,10 @@ package joystick
 import (
 	"sync"
 
-	"github.com/oakmound/oak/v4/event"
-	"github.com/oakmound/oak/v4/timing"
 	"github.com/oakmound/w32"
 )
 
-func newJoystick(id uint32) *Joystick {
-	return &Joystick{
-		Handler:  event.DefaultBus,
-		PollRate: timing.FPSToFrameDelay(60),
-		id:       id,
-		osJoystick: osJoystick{
-			wstate:    &w32.XInputState{},
-			vibration: &w32.XInputVibration{},
-		},
-	}
-}
+func newJoystick(id uint32) *Joystick { _ = "STUB: not implemented"; return nil }
 
 type osJoystick struct {
 	// Todo: mutex these values?
@@ -31,17 +19,9 @@ type osJoystick struct {
 
 var once sync.Once
 
-func osinit() error {
-	var err error
-	once.Do(func() {
-		err = w32.InitXInput()
-	})
-	return err
-}
+func osinit() error { _ = "STUB: not implemented"; return nil }
 
-func (j *Joystick) prepare() error {
-	return w32.XInputEnable(true)
-}
+func (j *Joystick) prepare() error { _ = "STUB: not implemented"; return nil }
 
 type buttonName struct {
 	name      Input
@@ -67,55 +47,22 @@ var (
 	}
 )
 
-func (j *Joystick) getState() (*State, error) {
-	err := w32.XInputGetState(j.id, j.wstate)
-	if err != nil {
-		return nil, err
-	}
-	// Convert windows state into os-regular state
-	s := &State{
-		Frame:    j.wstate.PacketNumber,
-		StickLX:  j.wstate.Gamepad.ThumbLX,
-		StickLY:  j.wstate.Gamepad.ThumbLY,
-		StickRX:  j.wstate.Gamepad.ThumbRX,
-		StickRY:  j.wstate.Gamepad.ThumbRY,
-		TriggerL: j.wstate.Gamepad.LeftTrigger,
-		TriggerR: j.wstate.Gamepad.RightTrigger,
-		ID:       j.id,
-		Buttons:  make(map[string]bool, len(chkButtons)),
-	}
+func (j *Joystick) getState() (*State, error) { _ = "STUB: not implemented"; return nil, nil }
 
-	for _, chk := range chkButtons {
-		if j.wstate.Gamepad.Buttons&chk.xinputVal > 0 {
-			s.Buttons[string(chk.name)] = true
-		} else {
-			s.Buttons[string(chk.name)] = false
-		}
-	}
-	return s, nil
-}
+// Convert windows state into os-regular state
 
-func (j *Joystick) vibrate(left, right uint16) error {
-	j.vibration.LeftMotorSpeed = left
-	j.vibration.RightMotorSpeed = right
-	return w32.XInputSetState(j.id, j.vibration)
-}
+func (j *Joystick) vibrate(left, right uint16) error { _ = "STUB: not implemented"; return nil }
 
 func (j *Joystick) close() error {
+	_ = "STUB: not implemented"
 	// It seemingly makes sense to do this, but doing this disables
 	// detection of future joysticks
-	//return w32.XInputEnable(false)
+	// return w32.XInputEnable(false)
 	return nil
 }
 
 func getJoysticks() []*Joystick {
+	_ = "STUB: not implemented"
 	// With xinput there are explicitly up to 4 controllers
-	joys := make([]*Joystick, 0, 4)
-	for i := 0; i < 4; i++ {
-		err := w32.XInputGetState(uint32(i), &w32.XInputState{})
-		if err == nil {
-			joys = append(joys, newJoystick(uint32(i)))
-		}
-	}
-	return joys
+	return nil
 }

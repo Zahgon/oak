@@ -152,13 +152,9 @@ type AttachCollisionTest struct {
 }
 
 func (act *AttachCollisionTest) CID() event.CallerID {
-	return act.CallerID.CID()
+	_ = "STUB: not implemented"
+	return *new(event.CallerID)
 }
 
 // UpdateR with the rgb set on the act.
-func (act *AttachCollisionTest) UpdateR() {
-	act.nextR = render.NewColorBox(50, 50, color.RGBA{uint8(act.r), uint8(act.g), uint8(act.b), 255})
-	act.nextR.SetPos(act.X(), act.Y())
-	act.nextR.SetLayer(1)
-	act.ShouldUpdate = true
-}
+func (act *AttachCollisionTest) UpdateR() { _ = "STUB: not implemented"; return }

@@ -19,6 +19,4 @@ var driverNames = map[Driver]string{
 	DriverALSA:        "alsa",
 }
 
-func (d Driver) String() string {
-	return driverNames[d]
-}
+func (d Driver) String() string { _ = "STUB: not implemented"; return "" }

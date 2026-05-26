@@ -41,37 +41,11 @@ var (
 // EventOn converts a generic positioned mouse event into its variant indicating
 // it occurred on a CallerID targetted entity
 func EventOn(ev event.EventID[*Event]) (event.EventID[*Event], bool) {
-	switch ev {
-	case Press:
-		return PressOn, true
-	case Release:
-		return ReleaseOn, true
-	case ScrollDown:
-		return ScrollDownOn, true
-	case ScrollUp:
-		return ScrollUpOn, true
-	case Click:
-		return ClickOn, true
-	case Drag:
-		return DragOn, true
-	}
-	return event.EventID[*Event]{}, false
+	_ = "STUB: not implemented"
+	return nil, false
 }
 
 func EventRelative(ev event.EventID[*Event]) (event.EventID[*Event], bool) {
-	switch ev {
-	case PressOn:
-		return RelativePressOn, true
-	case ReleaseOn:
-		return RelativeReleaseOn, true
-	case ScrollDownOn:
-		return RelativeScrollDownOn, true
-	case ScrollUpOn:
-		return RelativeScrollUpOn, true
-	case ClickOn:
-		return RelativeClickOn, true
-	case DragOn:
-		return RelativeDragOn, true
-	}
-	return event.EventID[*Event]{}, false
+	_ = "STUB: not implemented"
+	return nil, false
 }

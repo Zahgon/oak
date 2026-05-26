@@ -19,7 +19,6 @@ import (
 	"github.com/BurntSushi/xgbutil"
 	"github.com/BurntSushi/xgbutil/xevent"
 
-	"github.com/oakmound/oak/v4/shiny/driver/internal/errscreen"
 	"github.com/oakmound/oak/v4/shiny/screen"
 )
 
@@ -29,11 +28,7 @@ import (
 // It calls f on the Screen, possibly in a separate goroutine, as some OS-
 // specific libraries require being on 'the main thread'. It returns when f
 // returns.
-func Main(f func(screen.Screen)) {
-	if err := main(f); err != nil {
-		f(errscreen.Stub(err))
-	}
-}
+func Main(f func(screen.Screen)) { _ = "STUB: not implemented"; return }
 
 var mainLock sync.Mutex
 

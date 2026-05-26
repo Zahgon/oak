@@ -1,7 +1,6 @@
 package render
 
 import (
-	"image"
 	"image/color"
 	"math"
 )
@@ -35,45 +34,29 @@ var (
 // NewGradientBox returns a gradient box defined on the two input colors
 // and the given progress function
 func NewGradientBox(w, h int, startColor, endColor color.Color, pFunction progressFunction) *Sprite {
-	rect := image.Rect(0, 0, w, h)
-	rgba := image.NewRGBA(rect)
-
-	r, g, b, a := startColor.RGBA()
-	r2, g2, b2, a2 := endColor.RGBA()
-
-	for x := 0; x < w; x++ {
-		for y := 0; y < h; y++ {
-			progress := pFunction(x, y, w, h)
-			c := color.RGBA64{
-				uint16OnScale(r, r2, progress),
-				uint16OnScale(g, g2, progress),
-				uint16OnScale(b, b2, progress),
-				uint16OnScale(a, a2, progress),
-			}
-			rgba.Set(x, y, c)
-		}
-	}
-	return NewSprite(0, 0, rgba)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // NewHorizontalGradientBox returns a gradient box with a horizontal gradient from
 // the start to end color, left to right.
 func NewHorizontalGradientBox(w, h int, startColor, endColor color.Color) *Sprite {
-	return NewGradientBox(w, h, startColor, endColor, HorizontalProgress)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // NewVerticalGradientBox returns a gradient box with a vertical gradient from
 // the start to end color, top to bottom.
 func NewVerticalGradientBox(w, h int, startColor, endColor color.Color) *Sprite {
-	return NewGradientBox(w, h, startColor, endColor, VerticalProgress)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // NewCircularGradientBox returns a gradient box where the center will be startColor
 // and the gradient will radiate as a circle out from the center.
 func NewCircularGradientBox(w, h int, startColor, endColor color.Color) *Sprite {
-	return NewGradientBox(w, h, startColor, endColor, CircularProgress)
+	_ = "STUB: not implemented"
+	return nil
 }
 
-func uint16OnScale(n, endN uint32, progress float64) uint16 {
-	return uint16((float64(endN) - float64(endN)*(1.0-progress) + float64(n)*(1.0-progress)))
-}
+func uint16OnScale(n, endN uint32, progress float64) uint16 { _ = "STUB: not implemented"; return 0 }

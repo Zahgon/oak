@@ -15,55 +15,24 @@ type Rect func(sizes ...int) [][]bool
 // case for this is if the same size rect will be queried
 // on some function multiple times, and just having the booleans
 // to re-access is needed.
-func InToRect(i In) Rect {
-	return func(sizes ...int) [][]bool {
-		w := sizes[0]
-		h := sizes[0]
-		if len(sizes) > 1 {
-			h = sizes[1]
-		}
-		out := make([][]bool, w)
-		for x := range out {
-			out[x] = make([]bool, h)
-			for y := range out[x] {
-				out[x][y] = i(x, y, sizes...)
-			}
-		}
-		return out
-	}
-}
+func InToRect(i In) Rect { _ = "STUB: not implemented"; return *new(Rect) }
 
 // A StrictRect is a shape that ignores input width and height given to it.
 type StrictRect [][]bool
 
 // NewStrictRect returns a StrictRect with the given strict dimensions, all
 // values set to false.
-func NewStrictRect(w, h int) StrictRect {
-	sh := make(StrictRect, w)
-	for x := range sh {
-		sh[x] = make([]bool, h)
-	}
-	return sh
-}
+func NewStrictRect(w, h int) StrictRect { _ = "STUB: not implemented"; return *new(StrictRect) }
 
 // In returns whether the input x and y are within this StrictRect's shape.
 // If the shape is undefined for the input values, it returns false.
-func (sr StrictRect) In(x, y int, sizes ...int) bool {
-	if x >= len(sr) {
-		return false
-	}
-	if y >= len(sr[x]) {
-		return false
-	}
-	return sr[x][y]
-}
+func (sr StrictRect) In(x, y int, sizes ...int) bool { _ = "STUB: not implemented"; return false }
 
 // Outline returns this StrictRect's outline, ignoring the input dimensions.
 func (sr StrictRect) Outline(sizes ...int) ([]intgeom.Point2, error) {
-	return ToOutline(sr)(len(sr), len(sr[0]))
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // Rect returns the StrictRect itself.
-func (sr StrictRect) Rect(sizes ...int) [][]bool {
-	return sr
-}
+func (sr StrictRect) Rect(sizes ...int) [][]bool { _ = "STUB: not implemented"; return nil }

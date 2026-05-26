@@ -8,8 +8,4 @@ type Shapeable interface {
 }
 
 // Shape is an option to set a generator's shape
-func Shape(sf shape.Shape) func(Generator) {
-	return func(g Generator) {
-		g.(Shapeable).SetShape(sf)
-	}
-}
+func Shape(sf shape.Shape) func(Generator) { _ = "STUB: not implemented"; return nil }

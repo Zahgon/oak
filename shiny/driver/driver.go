@@ -20,6 +20,4 @@ import (
 // It calls f on the Screen, possibly in a separate goroutine, as some OS-
 // specific libraries require being on 'the main thread'. It returns when f
 // returns.
-func Main(f func(screen.Screen)) {
-	main(f)
-}
+func Main(f func(screen.Screen)) { _ = "STUB: not implemented"; return }

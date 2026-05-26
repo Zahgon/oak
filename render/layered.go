@@ -29,24 +29,23 @@ type Layer struct {
 }
 
 // GetLayer returns the layer of an object if it has one or else returns that the object needs to be undrawn
-func (ld *Layer) GetLayer() int {
-	if ld == nil {
-		return Undraw
-	}
-	return ld.layer
-}
+func (ld *Layer) GetLayer() int { _ = "STUB: not implemented"; return 0 }
 
 // SetLayer sets an object's layer
 func (ld *Layer) SetLayer(l int) {
-	ld.layer = l
+	_ = "STUB: not implemented"
+
+	// Undraw sets that a Layer object should be undrawn
+	return
 }
 
-// Undraw sets that a Layer object should be undrawn
 func (ld *Layer) Undraw() {
-	ld.layer = Undraw
+	_ = "STUB: not implemented"
+
+	// A LayeredPoint is an object with a position Vector and a layer
+	return
 }
 
-// A LayeredPoint is an object with a position Vector and a layer
 type LayeredPoint struct {
 	physics.Vector
 	Layer
@@ -54,49 +53,29 @@ type LayeredPoint struct {
 
 // NewLayeredPoint creates a new LayeredPoint at a given location and layer
 func NewLayeredPoint(x, y float64, l int) LayeredPoint {
-	return LayeredPoint{
-		Vector: physics.NewVector(x, y),
-		Layer:  Layer{l},
-	}
+	_ = "STUB: not implemented"
+	return *new(LayeredPoint)
 }
 
 // GetLayer returns the layer of this point. If this is nil,
 // it will return Undraw
-func (ldp *LayeredPoint) GetLayer() int {
-	if ldp == nil {
-		return Undraw
-	}
-	return ldp.Layer.GetLayer()
-}
+func (ldp *LayeredPoint) GetLayer() int { _ = "STUB: not implemented"; return 0 }
 
 // Copy deep copies the LayeredPoint
-func (ldp *LayeredPoint) Copy() LayeredPoint {
-	ldp2 := LayeredPoint{}
-	ldp2.Vector = ldp.Vector.Copy()
-	ldp2.Layer = ldp.Layer
-	return ldp2
-}
+func (ldp *LayeredPoint) Copy() LayeredPoint { _ = "STUB: not implemented"; return *new(LayeredPoint) }
 
 // These functions are redefined because vector's internal
 // functions return Vectors, and we don't want to return Vectors.
 
 // ShiftX moves the LayeredPoint by the given x
-func (ldp *LayeredPoint) ShiftX(x float64) {
-	ldp.Vector.ShiftX(x)
-}
+func (ldp *LayeredPoint) ShiftX(x float64) { _ = "STUB: not implemented"; return }
 
 // ShiftY moves the LayeredPoint by the given y
-func (ldp *LayeredPoint) ShiftY(y float64) {
-	ldp.Vector.ShiftY(y)
-}
+func (ldp *LayeredPoint) ShiftY(y float64) { _ = "STUB: not implemented"; return }
 
 // SetPos sets the LayeredPoint's position to the given x, y
-func (ldp *LayeredPoint) SetPos(x, y float64) {
-	ldp.Vector.SetPos(x, y)
-}
+func (ldp *LayeredPoint) SetPos(x, y float64) { _ = "STUB: not implemented"; return }
 
 // GetDims returns the dimensions of this object. As a single point, LayeredPoint
 // returns (1,1).
-func (ldp *LayeredPoint) GetDims() (int, int) {
-	return 1, 1
-}
+func (ldp *LayeredPoint) GetDims() (int, int) { _ = "STUB: not implemented"; return 0, 0 }

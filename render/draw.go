@@ -11,21 +11,18 @@ var (
 )
 
 // EmptyRenderable returns a minimal, 1-width and height pseudo-nil Renderable
-func EmptyRenderable() Modifiable {
-	return emptyRenderable.Copy()
-}
+func EmptyRenderable() Modifiable { _ = "STUB: not implemented"; return *new(Modifiable) }
 
 // DrawColor is equivalent to LoadSpriteAndDraw,
 // but with colorboxes.
 func DrawColor(c color.Color, x, y, w, h float64, layers ...int) (Renderable, error) {
-	cb := NewColorBox(int(w), int(h), c)
-	cb.ShiftX(x)
-	cb.ShiftY(y)
-	return Draw(cb, layers...)
+	_ = "STUB: not implemented"
+	return *new(Renderable), nil
 }
 
 // DrawPoint draws a color on the screen as a single-widthed
 // pixel (box)
 func DrawPoint(c color.Color, x1, y1 float64, layers ...int) (Renderable, error) {
-	return DrawColor(c, x1, y1, 1, 1, layers...)
+	_ = "STUB: not implemented"
+	return *new(Renderable), nil
 }

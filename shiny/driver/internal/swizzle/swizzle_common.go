@@ -10,22 +10,6 @@ package swizzle
 // orders.
 //
 // It panics if the input slice length is not a multiple of 4.
-func BGRA(p []byte) {
-	if len(p)%4 != 0 {
-		panic("input slice length is not a multiple of 4")
-	}
+func BGRA(p []byte) { _ = "STUB: not implemented"; return }
 
-	// Use asm code for 16- or 4-byte chunks, if supported.
-	if useBGRA16 {
-		n := len(p) &^ (16 - 1)
-		bgra16(p[:n])
-		p = p[n:]
-	} else if useBGRA4 {
-		bgra4(p)
-		return
-	}
-
-	for i := 0; i < len(p); i += 4 {
-		p[i+0], p[i+2] = p[i+2], p[i+0]
-	}
-}
+// Use asm code for 16- or 4-byte chunks, if supported.

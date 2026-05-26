@@ -18,27 +18,13 @@ type imageImpl struct {
 	dead     bool
 }
 
-func (ii *imageImpl) Size() image.Point {
-	return ii.size
-}
+func (ii *imageImpl) Size() image.Point { _ = "STUB: not implemented"; return *new(image.Point) }
 
 func (ii *imageImpl) Bounds() image.Rectangle {
-	return image.Rect(0, 0, ii.size.X, ii.size.Y)
+	_ = "STUB: not implemented"
+	return *new(image.Rectangle)
 }
 
-func (ii *imageImpl) Release() {
-	ii.deadLock.Lock()
-	ii.img.Release()
-	ii.dead = true
-	ii.deadLock.Unlock()
-}
+func (ii *imageImpl) Release() { _ = "STUB: not implemented"; return }
 
-func (ii *imageImpl) RGBA() *image.RGBA {
-	ii.deadLock.Lock()
-	if ii.dead {
-		ii.img = ii.screen.images.NewImage(ii.size.X, ii.size.Y)
-		ii.dead = false
-	}
-	ii.deadLock.Unlock()
-	return ii.img.RGBA
-}
+func (ii *imageImpl) RGBA() *image.RGBA { _ = "STUB: not implemented"; return nil }

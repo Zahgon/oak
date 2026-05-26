@@ -17,44 +17,19 @@ import (
 type CastLimit func([]collision.Point) bool
 
 // AddLimit is a helper for converting a CastLimit into a CastOption.
-func AddLimit(cl CastLimit) CastOption {
-	return func(c *Caster) {
-		c.Limits = append(c.Limits, cl)
-	}
-}
+func AddLimit(cl CastLimit) CastOption { _ = "STUB: not implemented"; return *new(CastOption) }
 
 // LimitResults will cause a Caster to return a limited number of
 // collision points.
-func LimitResults(limit int) CastOption {
-	return AddLimit(func(ps []collision.Point) bool {
-		return len(ps) < limit
-	})
-}
+func LimitResults(limit int) CastOption { _ = "STUB: not implemented"; return *new(CastOption) }
 
 // StopAtLabel will cause a caster to cease casting as soon as it
 // hits one of the input labels.
 func StopAtLabel(ls ...collision.Label) CastOption {
-	return AddLimit(func(ps []collision.Point) bool {
-		z := ps[len(ps)-1].Zone
-		for _, l := range ls {
-			if z.Label == l {
-				return false
-			}
-		}
-		return true
-	})
+	_ = "STUB: not implemented"
+	return *new(CastOption)
 }
 
 // StopAtID will cause a caster to cease casting as soon as it
 // hits one of the input CIDs.
-func StopAtID(ids ...event.CallerID) CastOption {
-	return AddLimit(func(ps []collision.Point) bool {
-		z := ps[len(ps)-1].Zone
-		for _, id := range ids {
-			if z.CID == id {
-				return false
-			}
-		}
-		return true
-	})
-}
+func StopAtID(ids ...event.CallerID) CastOption { _ = "STUB: not implemented"; return *new(CastOption) }

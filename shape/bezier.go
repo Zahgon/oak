@@ -2,36 +2,14 @@ package shape
 
 import (
 	"github.com/oakmound/oak/v4/alg/floatgeom"
-	"github.com/oakmound/oak/v4/oakerr"
 )
 
 // BezierCurve will form a Bezier on the given coordinates, expected in (x,y)
 // pairs. If the inputs have an odd length, an error noting so is returned, and
 // the Bezier returned is nil.
 func BezierCurve(coords ...float64) (Bezier, error) {
-	if len(coords) == 0 {
-		return nil, oakerr.InsufficientInputs{
-			AtLeast:   2,
-			InputName: "coords",
-		}
-	}
-	if len(coords)%2 != 0 {
-		return nil, oakerr.IndivisibleInput{
-			InputName:    "coords",
-			MustDivideBy: 2,
-		}
-	}
-	pts := make([]Bezier, len(coords)/2)
-	for i := 0; i < len(coords); i += 2 {
-		pts[i/2] = BezierPoint{coords[i], coords[i+1]}
-	}
-	for len(pts) > 1 {
-		for i := 0; i < len(pts)-1; i++ {
-			pts[i] = BezierNode{pts[i], pts[i+1]}
-		}
-		pts = pts[:len(pts)-1]
-	}
-	return pts[0], nil
+	_ = "STUB: not implemented"
+	return *new(Bezier), nil
 }
 
 // A Bezier has a function indicating how far along a curve something is given
@@ -51,16 +29,10 @@ type BezierNode struct {
 
 // Pos returns the a point progress percent between this node's left and
 // right progress percent points.
-func (bn BezierNode) Pos(progress float64) (x, y float64) {
-	x1, y1 := bn.Left.Pos(progress)
-	x2, y2 := bn.Right.Pos(progress)
-	return x1 + ((x2 - x1) * progress), y1 + ((y2 - y1) * progress)
-}
+func (bn BezierNode) Pos(progress float64) (x, y float64) { _ = "STUB: not implemented"; return 0, 0 }
 
 // A BezierPoint covers cases where only 1 point is supplied, and serve as roots.
 type BezierPoint floatgeom.Point2
 
 // Pos returns this point.
-func (bp BezierPoint) Pos(float64) (x, y float64) {
-	return bp[0], bp[1]
-}
+func (bp BezierPoint) Pos(float64) (x, y float64) { _ = "STUB: not implemented"; return 0, 0 }

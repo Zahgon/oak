@@ -1,10 +1,8 @@
 package main
 
 import (
-	"errors"
 	"image/color"
 	"log"
-	"strconv"
 
 	oak "github.com/oakmound/oak/v4"
 	"github.com/oakmound/oak/v4/alg"
@@ -28,29 +26,7 @@ var (
 	src            *pt.Source
 )
 
-func parseShape(args []string) shape.Shape {
-	if len(args) > 0 {
-		switch args[0] {
-		case "heart":
-			return shape.Heart
-		case "square":
-			return shape.Square
-		case "circle":
-			return shape.Circle
-		case "diamond":
-			return shape.Diamond
-		case "checkered":
-			return shape.Checkered
-		case "or":
-			return shape.JustIn(shape.OrIn(parseShape(args[1:2]).In, parseShape(args[2:]).In))
-		case "and":
-			return shape.JustIn(shape.AndIn(parseShape(args[1:2]).In, parseShape(args[2:]).In))
-		case "not":
-			return shape.JustIn(shape.NotIn(parseShape(args[1:]).In))
-		}
-	}
-	return nil
-}
+func parseShape(args []string) shape.Shape { _ = "STUB: not implemented"; return *new(shape.Shape) }
 
 func main() {
 
@@ -315,61 +291,16 @@ func main() {
 }
 
 func parseRGBA(args []string) (r, g, b, a int, err error) {
-	if len(args) < 4 {
-		return
-	}
-	r, err = strconv.Atoi(args[0])
-	if err != nil {
-		return
-	}
-	g, err = strconv.Atoi(args[1])
-	if err != nil {
-		return
-	}
-	b, err = strconv.Atoi(args[2])
-	if err != nil {
-		return
-	}
-	a, err = strconv.Atoi(args[3])
-	return
+	_ = "STUB: not implemented"
+	return 0, 0, 0, 0, nil
 }
 
 func parseFloats(args []string) (f1, f2 float64, two bool, err error) {
-	if len(args) < 1 {
-		err = errors.New("no args")
-		return
-	}
-	f1, err = strconv.ParseFloat(args[0], 64)
-	if err != nil {
-		return
-	}
-	if len(args) < 2 {
-		return
-	}
-	f2, err = strconv.ParseFloat(args[1], 64)
-	if err != nil {
-		return
-	}
-	two = true
-	return
+	_ = "STUB: not implemented"
+	return 0, 0, false, nil
 }
 
 func parseInts(args []string) (i1, i2 int, two bool, err error) {
-	if len(args) < 1 {
-		err = errors.New("No args")
-		return
-	}
-	i1, err = strconv.Atoi(args[0])
-	if err != nil {
-		return
-	}
-	if len(args) < 2 {
-		return
-	}
-	i2, err = strconv.Atoi(args[1])
-	if err != nil {
-		return
-	}
-	two = true
-	return
+	_ = "STUB: not implemented"
+	return 0, 0, false, nil
 }

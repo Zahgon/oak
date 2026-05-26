@@ -36,16 +36,17 @@ type Window struct {
 
 // NewWindow returns a Window that wraps an existing NSWindow * pointer.
 func NewWindow(window unsafe.Pointer) Window {
-	return Window{window}
+	_ = "STUB: not implemented"
+	return *
+
+	// ContentView returns the window's content view, the highest accessible View
+	// in the window's view hierarchy.
+	//
+	// Reference: https://developer.apple.com/documentation/appkit/nswindow/1419160-contentview.
+	new(Window)
 }
 
-// ContentView returns the window's content view, the highest accessible View
-// in the window's view hierarchy.
-//
-// Reference: https://developer.apple.com/documentation/appkit/nswindow/1419160-contentview.
-func (w Window) ContentView() View {
-	return View{C.Window_ContentView(w.window)}
-}
+func (w Window) ContentView() View { _ = "STUB: not implemented"; return *new(View) }
 
 // View is the infrastructure for drawing, printing, and handling events in an app.
 //
@@ -57,13 +58,9 @@ type View struct {
 // SetLayer sets v.layer to l.
 //
 // Reference: https://developer.apple.com/documentation/appkit/nsview/1483298-layer.
-func (v View) SetLayer(l coreanim.Layer) {
-	C.View_SetLayer(v.view, l.Layer())
-}
+func (v View) SetLayer(l coreanim.Layer) { _ = "STUB: not implemented"; return }
 
 // SetWantsLayer sets v.wantsLayer to wantsLayer.
 //
 // Reference: https://developer.apple.com/documentation/appkit/nsview/1483695-wantslayer.
-func (v View) SetWantsLayer(wantsLayer bool) {
-	C.View_SetWantsLayer(v.view, C.bool(wantsLayer))
-}
+func (v View) SetWantsLayer(wantsLayer bool) { _ = "STUB: not implemented"; return }

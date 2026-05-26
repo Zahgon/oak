@@ -23,18 +23,6 @@ const (
 
 // GetEventName returns a string event name given some mobile/mouse information
 func GetEvent(d mouse.Direction, b mouse.Button) event.EventID[*Event] {
-	switch d {
-	case mouse.DirPress:
-		return Press
-	case mouse.DirRelease:
-		return Release
-	default:
-		switch b {
-		case -2:
-			return ScrollDown
-		case -1:
-			return ScrollUp
-		}
-	}
-	return Drag
+	_ = "STUB: not implemented"
+	return nil
 }

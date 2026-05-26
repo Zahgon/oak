@@ -26,6 +26,4 @@ type InterruptBool struct {
 }
 
 // IsInterruptable returns whether this can be interrupted.
-func (ib InterruptBool) IsInterruptable() bool {
-	return ib.Interruptable
-}
+func (ib InterruptBool) IsInterruptable() bool { _ = "STUB: not implemented"; return false }

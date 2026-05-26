@@ -191,68 +191,22 @@ const (
 )
 
 // NewEnemy creates an enemy for a top down shooter
-func NewEnemy(ctx *scene.Context) {
-	x, y := enemyPos()
+func NewEnemy(ctx *scene.Context) { _ = "STUB: not implemented"; return }
 
-	enemyFrame := sheet[0][0].Copy()
-	enemyR := render.NewSwitch("left", map[string]render.Modifiable{
-		"left":  enemyFrame,
-		"right": enemyFrame.Copy().Modify(mod.FlipX),
-	})
-	enemy := entities.New(ctx,
-		entities.WithRect(floatgeom.NewRect2WH(x, y, 16, 16)),
-		entities.WithRenderable(enemyR),
-		entities.WithDrawLayers([]int{1, 2}),
-		entities.WithLabel(Enemy),
-	)
+// move towards the player
 
-	event.Bind(ctx, event.Enter, enemy, func(e *entities.Entity, ev event.EnterPayload) event.Response {
-		// move towards the player
-		x, y := enemy.X(), enemy.Y()
-		pt := floatgeom.Point2{x, y}
-		pt2 := floatgeom.Point2{*playerX, *playerY}
-		delta := pt2.Sub(pt).Normalize().MulConst(EnemySpeed * ev.TickPercent)
-		enemy.Shift(delta)
-
-		// update animation
-		swtch := enemy.Renderable.(*render.Switch)
-		if delta.X() > 0 {
-			if swtch.Get() == "left" {
-				swtch.Set("right")
-			}
-		} else if delta.X() < 0 {
-			if swtch.Get() == "right" {
-				swtch.Set("left")
-			}
-		}
-		return 0
-	})
-
-	event.Bind(ctx, destroy, enemy, func(e *entities.Entity, nothing struct{}) event.Response {
-		e.Destroy()
-		return 0
-	})
-}
+// update animation
 
 func enemyPos() (float64, float64) {
+	_ = "STUB: not implemented"
 	// Spawn on the edge of the screen
-	perimeter := fieldWidth*2 + fieldHeight*2
-	pos := int(rand.Float64() * float64(perimeter))
-	// Top
-	if pos < fieldWidth {
-		return float64(pos), 0
-	}
-	pos -= fieldWidth
-	// Right
-	if pos < fieldHeight {
-		return float64(fieldWidth), float64(pos)
-	}
-	// Bottom
-	pos -= fieldHeight
-	if pos < fieldWidth {
-		return float64(pos), float64(fieldHeight)
-	}
-	pos -= fieldWidth
-	// Left
-	return 0, float64(pos)
+	return 0, 0
 }
+
+// Top
+
+// Right
+
+// Bottom
+
+// Left

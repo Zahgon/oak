@@ -11,16 +11,13 @@ type imageImpl struct {
 	rgba   *image.RGBA
 }
 
-func (ii imageImpl) Size() image.Point {
-	return ii.size
-}
+func (ii imageImpl) Size() image.Point { _ = "STUB: not implemented"; return *new(image.Point) }
 
 func (ii imageImpl) Bounds() image.Rectangle {
-	return image.Rect(0, 0, ii.size.X, ii.size.Y)
+	_ = "STUB: not implemented"
+	return *new(image.Rectangle)
 }
 
-func (imageImpl) Release() {}
+func (imageImpl) Release() { _ = "STUB: not implemented"; return }
 
-func (ii imageImpl) RGBA() *image.RGBA {
-	return ii.rgba
-}
+func (ii imageImpl) RGBA() *image.RGBA { _ = "STUB: not implemented"; return nil }

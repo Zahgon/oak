@@ -1,8 +1,6 @@
 package collision
 
 import (
-	"errors"
-
 	"github.com/oakmound/oak/v4/event"
 )
 
@@ -18,13 +16,9 @@ type Phase struct {
 	Touching map[Label]bool
 }
 
-func (cp *Phase) getCollisionPhase() *Phase {
-	return cp
-}
+func (cp *Phase) getCollisionPhase() *Phase { _ = "STUB: not implemented"; return nil }
 
-func (cp *Phase) CID() event.CallerID {
-	return cp.OnCollisionS.CID
-}
+func (cp *Phase) CID() event.CallerID { _ = "STUB: not implemented"; return *new(event.CallerID) }
 
 type collisionPhase interface {
 	getCollisionPhase() *Phase
@@ -34,25 +28,12 @@ type collisionPhase interface {
 // receive CollisionStart and CollisionStop events, appropriately when
 // entities begin to collide or stop colliding with the space.
 // If tree is nil, it uses DefTree
-func PhaseCollision(s *Space, tree *Tree) error {
-	return PhaseCollisionWithBus(s, tree, event.DefaultBus)
-}
+func PhaseCollision(s *Space, tree *Tree) error { _ = "STUB: not implemented"; return nil }
 
 // PhaseCollisionWithBus allows for a non-default bus in a phase collision binding.
 func PhaseCollisionWithBus(s *Space, tree *Tree, bus event.Handler) error {
-	en := bus.GetCallerMap().GetEntity(s.CID)
-	if cp, ok := en.(collisionPhase); ok {
-		oc := cp.getCollisionPhase()
-		oc.OnCollisionS = s
-		oc.tree = tree
-		oc.bus = bus
-		if oc.tree == nil {
-			oc.tree = DefaultTree
-		}
-		bus.UnsafeBind(event.Enter.UnsafeEventID, s.CID, phaseCollisionEnter)
-		return nil
-	}
-	return errors.New("This space's entity does not implement collisionPhase")
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // CollisionStart/Stop: when a PhaseCollision entity starts/stops touching some label.
@@ -62,30 +43,12 @@ var (
 )
 
 func phaseCollisionEnter(id event.CallerID, handler event.Handler, _ interface{}) event.Response {
-	e := handler.GetCallerMap().GetEntity(id).(collisionPhase)
-	oc := e.getCollisionPhase()
-
-	// check hits
-	hits := oc.tree.Hits(oc.OnCollisionS)
-	newTouching := map[Label]bool{}
-
-	// if any are new, trigger on collision
-	for _, h := range hits {
-		l := h.Label
-		if _, ok := oc.Touching[l]; !ok {
-			event.TriggerForCallerOn(oc.bus, id, Start, l)
-		}
-		newTouching[l] = true
-	}
-
-	// if we lost any, trigger off collision
-	for l := range oc.Touching {
-		if _, ok := newTouching[l]; !ok {
-			event.TriggerForCallerOn(handler, id, Stop, l)
-		}
-	}
-
-	oc.Touching = newTouching
-
-	return 0
+	_ = "STUB: not implemented"
+	return *new(event.Response)
 }
+
+// check hits
+
+// if any are new, trigger on collision
+
+// if we lost any, trigger off collision

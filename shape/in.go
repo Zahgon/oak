@@ -12,56 +12,29 @@ type In func(x, y int, sizes ...int) bool
 
 // AndIn will combine multiple In functions into one, where
 // if any of the shapes are false the result is false.
-func AndIn(is ...In) In {
-	return func(x, y int, sizes ...int) bool {
-		for _, i := range is {
-			b := i(x, y, sizes...)
-			if !b {
-				return false
-			}
-		}
-		return true
-	}
-}
+func AndIn(is ...In) In { _ = "STUB: not implemented"; return *new(In) }
 
 // OrIn will combine multiple In functions into one, where
 // if any of the shapes are true the result is true.
-func OrIn(is ...In) In {
-	return func(x, y int, sizes ...int) bool {
-		for _, i := range is {
-			b := i(x, y, sizes...)
-			if b {
-				return true
-			}
-		}
-		return false
-	}
-}
+func OrIn(is ...In) In { _ = "STUB: not implemented"; return *new(In) }
 
 // NotIn returns the opposite of a given In function for any query.
-func NotIn(i In) In {
-	return func(x, y int, sizes ...int) bool {
-		return !i(x, y, sizes...)
-	}
-}
+func NotIn(i In) In { _ = "STUB: not implemented"; return *new(In) }
 
 // A JustIn lets an In function serve as a shape by automatically
 // wrapping it in assistant functions for other utilites.
 type JustIn In
 
 // In acts as the underlying In function
-func (ji JustIn) In(x, y int, sizes ...int) bool {
-	return ji(x, y, sizes...)
-}
+func (ji JustIn) In(x, y int, sizes ...int) bool { _ = "STUB: not implemented"; return false }
 
 // Rect calls InToRect on a JustIn's In
-func (ji JustIn) Rect(sizes ...int) [][]bool {
-	return InToRect(In(ji))(sizes...)
-}
+func (ji JustIn) Rect(sizes ...int) [][]bool { _ = "STUB: not implemented"; return nil }
 
 // Outline calls ToOutline on a JustIn
 func (ji JustIn) Outline(sizes ...int) ([]intgeom.Point2, error) {
-	return ToOutline(ji)(sizes...)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 var (
@@ -124,10 +97,4 @@ var (
 
 // XRange is an example In utility which returns values within a given
 // relative range (where 0 = 0 and 1 = size).
-func XRange(a, b float64) In {
-	return func(x, y int, sizes ...int) bool {
-		xf := float64(x)
-		sf := float64(sizes[0])
-		return (xf >= sf*a) && (xf <= sf*b)
-	}
-}
+func XRange(a, b float64) In { _ = "STUB: not implemented"; return *new(In) }

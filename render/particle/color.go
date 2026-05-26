@@ -12,12 +12,8 @@ type Colorable interface {
 
 // Color sets colors on a Colorable
 func Color(start, startRand, end, endRand color.Color) func(Generator) {
-	return func(g Generator) {
-		if c, ok := g.(Colorable); ok {
-			c.SetStartColor(start, startRand)
-			c.SetEndColor(end, endRand)
-		}
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // A Colorable2 can have more colors set on it
@@ -28,10 +24,6 @@ type Colorable2 interface {
 
 // Color2 sets more colors on a Colorable2
 func Color2(start, startRand, end, endRand color.Color) func(Generator) {
-	return func(g Generator) {
-		if c, ok := g.(Colorable2); ok {
-			c.SetStartColor2(start, startRand)
-			c.SetEndColor2(end, endRand)
-		}
-	}
+	_ = "STUB: not implemented"
+	return nil
 }

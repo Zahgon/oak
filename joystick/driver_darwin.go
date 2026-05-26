@@ -1,34 +1,18 @@
 package joystick
 
-import "github.com/oakmound/oak/v4/oakerr"
+func osinit() error { _ = "STUB: not implemented"; return nil }
 
-func osinit() error {
-	return nil
-}
-
-func newOsJoystick() osJoystick {
-	return osJoystick{}
-}
+func newOsJoystick() osJoystick { _ = "STUB: not implemented"; return *new(osJoystick) }
 
 type osJoystick struct {
 }
 
-func (j *Joystick) prepare() error {
-	return oakerr.UnsupportedPlatform{Operation: "joystick"}
-}
+func (j *Joystick) prepare() error { _ = "STUB: not implemented"; return nil }
 
-func (j *Joystick) getState() (*State, error) {
-	return nil, oakerr.UnsupportedPlatform{Operation: "joystick"}
-}
+func (j *Joystick) getState() (*State, error) { _ = "STUB: not implemented"; return nil, nil }
 
-func (j *Joystick) vibrate(left, right uint16) error {
-	return oakerr.UnsupportedPlatform{Operation: "joystick"}
-}
+func (j *Joystick) vibrate(left, right uint16) error { _ = "STUB: not implemented"; return nil }
 
-func (j *Joystick) close() error {
-	return oakerr.UnsupportedPlatform{Operation: "joystick"}
-}
+func (j *Joystick) close() error { _ = "STUB: not implemented"; return nil }
 
-func getJoysticks() []*Joystick {
-	return nil
-}
+func getJoysticks() []*Joystick { _ = "STUB: not implemented"; return nil }

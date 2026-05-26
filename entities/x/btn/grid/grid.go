@@ -33,29 +33,7 @@ var (
 )
 
 // Generate creates a Grid from a Generator
-func (g *Generator) Generate(ctx *scene.Context) Grid {
-	grid := make([][]*entities.Entity, len(g.Content))
-	for x := 0; x < len(g.Content); x++ {
-		grid[x] = make([]*entities.Entity, len(g.Content[x]))
-		for y := 0; y < len(g.Content[x]); y++ {
-			grid[x][y] = btn.New(ctx,
-				g.Defaults,
-				g.Content[x][y],
-				btn.Offset(float64(x)*g.XGap, float64(y)*g.YGap),
-			)
-		}
-	}
-	return grid
-}
+func (g *Generator) Generate(ctx *scene.Context) Grid { _ = "STUB: not implemented"; return *new(Grid) }
 
 // New creates a grid of buttons from a set of options
-func New(ctx *scene.Context, opts ...Option) Grid {
-	g := defaultGenerator
-	for _, opt := range opts {
-		if opt == nil {
-			continue
-		}
-		g = opt(g)
-	}
-	return g.Generate(ctx)
-}
+func New(ctx *scene.Context, opts ...Option) Grid { _ = "STUB: not implemented"; return *new(Grid) }

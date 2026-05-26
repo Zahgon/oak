@@ -15,13 +15,7 @@ const (
 	NoAudioDevice
 )
 
-func (lc logCode) String() string {
-	s := logstrings[oakerr.CurrentLanguage][lc]
-	if s == "" {
-		return logstrings[oakerr.ENG][lc]
-	}
-	return s
-}
+func (lc logCode) String() string { _ = "STUB: not implemented"; return "" }
 
 var logstrings = map[oakerr.Language]map[logCode]string{
 	oakerr.ENG: {

@@ -16,16 +16,10 @@ var (
 )
 
 // And combines two directions
-func (d Dir2) And(d2 Dir2) Dir2 {
-	return Dir2(Point2(d).Add(Point2(d2)))
-}
+func (d Dir2) And(d2 Dir2) Dir2 { _ = "STUB: not implemented"; return *new(Dir2) }
 
 // X retrieves the horizontal component of a Dir2
-func (d Dir2) X() int {
-	return Point2(d).X()
-}
+func (d Dir2) X() int { _ = "STUB: not implemented"; return 0 }
 
 // Y retrieves the vertical component for a Dir2
-func (d Dir2) Y() int {
-	return Point2(d).Y()
-}
+func (d Dir2) Y() int { _ = "STUB: not implemented"; return 0 }

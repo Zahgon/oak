@@ -3,11 +3,9 @@ package shake
 
 import (
 	"context"
-	"math/rand"
 	"time"
 
 	"github.com/oakmound/oak/v4/alg/floatgeom"
-	"github.com/oakmound/oak/v4/alg/intgeom"
 	"github.com/oakmound/oak/v4/scene"
 	"github.com/oakmound/oak/v4/window"
 )
@@ -42,87 +40,30 @@ type ShiftPoser interface {
 
 // Shake shakes a ShiftPoser for the given duration. It uses the settings
 // in DefaultShaker to determine the quality of the shake.
-func Shake(sp ShiftPoser, dur time.Duration) {
-	DefaultShaker.Shake(sp, dur)
-}
+func Shake(sp ShiftPoser, dur time.Duration) { _ = "STUB: not implemented"; return }
 
 // Shake shakes a ShiftPoser for the given duration.
-func (sk *Shaker) Shake(sp ShiftPoser, dur time.Duration) {
-	sk.ShakeContext(context.Background(), sp, dur)
-}
+func (sk *Shaker) Shake(sp ShiftPoser, dur time.Duration) { _ = "STUB: not implemented"; return }
 
 // ShakeContext shakes a ShiftPoser for the given duration or until the context is done,
 // whichever comes first.
 func (sk *Shaker) ShakeContext(ctx context.Context, sp ShiftPoser, dur time.Duration) {
-	ctx, cancel := context.WithTimeout(ctx, dur)
-	mag := sk.Magnitude
-	delta := floatgeom.Point2{}
-
-	if sk.Random {
-		randOff := mag
-		go func() {
-			defer cancel()
-			tick := time.NewTicker(sk.Delay)
-			defer tick.Stop()
-			for {
-				select {
-				case <-ctx.Done():
-					if sk.ResetPosition {
-						sp.ShiftPos(-delta.X(), -delta.Y())
-					}
-					return
-				case <-tick.C:
-				}
-				xDelta := randOff.X() - delta.X()
-				yDelta := randOff.Y() - delta.Y()
-				sp.ShiftPos(xDelta, yDelta)
-				delta = delta.Add(floatgeom.Point2{xDelta, yDelta})
-				mag = mag.MulConst(-1)
-				randOff = mag.MulConst(rand.Float64())
-			}
-
-		}()
-	} else {
-		go func() {
-			defer cancel()
-			tick := time.NewTicker(sk.Delay)
-			defer tick.Stop()
-			for {
-				select {
-				case <-ctx.Done():
-					if sk.ResetPosition {
-						sp.ShiftPos(-delta.X(), -delta.Y())
-					}
-					return
-				case <-tick.C:
-				}
-				xDelta := mag.X()
-				yDelta := mag.Y()
-
-				sp.ShiftPos(xDelta, yDelta)
-				delta = delta.Add(floatgeom.Point2{xDelta, yDelta})
-				mag = mag.MulConst(-1)
-			}
-		}()
-	}
+	_ = "STUB: not implemented"
+	return
 }
 
 type screenToPoser struct {
 	window.App
 }
 
-func (stp screenToPoser) ShiftPos(x, y float64) {
-	stp.ShiftViewport(intgeom.Point2{int(x), int(y)})
-}
+func (stp screenToPoser) ShiftPos(x, y float64) { _ = "STUB: not implemented"; return }
 
 // Screen shakes the screen that the context controls for the given duration.
 // It uses the settings in DefaultShaker to determine the quality of the shake.
-func Screen(ctx *scene.Context, dur time.Duration) {
-	DefaultShaker.ShakeScreen(ctx, dur)
-}
+func Screen(ctx *scene.Context, dur time.Duration) { _ = "STUB: not implemented"; return }
 
 // ShakeScreen shakes the screen that the context controls for the given duration.
 func (sk *Shaker) ShakeScreen(ctx *scene.Context, dur time.Duration) {
-	poser := screenToPoser{ctx.Window}
-	sk.ShakeContext(ctx, poser, dur)
+	_ = "STUB: not implemented"
+	return
 }

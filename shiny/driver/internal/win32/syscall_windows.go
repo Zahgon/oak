@@ -80,25 +80,15 @@ const (
 	_WHEEL_DELTA = 120
 )
 
-func _GET_X_LPARAM(lp uintptr) int32 {
-	return int32(_LOWORD(lp))
-}
+func _GET_X_LPARAM(lp uintptr) int32 { _ = "STUB: not implemented"; return 0 }
 
-func _GET_Y_LPARAM(lp uintptr) int32 {
-	return int32(_HIWORD(lp))
-}
+func _GET_Y_LPARAM(lp uintptr) int32 { _ = "STUB: not implemented"; return 0 }
 
-func _GET_WHEEL_DELTA_WPARAM(lp uintptr) int16 {
-	return int16(_HIWORD(lp))
-}
+func _GET_WHEEL_DELTA_WPARAM(lp uintptr) int16 { _ = "STUB: not implemented"; return 0 }
 
-func _LOWORD(l uintptr) uint16 {
-	return uint16(uint32(l))
-}
+func _LOWORD(l uintptr) uint16 { _ = "STUB: not implemented"; return 0 }
 
-func _HIWORD(l uintptr) uint16 {
-	return uint16(uint32(l >> 16))
-}
+func _HIWORD(l uintptr) uint16 { _ = "STUB: not implemented"; return 0 }
 
 // notes to self
 // UINT = uint32

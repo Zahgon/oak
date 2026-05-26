@@ -1,10 +1,5 @@
 package scene
 
-import (
-	"github.com/oakmound/oak/v4/dlog"
-	"github.com/oakmound/oak/v4/oakerr"
-)
-
 // A Scene is a set of functions defining what needs to happen when a scene
 // starts and ends.
 type Scene struct {
@@ -27,20 +22,14 @@ type Result struct {
 // GoTo returns an End function that, without any other customization possible,
 // will change to the input next scene.
 func GoTo(nextScene string) func() (nextScene string, result *Result) {
-	return func() (string, *Result) {
-		return nextScene, nil
-	}
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // GoToPtr returns an End function that, without any other customization possible,
 // will change to the input next scene. It takes a pointer so the scene can
 // be changed after this function is called.
 func GoToPtr(nextScene *string) func() (nextScene string, result *Result) {
-	return func() (string, *Result) {
-		if nextScene == nil {
-			dlog.Error(oakerr.NilInput{InputName: "nextScene"}.Error())
-			return "", nil
-		}
-		return *nextScene, nil
-	}
+	_ = "STUB: not implemented"
+	return nil
 }

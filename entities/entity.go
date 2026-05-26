@@ -5,7 +5,6 @@ import (
 
 	"github.com/oakmound/oak/v4/alg/floatgeom"
 	"github.com/oakmound/oak/v4/collision"
-	"github.com/oakmound/oak/v4/dlog"
 	"github.com/oakmound/oak/v4/event"
 	"github.com/oakmound/oak/v4/render"
 	"github.com/oakmound/oak/v4/render/mod"
@@ -35,43 +34,15 @@ type Generator struct {
 	ExplicitChildren []*Entity
 }
 
-func And(opts ...Option) Option {
-	return func(g Generator) Generator {
-		for _, o := range opts {
-			g = o(g)
-		}
-		return g
-	}
-}
+func And(opts ...Option) Option { _ = "STUB: not implemented"; return *new(Option) }
 
-func WithChild(opts ...Option) Option {
-	return func(s Generator) Generator {
-		s.Children = append(s.Children, opts)
-		return s
-	}
-}
+func WithChild(opts ...Option) Option { _ = "STUB: not implemented"; return *new(Option) }
 
-func WithExplicitChild(e *Entity) Option {
-	return func(s Generator) Generator {
-		s.ExplicitChildren = append(s.ExplicitChildren, e)
-		return s
-	}
-}
+func WithExplicitChild(e *Entity) Option { _ = "STUB: not implemented"; return *new(Option) }
 
-func WithRect(v floatgeom.Rect2) Option {
-	return func(s Generator) Generator {
-		s.Position = v.Min
-		s.Dimensions = v.Max.Sub(v.Min)
-		return s
-	}
-}
+func WithRect(v floatgeom.Rect2) Option { _ = "STUB: not implemented"; return *new(Option) }
 
-func WithOffset(p floatgeom.Point2) Option {
-	return func(g Generator) Generator {
-		g.Position = g.Position.Add(p)
-		return g
-	}
-}
+func WithOffset(p floatgeom.Point2) Option { _ = "STUB: not implemented"; return *new(Option) }
 
 var defaultGenerator = Generator{
 	Dimensions: floatgeom.Point2{1, 1},
@@ -99,190 +70,60 @@ type Entity struct {
 	Children []*Entity
 }
 
-func (e Entity) CID() event.CallerID {
-	return e.CallerID.CID()
-}
+func (e Entity) CID() event.CallerID { _ = "STUB: not implemented"; return *new(event.CallerID) }
 
-func (e Entity) X() float64 {
-	return e.Rect.Min.X()
-}
-func (e Entity) Y() float64 {
-	return e.Rect.Min.Y()
-}
-func (e Entity) W() float64 {
-	return e.Rect.W()
-}
-func (e Entity) H() float64 {
-	return e.Rect.H()
-}
-func (e Entity) Top() float64 {
-	return e.Y()
-}
-func (e Entity) Bottom() float64 {
-	return e.Y() + e.H()
-}
-func (e Entity) Left() float64 {
-	return e.X()
-}
-func (e Entity) Right() float64 {
-	return e.X() + e.W()
-}
+func (e Entity) X() float64 { _ = "STUB: not implemented"; return 0 }
 
-func (e *Entity) ShiftDelta() {
-	e.Shift(e.Delta)
-}
+func (e Entity) Y() float64 { _ = "STUB: not implemented"; return 0 }
+
+func (e Entity) W() float64 { _ = "STUB: not implemented"; return 0 }
+
+func (e Entity) H() float64 { _ = "STUB: not implemented"; return 0 }
+
+func (e Entity) Top() float64 { _ = "STUB: not implemented"; return 0 }
+
+func (e Entity) Bottom() float64 { _ = "STUB: not implemented"; return 0 }
+
+func (e Entity) Left() float64 { _ = "STUB: not implemented"; return 0 }
+
+func (e Entity) Right() float64 { _ = "STUB: not implemented"; return 0 }
+
+func (e *Entity) ShiftDelta() { _ = "STUB: not implemented"; return }
 
 func (e *Entity) Shift(delta floatgeom.Point2) {
+	_ = "STUB: not implemented"
 	// TODO: attachment?
 	// TODO: helper
-	e.Renderable.ShiftX(delta.X())
-	e.Renderable.ShiftY(delta.Y())
-	e.Rect = e.Rect.Shift(delta)
-	if e.Tree != nil {
-		e.Tree.UpdateSpace(
-			e.X(), e.Y(), e.W(), e.H(), e.Space,
-		)
-	}
-	for _, c := range e.Children {
-		c.Shift(delta)
-	}
+	return
 }
 
-func (e *Entity) SetX(x float64) {
-	e.ShiftX(x - e.X())
-}
+func (e *Entity) SetX(x float64) { _ = "STUB: not implemented"; return }
 
-func (e *Entity) SetY(y float64) {
-	e.ShiftY(y - e.Y())
-}
+func (e *Entity) SetY(y float64) { _ = "STUB: not implemented"; return }
 
-func (e *Entity) ShiftX(x float64) {
-	e.Renderable.ShiftX(x)
-	e.Rect = e.Rect.Shift(floatgeom.Point2{x, 0})
-	if e.Tree != nil {
-		e.Tree.UpdateSpace(
-			e.X(), e.Y(), e.W(), e.H(), e.Space,
-		)
-	}
-	for _, c := range e.Children {
-		c.ShiftX(x)
-	}
-}
+func (e *Entity) ShiftX(x float64) { _ = "STUB: not implemented"; return }
 
-func (e *Entity) ShiftY(y float64) {
-	e.Renderable.ShiftY(y)
-	e.Rect = e.Rect.Shift(floatgeom.Point2{0, y})
-	if e.Tree != nil {
-		e.Tree.UpdateSpace(
-			e.X(), e.Y(), e.W(), e.H(), e.Space,
-		)
-	}
-	for _, c := range e.Children {
-		c.ShiftY(y)
-	}
-}
+func (e *Entity) ShiftY(y float64) { _ = "STUB: not implemented"; return }
 
-func (e *Entity) SetPos(p floatgeom.Point2) {
-	e.Shift(p.Sub(e.Rect.Min))
-}
+func (e *Entity) SetPos(p floatgeom.Point2) { _ = "STUB: not implemented"; return }
 
-func (e *Entity) ShiftPos(x, y float64) {
-	e.Shift(floatgeom.Point2{x, y})
-}
+func (e *Entity) ShiftPos(x, y float64) { _ = "STUB: not implemented"; return }
 
 func (e *Entity) HitLabel(label collision.Label) *collision.Space {
-	return e.Tree.HitLabel(e.Space, label)
+	_ = "STUB: not implemented"
+	return nil
 }
 
-func (e *Entity) Destroy() {
-	e.Renderable.Undraw()
-	e.Tree.Remove(e.Space)
-	e.ctx.UnbindAllFrom(e.CallerID)
-}
+func (e *Entity) Destroy() { _ = "STUB: not implemented"; return }
 
 // SetMetadata sets the metadata for some key to some value. Empty value strings
 // will not be stored.
-func (e *Entity) SetMetadata(k, v string) {
-	if v == "" {
-		delete(e.metadata, k)
-	} else {
-		e.metadata[k] = v
-	}
-}
+func (e *Entity) SetMetadata(k, v string) { _ = "STUB: not implemented"; return }
 
 // Metadata accesses the value, and whether it existed, for a given metadata key
 func (e *Entity) Metadata(k string) (v string, ok bool) {
-	v, ok = e.metadata[k]
-	return v, ok
+	_ = "STUB: not implemented"
+	return "", false
 }
 
-func New(ctx *scene.Context, opts ...Option) *Entity {
-	g := defaultGenerator
-	for _, o := range opts {
-		g = o(g)
-	}
-
-	children := make([]*Entity, len(g.Children)+len(g.ExplicitChildren))
-	for i, childOpts := range g.Children {
-		childOpts = append(childOpts, WithOffset(g.Position))
-		children[i] = New(ctx, childOpts...)
-	}
-	for i, explicitChild := range g.ExplicitChildren {
-		child := explicitChild
-		child.ShiftPos(g.Position.X(), g.Position.Y())
-		children[i+len(g.Children)] = child
-	}
-
-	e := &Entity{
-		ctx: ctx,
-		Rect: floatgeom.NewRect2WH(
-			g.Position[0],
-			g.Position[1],
-			g.Dimensions[0],
-			g.Dimensions[1],
-		),
-		Renderable: g.Renderable,
-		Speed:      g.Speed,
-		Children:   children,
-		metadata:   map[string]string{},
-	}
-
-	if g.Renderable == nil && g.Color != nil {
-		e.Renderable = render.NewColorBox(int(e.W()), int(e.H()), g.Color)
-	}
-
-	if m, isMod := e.Renderable.(render.Modifiable); g.Mod != nil && isMod {
-		e.Renderable = m.Modify(g.Mod)
-	}
-	if e.Renderable != nil {
-		e.Renderable.SetPos(e.X(), e.Y())
-	}
-
-	if g.Parent == nil {
-		cid := ctx.CallerMap.Register(e)
-		e.CallerID = cid
-	} else {
-		e.CallerID = g.Parent.CID()
-		if e.CallerID == 0 {
-			dlog.Error("entity created with uninitialized parent caller ID")
-		}
-	}
-
-	if !g.WithoutCollision {
-		e.Tree = ctx.CollisionTree
-		if g.UseMouseTree {
-			e.Tree = ctx.MouseTree
-		}
-		e.Space = collision.NewSpace(
-			e.X(), e.Y(), e.W(), e.H(), e.CallerID,
-		)
-		e.Space.Label = g.Label
-		e.Tree.Add(e.Space)
-	}
-
-	if len(g.DrawLayers) != 0 && e.Renderable != nil {
-		ctx.Draw(e.Renderable, g.DrawLayers...)
-	}
-
-	return e
-}
+func New(ctx *scene.Context, opts ...Option) *Entity { _ = "STUB: not implemented"; return nil }

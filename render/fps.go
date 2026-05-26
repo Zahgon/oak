@@ -3,8 +3,6 @@ package render
 import (
 	"image/draw"
 	"time"
-
-	"github.com/oakmound/oak/v4/timing"
 )
 
 const (
@@ -30,25 +28,9 @@ type DrawFPS struct {
 // If font is not provided, DefaultFont is used. If smoothing is 0, a reasonable
 // default will be used.
 func NewDrawFPS(smoothing float64, font *Font, x, y float64) *DrawFPS {
-	if smoothing == 0.0 {
-		smoothing = defaultFpsSmoothing
-	}
-	if font == nil {
-		font = DefaultFont().Copy()
-	}
-	df := &DrawFPS{
-		Smoothing: smoothing,
-		lastTime:  time.Now(),
-	}
-	df.Text = font.NewIntText(&df.fps, x, y)
-
-	return df
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Draw renders a DrawFPS to a buffer.
-func (df *DrawFPS) Draw(buff draw.Image, xOff, yOff float64) {
-	t := time.Now()
-	df.fps = int((timing.FPS(df.lastTime, t) * df.Smoothing) + (float64(df.fps) * (1 - df.Smoothing)))
-	df.lastTime = t
-	df.Text.Draw(buff, xOff, yOff)
-}
+func (df *DrawFPS) Draw(buff draw.Image, xOff, yOff float64) { _ = "STUB: not implemented"; return }

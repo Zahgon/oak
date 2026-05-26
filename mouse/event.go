@@ -31,20 +31,12 @@ type Event struct {
 
 // NewEvent creates an event.
 func NewEvent(x, y float64, button Button, ev event.EventID[*Event]) Event {
-	return Event{
-		Point2:    floatgeom.Point2{x, y},
-		Button:    button,
-		EventType: ev,
-	}
+	_ = "STUB: not implemented"
+	return *new(Event)
 }
 
 // ToSpace converts a mouse event into a collision space
-func (e Event) ToSpace() *collision.Space {
-	sp := collision.NewUnassignedSpace(e.X(), e.Y(), 0.1, 0.1)
-	sp.Location.Max[2] = MaxZLayer
-	sp.Location.Min[2] = MinZLayer
-	return sp
-}
+func (e Event) ToSpace() *collision.Space { _ = "STUB: not implemented"; return nil }
 
 // Min and Max Z layer inform what range of z layer values will be checked
 // on mouse collision interactions. Mouse events will not propagate to

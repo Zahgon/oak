@@ -1,8 +1,6 @@
 package collision
 
 import (
-	"errors"
-
 	"github.com/oakmound/oak/v4/event"
 	"github.com/oakmound/oak/v4/physics"
 )
@@ -22,13 +20,9 @@ type AttachSpace struct {
 	binding    event.Binding
 }
 
-func (as *AttachSpace) getAttachSpace() *AttachSpace {
-	return as
-}
+func (as *AttachSpace) getAttachSpace() *AttachSpace { _ = "STUB: not implemented"; return nil }
 
-func (as *AttachSpace) CID() event.CallerID {
-	return (*as.aSpace).CID
-}
+func (as *AttachSpace) CID() event.CallerID { _ = "STUB: not implemented"; return *new(event.CallerID) }
 
 var _ attachSpace = &AttachSpace{}
 
@@ -39,52 +33,22 @@ type attachSpace interface {
 
 // Attach attaches v to the given space with optional x,y offsets. See AttachSpace.
 func Attach(v physics.Vector, s *Space, tree *Tree, offsets ...float64) error {
-	return AttachWithBus(v, s, tree, event.DefaultBus, offsets...)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 func AttachWithBus(v physics.Vector, s *Space, tree *Tree, bus event.Handler, offsets ...float64) error {
-	en := bus.GetCallerMap().GetEntity(s.CID)
-	if t, ok := en.(attachSpace); ok {
-		as := t.getAttachSpace()
-		as.aSpace = &s
-		as.follow = v
-		as.tree = tree
-		if as.tree == nil {
-			as.tree = DefaultTree
-		}
-		as.binding = event.Bind(bus, event.Enter, t, attachSpaceEnter)
-		if len(offsets) > 0 {
-			as.offX = offsets[0]
-			if len(offsets) > 1 {
-				as.offY = offsets[1]
-			}
-		}
-		return nil
-	}
-	return errors.New("this space's entity is not composed of AttachSpace")
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Detach removes the attachSpaceEnter binding from an entity composed with
 // AttachSpace
-func Detach(s *Space) error {
-	return DetachWithBus(s, event.DefaultBus)
-}
+func Detach(s *Space) error { _ = "STUB: not implemented"; return nil }
 
-func DetachWithBus(s *Space, bus event.Handler) error {
-	en := bus.GetCallerMap().GetEntity(s.CID)
-	if as, ok := en.(attachSpace); ok {
-		as.getAttachSpace().binding.Unbind()
-		return nil
-	}
-	return errors.New("this space's entity is not composed of AttachSpace")
-}
+func DetachWithBus(s *Space, bus event.Handler) error { _ = "STUB: not implemented"; return nil }
 
 func attachSpaceEnter(asIface attachSpace, _ event.EnterPayload) event.Response {
-	as := asIface.(attachSpace).getAttachSpace()
-	x, y := as.follow.X()+as.offX, as.follow.Y()+as.offY
-	if x != (*as.aSpace).X() ||
-		y != (*as.aSpace).Y() {
-		as.tree.UpdateSpace(x, y, (*as.aSpace).GetW(), (*as.aSpace).GetH(), *as.aSpace)
-	}
-	return 0
+	_ = "STUB: not implemented"
+	return *new(event.Response)
 }

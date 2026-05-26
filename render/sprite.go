@@ -15,105 +15,78 @@ type Sprite struct {
 }
 
 // NewEmptySprite returns a sprite of the given dimensions with a blank RGBA
-func NewEmptySprite(x, y float64, w, h int) *Sprite {
-	r := image.NewRGBA(image.Rect(0, 0, w, h))
-	return NewSprite(x, y, r)
-}
+func NewEmptySprite(x, y float64, w, h int) *Sprite { _ = "STUB: not implemented"; return nil }
 
 // NewSprite creates a new sprite
-func NewSprite(x, y float64, r *image.RGBA) *Sprite {
-	return &Sprite{
-		LayeredPoint: NewLayeredPoint(x, y, 0),
-		r:            r,
-	}
-}
+func NewSprite(x, y float64, r *image.RGBA) *Sprite { _ = "STUB: not implemented"; return nil }
 
 // GetRGBA returns the rgba behind this sprite
 func (s *Sprite) GetRGBA() *image.RGBA {
-	return s.r
+	_ = "STUB: not implemented"
+
+	// GetDims returns the dimensions of this sprite, or if this sprite has no
+	// defined RGBA returns default values.
+	return nil
 }
 
-// GetDims returns the dimensions of this sprite, or if this sprite has no
-// defined RGBA returns default values.
-func (s *Sprite) GetDims() (int, int) {
-	if s.r == nil {
-		return 1, 1
-	}
-	bds := s.r.Bounds()
-	return bds.Max.X, bds.Max.Y
-}
+func (s *Sprite) GetDims() (int, int) { _ = "STUB: not implemented"; return 0, 0 }
 
 // SetRGBA will replace the rgba behind this sprite
 func (s *Sprite) SetRGBA(r *image.RGBA) {
-	s.r = r
+	_ = "STUB: not implemented"
+
+	// Bounds is an alternative to GetDims that alows a sprite
+	// to satisfy draw.Image.
+	return
 }
 
-// Bounds is an alternative to GetDims that alows a sprite
-// to satisfy draw.Image.
 func (s *Sprite) Bounds() image.Rectangle {
-	return s.r.Bounds()
+	_ = "STUB: not implemented"
+	return *
+
+	// ColorModel allows sprites to satisfy draw.Image. Returns
+	// color.RGBAModel.
+	new(image.Rectangle)
 }
 
-// ColorModel allows sprites to satisfy draw.Image. Returns
-// color.RGBAModel.
 func (s *Sprite) ColorModel() color.Model {
-	return s.r.ColorModel()
+	_ = "STUB: not implemented"
+	return *
+
+	// At returns the color of a given pixel location
+	new(color.Model)
 }
 
-// At returns the color of a given pixel location
 func (s *Sprite) At(x, y int) color.Color {
-	return s.r.At(x, y)
+	_ = "STUB: not implemented"
+	return *
+
+	// Set sets a color of a given pixel location
+	new(color.Color)
 }
 
-// Set sets a color of a given pixel location
 func (s *Sprite) Set(x, y int, c color.Color) {
-	s.r.Set(x, y, c)
+	_ = "STUB: not implemented"
+
+	// Draw draws this sprite at +xOff, +yOff
+	return
 }
 
-// Draw draws this sprite at +xOff, +yOff
-func (s *Sprite) Draw(buff draw.Image, xOff, yOff float64) {
-	DrawImage(buff, s.r, int(s.X()+xOff), int(s.Y()+yOff))
-}
+func (s *Sprite) Draw(buff draw.Image, xOff, yOff float64) { _ = "STUB: not implemented"; return }
 
 // Copy returns a copy of this Sprite
-func (s *Sprite) Copy() Modifiable {
-	newS := new(Sprite)
-	if s.r != nil {
-		newS.r = rgbaCopy(s.r)
-	}
-	newS.LayeredPoint = s.LayeredPoint.Copy()
-	return newS
-}
+func (s *Sprite) Copy() Modifiable { _ = "STUB: not implemented"; return *new(Modifiable) }
 
-func rgbaCopy(r *image.RGBA) *image.RGBA {
-	newRgba := new(image.RGBA)
-	newRgba.Rect = r.Rect
-	newRgba.Stride = r.Stride
-	newRgba.Pix = make([]uint8, len(r.Pix))
-	copy(newRgba.Pix, r.Pix)
-	return newRgba
-}
+func rgbaCopy(r *image.RGBA) *image.RGBA { _ = "STUB: not implemented"; return nil }
 
 // Modify takes in modifications (modify.go) and alters this sprite accordingly
 func (s *Sprite) Modify(ms ...mod.Mod) Modifiable {
-	for _, m := range ms {
-		s.r = m(s.GetRGBA())
-	}
-	return s
+	_ = "STUB: not implemented"
+	return *new(Modifiable)
 }
 
 // Filter filters this sprite's rgba on all the input filters
-func (s *Sprite) Filter(fs ...mod.Filter) {
-	for _, f := range fs {
-		f(s.r)
-	}
-}
+func (s *Sprite) Filter(fs ...mod.Filter) { _ = "STUB: not implemented"; return }
 
 // OverlaySprites combines sprites together through masking to form a single sprite
-func OverlaySprites(sps []*Sprite) *Sprite {
-	tmpSprite := sps[len(sps)-1].Copy().(*Sprite)
-	for i := len(sps) - 1; i > 0; i-- {
-		mod.FillMask(*sps[i-1].GetRGBA())(tmpSprite.GetRGBA())
-	}
-	return tmpSprite
-}
+func OverlaySprites(sps []*Sprite) *Sprite { _ = "STUB: not implemented"; return nil }

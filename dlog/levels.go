@@ -1,11 +1,5 @@
 package dlog
 
-import (
-	"strings"
-
-	"github.com/oakmound/oak/v4/oakerr"
-)
-
 // Level represents the levels a debug message can have
 type Level int
 
@@ -24,23 +18,10 @@ var logLevels = map[Level]string{
 	VERBOSE: "VERBOSE",
 }
 
-func (l Level) String() string {
-	return logLevels[l]
-}
+func (l Level) String() string { _ = "STUB: not implemented"; return "" }
 
 // ParseDebugLevel parses the input string as a known debug levels
 func ParseDebugLevel(level string) (Level, error) {
-	level = strings.ToUpper(level)
-	switch level {
-	case "INFO":
-		return INFO, nil
-	case "VERBOSE":
-		return VERBOSE, nil
-	case "ERROR":
-		return ERROR, nil
-	case "NONE":
-		return NONE, nil
-	default:
-		return ERROR, oakerr.InvalidInput{InputName: "level"}
-	}
+	_ = "STUB: not implemented"
+	return *new(Level), nil
 }

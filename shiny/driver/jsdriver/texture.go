@@ -17,17 +17,20 @@ type textureImpl struct {
 	rgba   *image.RGBA
 }
 
-func (ti *textureImpl) Size() image.Point {
-	return ti.size
-}
+func (ti *textureImpl) Size() image.Point { _ = "STUB: not implemented"; return *new(image.Point) }
 
 func (ti *textureImpl) Bounds() image.Rectangle {
-	return image.Rect(0, 0, ti.size.X, ti.size.Y)
+	_ = "STUB: not implemented"
+	return *new(image.Rectangle)
 }
 
 func (ti *textureImpl) Upload(dp image.Point, src screen.Image, sr image.Rectangle) {
-	rgba := src.RGBA()
-	ti.rgba = rgba
+	_ = "STUB: not implemented"
+	return
 }
-func (*textureImpl) Fill(dr image.Rectangle, src color.Color, op draw.Op) {}
-func (*textureImpl) Release()                                             {}
+
+func (*textureImpl) Fill(dr image.Rectangle, src color.Color, op draw.Op) {
+	_ = "STUB: not implemented"
+	return
+}
+func (*textureImpl) Release() { _ = "STUB: not implemented"; return }

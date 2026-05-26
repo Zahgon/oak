@@ -18,21 +18,8 @@ import (
 // once the player enters them.
 
 func isOffScreen(ctx *scene.Context, char *entities.Entity) (intgeom.Dir2, bool) {
-	x := int(char.X())
-	y := int(char.Y())
-	if x > ctx.Window.Viewport().X()+ctx.Window.Bounds().X() {
-		return intgeom.Right, true
-	}
-	if y > ctx.Window.Viewport().Y()+ctx.Window.Bounds().Y() {
-		return intgeom.Down, true
-	}
-	if int(char.Right()) < ctx.Window.Viewport().X() {
-		return intgeom.Left, true
-	}
-	if int(char.Bottom()) < ctx.Window.Viewport().Y() {
-		return intgeom.Up, true
-	}
-	return intgeom.Dir2{}, false
+	_ = "STUB: not implemented"
+	return *new(intgeom.Dir2), false
 }
 
 const (

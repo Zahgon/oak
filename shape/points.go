@@ -9,27 +9,18 @@ import (
 type Points map[intgeom.Point2]struct{}
 
 // NewPoints creates a Points shape from any number of intgeom Points
-func NewPoints(ps ...intgeom.Point2) Shape {
-	points := make(map[intgeom.Point2]struct{}, len(ps))
-	for _, p := range ps {
-		points[p] = struct{}{}
-	}
-	return Points(points)
-}
+func NewPoints(ps ...intgeom.Point2) Shape { _ = "STUB: not implemented"; return *new(Shape) }
 
 // In returns whether the input x and y are a point in the point map
-func (p Points) In(x, y int, sizes ...int) bool {
-	_, ok := p[intgeom.Point2{x, y}]
-	return ok
-}
+func (p Points) In(x, y int, sizes ...int) bool { _ = "STUB: not implemented"; return false }
 
 // Outline returns the set of points along the point map's outline, if
 // one exists
 func (p Points) Outline(sizes ...int) ([]intgeom.Point2, error) {
-	return ToOutline(p)(sizes...)
+	_ = "STUB: not implemented"
+	return nil, nil
+
+	// Rect returns a 2D slice of booleans representing the output of the In function in that rectangle
 }
 
-// Rect returns a 2D slice of booleans representing the output of the In function in that rectangle
-func (p Points) Rect(sizes ...int) [][]bool {
-	return InToRect(p.In)(sizes...)
-}
+func (p Points) Rect(sizes ...int) [][]bool { _ = "STUB: not implemented"; return nil }

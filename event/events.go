@@ -1,7 +1,6 @@
 package event
 
 import (
-	"sync/atomic"
 	"time"
 )
 
@@ -19,12 +18,7 @@ var (
 
 // RegisterEvent returns a unique ID to associate an event with. EventIDs not created through RegisterEvent are
 // not valid for use in type-safe bindings.
-func RegisterEvent[T any]() EventID[T] {
-	id := atomic.AddInt64(&nextEventID, 1)
-	return EventID[T]{
-		UnsafeEventID: UnsafeEventID(id),
-	}
-}
+func RegisterEvent[T any]() EventID[T] { _ = "STUB: not implemented"; return nil }
 
 // EnterPayload is the payload sent down to Enter bindings
 type EnterPayload struct {

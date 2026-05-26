@@ -15,57 +15,28 @@ type State struct {
 }
 
 // NewState creates a state object for tracking keyboard state.
-func NewState() State {
-	return State{
-		state:     make(map[Code]bool),
-		durations: make(map[Code]time.Time),
-	}
-}
+func NewState() State { _ = "STUB: not implemented"; return *new(State) }
 
 // SetUp will cause later IsDown calls to report false
 // for the given key. This is called internally when
 // events are sent from the real keyboard and mouse.
 // Calling this can interrupt real input or cause
 // unintended behavior and should be done cautiously.
-func (ks *State) SetUp(key Code) {
-	ks.stateLock.Lock()
-	ks.durationLock.Lock()
-	delete(ks.state, key)
-	delete(ks.durations, key)
-	ks.durationLock.Unlock()
-	ks.stateLock.Unlock()
-}
+func (ks *State) SetUp(key Code) { _ = "STUB: not implemented"; return }
 
 // SetDown will cause later IsDown calls to report true
 // for the given key. This is called internally when
 // events are sent from the real keyboard and mouse.
 // Calling this can interrupt real input or cause
 // unintended behavior and should be done cautiously.
-func (ks *State) SetDown(key Code) {
-	ks.stateLock.Lock()
-	ks.state[key] = true
-	ks.durations[key] = time.Now()
-	ks.stateLock.Unlock()
-}
+func (ks *State) SetDown(key Code) { _ = "STUB: not implemented"; return }
 
 // IsDown returns whether a key is held down
-func (ks *State) IsDown(key Code) (k bool) {
-	ks.stateLock.RLock()
-	k = ks.state[key]
-	ks.stateLock.RUnlock()
-	return
-}
+func (ks *State) IsDown(key Code) (k bool) { _ = "STUB: not implemented"; return false }
 
 // IsHeld returns whether a key is held down, and for how long
 // it has been held.
 func (ks *State) IsHeld(key Code) (k bool, d time.Duration) {
-	ks.stateLock.RLock()
-	k = ks.state[key]
-	ks.stateLock.RUnlock()
-	if k {
-		ks.durationLock.RLock()
-		d = time.Since(ks.durations[key])
-		ks.durationLock.RUnlock()
-	}
-	return
+	_ = "STUB: not implemented"
+	return false, *new(time.Duration)
 }

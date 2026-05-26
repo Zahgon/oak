@@ -3,7 +3,6 @@ package particle
 import (
 	"image/color"
 
-	"github.com/oakmound/oak/v4/alg"
 	"github.com/oakmound/oak/v4/shape"
 
 	"github.com/oakmound/oak/v4/alg/span"
@@ -24,67 +23,40 @@ type ColorGenerator struct {
 
 // NewColorGenerator returns a new color generator with some applied options.
 func NewColorGenerator(options ...func(Generator)) Generator {
-	g := new(ColorGenerator)
-	g.setDefaults()
-
-	for _, opt := range options {
-		opt(g)
-	}
-
-	return g
+	_ = "STUB: not implemented"
+	return *new(Generator)
 }
 
-func (cg *ColorGenerator) setDefaults() {
-	cg.BaseGenerator.setDefaults()
-	cg.StartColor = color.RGBA{0, 0, 0, 0}
-	cg.StartColorRand = color.RGBA{0, 0, 0, 0}
-	cg.EndColor = color.RGBA{0, 0, 0, 0}
-	cg.EndColorRand = color.RGBA{0, 0, 0, 0}
-	cg.Size = span.NewConstant(1)
-	cg.EndSize = span.NewConstant(1)
-	cg.Shape = shape.Square
-}
+func (cg *ColorGenerator) setDefaults() { _ = "STUB: not implemented"; return }
 
 // Generate creates a source using this generator
 func (cg *ColorGenerator) Generate(layer int) *Source {
+	_ = "STUB: not implemented"
 	// Convert rotation from degrees to radians
-	if cg.Rotation != nil {
-		cg.Rotation = cg.Rotation.MulSpan(alg.DegToRad)
-	}
-	return NewDefaultSource(cg, layer)
+	return nil
 }
 
 // GenerateParticle creates a particle from a generator
 func (cg *ColorGenerator) GenerateParticle(bp *baseParticle) Particle {
-	return &ColorParticle{
-		baseParticle: bp,
-		startColor:   randColor(cg.StartColor, cg.StartColorRand),
-		endColor:     randColor(cg.EndColor, cg.EndColorRand),
-		size:         float64(cg.Size.Poll()),
-		endSize:      float64(cg.EndSize.Poll()),
-	}
+	_ = "STUB: not implemented"
+	return *new(Particle)
 }
 
 // GetParticleSize on a color generator returns that the particles
 // are per-particle specifically sized
 func (cg *ColorGenerator) GetParticleSize() (w float64, h float64, perParticle bool) {
-	return 0, 0, true
-}
+	_ = "STUB: not implemented"
 
-// Coloration
-//
+	// Coloration
+	//
+	return 0, 0, false
+}
 
 // SetStartColor lets cg have its color be set
-func (cg *ColorGenerator) SetStartColor(sc, scr color.Color) {
-	cg.StartColor = sc
-	cg.StartColorRand = scr
-}
+func (cg *ColorGenerator) SetStartColor(sc, scr color.Color) { _ = "STUB: not implemented"; return }
 
 // SetEndColor lets cg have its end color be set
-func (cg *ColorGenerator) SetEndColor(ec, ecr color.Color) {
-	cg.EndColor = ec
-	cg.EndColorRand = ecr
-}
+func (cg *ColorGenerator) SetEndColor(ec, ecr color.Color) { _ = "STUB: not implemented"; return }
 
 //
 // Sizing
@@ -97,38 +69,25 @@ type Sizeable interface {
 }
 
 // Size is an option to set a Sizeable size
-func Size(i span.Span[int]) func(Generator) {
-	return func(g Generator) {
-		if g2, ok := g.(Sizeable); ok {
-			g2.SetSize(i)
-		}
-	}
-}
+func Size(i span.Span[int]) func(Generator) { _ = "STUB: not implemented"; return nil }
 
 // EndSize sets the end size of a Sizeable
-func EndSize(i span.Span[int]) func(Generator) {
-	return func(g Generator) {
-		if g2, ok := g.(Sizeable); ok {
-			g2.SetEndSize(i)
-		}
-	}
-}
+func EndSize(i span.Span[int]) func(Generator) { _ = "STUB: not implemented"; return nil }
 
 // SetSize satisfies Sizeable
 func (cg *ColorGenerator) SetSize(i span.Span[int]) {
-	cg.Size = i
+	_ = "STUB: not implemented"
+
+	// SetEndSize stasfies Sizeable
+	return
 }
 
-// SetEndSize stasfies Sizeable
 func (cg *ColorGenerator) SetEndSize(i span.Span[int]) {
-	cg.EndSize = i
-}
+	_ = "STUB: not implemented"
 
-//
-// Shaping
-//
+	// Shaping
+	return
+}
 
 // SetShape satisfies Shapeable
-func (cg *ColorGenerator) SetShape(sf shape.Shape) {
-	cg.Shape = sf
-}
+func (cg *ColorGenerator) SetShape(sf shape.Shape) { _ = "STUB: not implemented"; return }

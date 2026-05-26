@@ -4,17 +4,11 @@ package audio
 
 import (
 	"github.com/oakmound/oak/v4/audio/pcm"
-	"github.com/oakmound/oak/v4/oakerr"
 )
 
-func initOS(driver Driver) error {
-	return oakerr.UnsupportedPlatform{
-		Operation: "pcm.Init",
-	}
-}
+func initOS(driver Driver) error { _ = "STUB: not implemented"; return nil }
 
 func newWriter(f pcm.Format) (pcm.Writer, error) {
-	return nil, oakerr.UnsupportedPlatform{
-		Operation: "pcm.NewWriter",
-	}
+	_ = "STUB: not implemented"
+	return *new(pcm.Writer), nil
 }

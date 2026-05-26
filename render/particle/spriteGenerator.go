@@ -3,7 +3,6 @@ package particle
 import (
 	"github.com/oakmound/oak/v4/alg/span"
 
-	"github.com/oakmound/oak/v4/alg"
 	"github.com/oakmound/oak/v4/render"
 )
 
@@ -16,36 +15,23 @@ type SpriteGenerator struct {
 
 // NewSpriteGenerator creates a SpriteGenerator
 func NewSpriteGenerator(options ...func(Generator)) Generator {
-	g := new(SpriteGenerator)
-	g.setDefaults()
-
-	for _, opt := range options {
-		opt(g)
-	}
-
-	return g
+	_ = "STUB: not implemented"
+	return *new(Generator)
 }
 
-func (sg *SpriteGenerator) setDefaults() {
-	sg.BaseGenerator.setDefaults()
-	sg.SpriteRotation = span.NewConstant(0.0)
-}
+func (sg *SpriteGenerator) setDefaults() { _ = "STUB: not implemented"; return }
 
 // Generate creates a source using this generator
 func (sg *SpriteGenerator) Generate(layer int) *Source {
+	_ = "STUB: not implemented"
 	// Convert rotation from degrees to radians
-	if sg.Rotation != nil {
-		sg.Rotation = sg.Rotation.MulSpan(alg.DegToRad)
-	}
-	return NewDefaultSource(sg, layer)
+	return nil
 }
 
 // GenerateParticle creates a particle from a generator
 func (sg *SpriteGenerator) GenerateParticle(bp *baseParticle) Particle {
-	return &SpriteParticle{
-		baseParticle: bp,
-		rotation:     float32(sg.SpriteRotation.Poll()),
-	}
+	_ = "STUB: not implemented"
+	return *new(Particle)
 }
 
 // A Sprited can have a sprite set to it
@@ -55,32 +41,28 @@ type Sprited interface {
 }
 
 // Sprite sets a Sprited's sprite
-func Sprite(s *render.Sprite) func(Generator) {
-	return func(g Generator) {
-		g.(Sprited).SetSprite(s)
-	}
-}
+func Sprite(s *render.Sprite) func(Generator) { _ = "STUB: not implemented"; return nil }
 
 // SetSprite is the function on a sprite generator that satisfies
 // Sprited
 func (sg *SpriteGenerator) SetSprite(s *render.Sprite) {
-	sg.Base = s
+	_ = "STUB: not implemented"
+
+	// SpriteRotation sets a Sprited's rotation
+	return
 }
 
-// SpriteRotation sets a Sprited's rotation
-func SpriteRotation(f span.Span[float64]) func(Generator) {
-	return func(g Generator) {
-		g.(Sprited).SetSpriteRotation(f)
-	}
-}
+func SpriteRotation(f span.Span[float64]) func(Generator) { _ = "STUB: not implemented"; return nil }
 
 // SetSpriteRotation satisfied Sprited for SpriteGenerators
 func (sg *SpriteGenerator) SetSpriteRotation(f span.Span[float64]) {
-	sg.SpriteRotation = f
+	_ = "STUB: not implemented"
+	return
+
+	// GetParticleSize returns the size of the sprite that the generator generates
 }
 
-// GetParticleSize returns the size of the sprite that the generator generates
 func (sg *SpriteGenerator) GetParticleSize() (w float64, h float64, perParticle bool) {
-	bounds := sg.Base.GetRGBA().Rect.Max
-	return float64(bounds.X), float64(bounds.Y), false
+	_ = "STUB: not implemented"
+	return 0, 0, false
 }

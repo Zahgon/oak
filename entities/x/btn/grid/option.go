@@ -1,7 +1,6 @@
 package grid
 
 import (
-	"github.com/oakmound/oak/v4/dlog"
 	"github.com/oakmound/oak/v4/entities/x/btn"
 )
 
@@ -12,12 +11,7 @@ type Option func(Generator) Generator
 // button at x,y coordinates on this grid. This should
 // not be used with Width and Height. Options set here act
 // like And() when used with Defaults.
-func Content(content [][]btn.Option) Option {
-	return func(g Generator) Generator {
-		g.Content = content
-		return g
-	}
-}
+func Content(content [][]btn.Option) Option { _ = "STUB: not implemented"; return *new(Option) }
 
 // ContentAt sets the button uption to create for a button
 // at a given x,y coordinate on this grid. If the grid has
@@ -28,87 +22,22 @@ func Content(content [][]btn.Option) Option {
 // no effect.
 // ContentAt will overwrite options set by Content. It acts
 // like And() when used with Defaults.
-func ContentAt(x, y int, opts ...btn.Option) Option {
-	return func(g Generator) Generator {
-		opt := btn.And(opts...)
-		if x < 0 {
-			dlog.Error("ContentAt option created with <0 x")
-			return g
-		}
-		if y < 0 {
-			dlog.Error("ContentAt option created with <0 y")
-			return g
-		}
-		if len(g.Content) <= x {
-			delta := (len(g.Content) - x) + 1
-			for i := 0; i < delta; i++ {
-				g.Content = append(g.Content, make([]btn.Option, 0))
-			}
-		}
-		if len(g.Content[x]) <= y {
-			delta := (len(g.Content[x]) - y) + 1
-			newOpts := make([]btn.Option, delta)
-			g.Content[x] = append(g.Content[x], newOpts...)
-		}
-		g.Content[x][y] = opt
-		return g
-	}
-}
+func ContentAt(x, y int, opts ...btn.Option) Option { _ = "STUB: not implemented"; return *new(Option) }
 
 // Height sets the number of buttons vertically that this grid will make.
-func Height(h int) Option {
-	return func(g Generator) Generator {
-		for x := 0; x < len(g.Content); x++ {
-			if len(g.Content[x]) <= h {
-				delta := (len(g.Content[x]) - h) + 1
-				opts := make([]btn.Option, delta)
-				g.Content[x] = append(g.Content[x], opts...)
-			}
-		}
-		return g
-	}
-}
+func Height(h int) Option { _ = "STUB: not implemented"; return *new(Option) }
 
 // Width sets the number of buttons horizontally that this grid will make.
-func Width(w int) Option {
-	return func(g Generator) Generator {
-		if len(g.Content) <= w {
-			delta := (len(g.Content) - w) + 1
-			height := 1
-			if len(g.Content) > 0 {
-				height = len(g.Content[0])
-			}
-			for i := 0; i < delta; i++ {
-				g.Content = append(g.Content, make([]btn.Option, height))
-			}
-		}
-		return g
-	}
-}
+func Width(w int) Option { _ = "STUB: not implemented"; return *new(Option) }
 
 // Defaults sets the starting option used to create buttons in this grid.
-func Defaults(defaults btn.Option) Option {
-	return func(g Generator) Generator {
-		g.Defaults = defaults
-		return g
-	}
-}
+func Defaults(defaults btn.Option) Option { _ = "STUB: not implemented"; return *new(Option) }
 
 // YGap sets the gap between buttons vertically on this grid.
-func YGap(gap float64) Option {
-	return func(g Generator) Generator {
-		g.YGap = gap
-		return g
-	}
-}
+func YGap(gap float64) Option { _ = "STUB: not implemented"; return *new(Option) }
 
 // XGap sets the gap between buttons horizontally on this grid.
-func XGap(gap float64) Option {
-	return func(g Generator) Generator {
-		g.XGap = gap
-		return g
-	}
-}
+func XGap(gap float64) Option { _ = "STUB: not implemented"; return *new(Option) }
 
 // Todo: combine grids?
 // So could have a grid of color definitions,

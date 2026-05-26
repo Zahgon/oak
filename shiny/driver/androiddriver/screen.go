@@ -13,7 +13,6 @@ import (
 	"golang.org/x/mobile/app"
 	"golang.org/x/mobile/event/size"
 	"golang.org/x/mobile/exp/gl/glutil"
-	"golang.org/x/mobile/geom"
 	"golang.org/x/mobile/gl"
 )
 
@@ -32,39 +31,31 @@ type Screen struct {
 }
 
 func (s *Screen) NewImage(size image.Point) (screen.Image, error) {
-	img := &imageImpl{
-		screen: s,
-		size:   size,
-		img:    s.images.NewImage(size.X, size.Y),
-	}
-	s.activeImages = append(s.activeImages, img)
-	return img, nil
+	_ = "STUB: not implemented"
+	return *new(screen.Image), nil
 }
 
 func (s *Screen) NewTexture(size image.Point) (screen.Texture, error) {
-	return NewTexture(s, size), nil
+	_ = "STUB: not implemented"
+	return *new(screen.Texture), nil
 }
 
 var _ screen.Window = &Screen{}
 
 func (s *Screen) NewWindow(opts screen.WindowGenerator) (screen.Window, error) {
+	_ = "STUB: not implemented"
 	// android does not support multiple windows
-	return s, nil
+	return *new(screen.Window), nil
 }
 
-func (w *Screen) Publish() {}
+func (w *Screen) Publish() { _ = "STUB: not implemented"; return }
 
-func (w *Screen) Release()                                                    {}
-func (w *Screen) Upload(dp image.Point, src screen.Image, sr image.Rectangle) {}
+func (w *Screen) Release() { _ = "STUB: not implemented"; return }
+func (w *Screen) Upload(dp image.Point, src screen.Image, sr image.Rectangle) {
+	_ = "STUB: not implemented"
+	return
+}
 func (w *Screen) Scale(dr image.Rectangle, src screen.Texture, sr image.Rectangle, op draw.Op) {
-	t := src.(*textureImpl)
-	t.img.img.Draw(
-		w.lastSz,
-		geom.Point{},
-		geom.Point{X: w.lastSz.WidthPt},
-		geom.Point{Y: w.lastSz.HeightPt},
-		t.img.Bounds(),
-	)
-	t.img.img.Upload()
-	w.app.Publish()
+	_ = "STUB: not implemented"
+	return
 }

@@ -2,7 +2,6 @@ package particle
 
 import (
 	"github.com/oakmound/oak/v4/collision"
-	"github.com/oakmound/oak/v4/event"
 )
 
 // A CollisionGenerator generates collision particles
@@ -14,63 +13,36 @@ type CollisionGenerator struct {
 
 // NewCollisionGenerator creates a new collision generator
 func NewCollisionGenerator(g Generator, options ...func(*CollisionGenerator)) Generator {
-	g2 := new(CollisionGenerator)
-	g2.setDefault()
-
-	g2.Generator = g
-
-	for _, opt := range options {
-		opt(g2)
-	}
-
-	return g2
+	_ = "STUB: not implemented"
+	return *new(Generator)
 }
 
-func (cg *CollisionGenerator) setDefault() {
-	cg.HitMap = make(map[collision.Label]collision.OnHit)
-}
+func (cg *CollisionGenerator) setDefault() { _ = "STUB: not implemented"; return }
 
 // Generate creates a source using this generator
-func (cg *CollisionGenerator) Generate(layer int) *Source {
-	ps := cg.Generator.Generate(layer)
-	ps.Generator = cg
-	return ps
-}
+func (cg *CollisionGenerator) Generate(layer int) *Source { _ = "STUB: not implemented"; return nil }
 
 // GenerateParticle creates a particle from a generator
 func (cg *CollisionGenerator) GenerateParticle(bp *baseParticle) Particle {
-	p := cg.Generator.GenerateParticle(bp)
-
-	w, h, dynamic := cg.Generator.GetParticleSize()
-	if dynamic {
-		iw, ih := p.GetDims()
-		w, h = float64(iw), float64(ih)
-	}
-	pos := p.GetPos()
-	return &CollisionParticle{
-		p,
-		collision.NewReactiveSpace(collision.NewFullSpace(pos.X(), pos.Y(), w, h, 0, event.CallerID(bp.pID)), cg.HitMap),
-	}
+	_ = "STUB: not implemented"
+	return *new(Particle)
 }
 
 // GetParticleSize on a CollisionGenerator tells the caller that the particle size
 // is per-particle specific
 func (cg *CollisionGenerator) GetParticleSize() (w float64, h float64, perParticle bool) {
-	return 0, 0, true
+	_ = "STUB: not implemented"
+
+	// Fragile sets whether the particles from this collisionGenerator are destroyed
+	// on contact
+	return 0, 0, false
 }
 
-// Fragile sets whether the particles from this collisionGenerator are destroyed
-// on contact
-func Fragile(f bool) func(*CollisionGenerator) {
-	return func(cg *CollisionGenerator) {
-		cg.Fragile = f
-	}
-}
+func Fragile(f bool) func(*CollisionGenerator) { _ = "STUB: not implemented"; return nil }
 
 // HitMap sets functions to be called when particles from this generator collide
 // with other spaces
 func HitMap(hm map[collision.Label]collision.OnHit) func(*CollisionGenerator) {
-	return func(cg *CollisionGenerator) {
-		cg.HitMap = hm
-	}
+	_ = "STUB: not implemented"
+	return nil
 }

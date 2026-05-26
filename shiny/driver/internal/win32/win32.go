@@ -11,14 +11,7 @@
 package win32
 
 import (
-	"errors"
-	"fmt"
-	"runtime"
-	"strconv"
 	"sync"
-	"sync/atomic"
-	"syscall"
-	"unsafe"
 
 	"github.com/oakmound/oak/v4/shiny/screen"
 	"golang.org/x/mobile/event/key"
@@ -26,7 +19,6 @@ import (
 	"golang.org/x/mobile/event/mouse"
 	"golang.org/x/mobile/event/paint"
 	"golang.org/x/mobile/event/size"
-	"golang.org/x/mobile/geom"
 )
 
 // screenHWND is the handle to the "Screen window".
@@ -57,82 +49,34 @@ type userWM struct {
 }
 
 // next id for the given userWM (which is a construct purely used to generate unique ids).
-func (m *userWM) next() uint32 {
-	m.Lock()
-	if m.id == 0 {
-		m.id = msgLast
-	}
-	r := m.id
-	m.id++
-	m.Unlock()
-	return r
-}
+func (m *userWM) next() uint32 { _ = "STUB: not implemented"; return 0 }
 
 // currentUserM gives a quick handle to globally mess with userWM.
 var currentUserWM userWM
 
 func newWindow(opts screen.WindowGenerator, class string) (HWND, error) {
-	wcname, err := syscall.UTF16PtrFromString(class)
-	if err != nil {
-		return 0, err
-	}
-	title, err := syscall.UTF16PtrFromString(opts.Title)
-	if err != nil {
-		return 0, err
-	}
-	style, exStyle := WindowsStyle(opts)
-	// This should be a feature, putting windows on the top layer
-	if opts.TopMost {
-		exStyle = exStyle | WS_EX_TOPMOST
-	}
-	hwnd, err := CreateWindowEx(exStyle,
-		wcname, title,
-		style,
-		_CW_USEDEFAULT, _CW_USEDEFAULT,
-		_CW_USEDEFAULT, _CW_USEDEFAULT,
-		0, 0, hThisInstance, 0)
-	if err != nil {
-		return 0, err
-	}
-
-	// This is interesting and we'll use it eventually
-	//SetWindowLongPtr(hwnd, GWL_STYLE, 0)
-	// TODO(andlabs): use proper nCmdShow
-	// TODO(andlabs): call UpdateWindow()
-
-	return hwnd, nil
+	_ = "STUB: not implemented"
+	return *new(HWND), nil
 }
+
+// This should be a feature, putting windows on the top layer
+
+// This is interesting and we'll use it eventually
+//SetWindowLongPtr(hwnd, GWL_STYLE, 0)
+// TODO(andlabs): use proper nCmdShow
+// TODO(andlabs): call UpdateWindow()
 
 // WindowsStyle converts a screen.BorderStyle into a style and
 // exStyle for a Windows window
 func WindowsStyle(gen screen.WindowGenerator) (uint32, uint32) {
-	return WS_OVERLAPPEDWINDOW, 0
+	_ = "STUB: not implemented"
+	return 0, 0
 }
 
 // ResizeClientRect makes hwnd client rectangle opts.Width by opts.Height in size.
 func ResizeClientRect(hwnd HWND, opts screen.WindowGenerator) error {
-	if opts.Width <= 0 || opts.Height <= 0 {
-		return errors.New("Invalid inputs to ResizeClientRect")
-	}
-	cr, err := GetClientRect(hwnd)
-	if err != nil {
-		return err
-	}
-	wr, err := GetWindowRect(hwnd)
-	if err != nil {
-		return err
-	}
-	w := (wr.Right - wr.Left) - (cr.Right - int32(opts.Width))
-	h := (wr.Bottom - wr.Top) - (cr.Bottom - int32(opts.Height))
-	x := wr.Left
-	if opts.X != 0 {
-		x = int32(opts.X)
-	}
-	y := wr.Top
-	if opts.Y != 0 {
-		y = int32(opts.Y)
-	}
-	return MoveWindow(hwnd, x, y, w, h, false)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Show shows a newly created window.
@@ -142,154 +86,58 @@ func ResizeClientRect(hwnd HWND, opts screen.WindowGenerator) error {
 // This is a separate step from NewWindow to give the driver a chance
 // to setup its internal state for a window before events start being
 // delivered.
-func Show(hwnd HWND) {
-	SendMessage(hwnd, msgShow, 0, 0)
-}
+func Show(hwnd HWND) { _ = "STUB: not implemented"; return }
 
 // Release sends the close message to the specified window.
 // https://docs.microsoft.com/en-us/windows/win32/winmsg/wm-close
-func Release(hwnd HWND) {
-	SendMessage(hwnd, WM_CLOSE, 0, 0)
-}
+func Release(hwnd HWND) { _ = "STUB: not implemented"; return }
 
 // sendFocus change to the specified window.
 // There is some value here but the panic is not safe for consumption.
 // Consider: wrapper func or rewrite.
 func sendFocus(hwnd HWND, uMsg uint32, wParam, lParam uintptr) (lResult uintptr) {
-	switch uMsg {
-	case _WM_SETFOCUS:
-		LifecycleEvent(hwnd, lifecycle.StageFocused)
-	case _WM_KILLFOCUS:
-		LifecycleEvent(hwnd, lifecycle.StageVisible)
-	default:
-		panic(fmt.Sprintf("unexpected focus message: %d", uMsg))
-	}
-	lResult, _ = DefWindowProc(hwnd, uMsg, wParam, lParam)
-	return lResult
+	_ = "STUB: not implemented"
+	return 0
 }
 
 func sendShow(hwnd HWND, uMsg uint32, wParam, lParam uintptr) (lResult uintptr) {
-	LifecycleEvent(hwnd, lifecycle.StageVisible)
-	ShowWindow(hwnd, _SW_SHOWDEFAULT)
-	sendSize(hwnd)
+	_ = "STUB: not implemented"
 	return 0
 }
 
 func sendSizeEvent(hwnd HWND, uMsg uint32, wParam, lParam uintptr) (lResult uintptr) {
-	wp := (*_WINDOWPOS)(unsafe.Pointer(lParam))
-	if wp.Flags&_SWP_NOSIZE != 0 {
-		return 0
-	}
-	sendSize(hwnd)
+	_ = "STUB: not implemented"
 	return 0
 }
 
-func sendSize(hwnd HWND) {
-	r, err := GetClientRect(hwnd)
-	if err != nil {
-		panic(err) // TODO(andlabs)
-	}
+func sendSize(hwnd HWND) { _ = "STUB: not implemented"; return }
 
-	width := int(r.Right - r.Left)
-	height := int(r.Bottom - r.Top)
+// TODO(andlabs)
 
-	// TODO(andlabs): don't assume that PixelsPerPt == 1
-	SizeEvent(hwnd, size.Event{
-		WidthPx:     width,
-		HeightPx:    height,
-		WidthPt:     geom.Pt(width),
-		HeightPt:    geom.Pt(height),
-		PixelsPerPt: 1,
-	})
-}
+// TODO(andlabs): don't assume that PixelsPerPt == 1
 
 func sendClose(hwnd HWND, uMsg uint32, wParam, lParam uintptr) (lResult uintptr) {
-	LifecycleEvent(hwnd, lifecycle.StageDead)
-	ptr, _ := DefWindowProc(hwnd, uMsg, wParam, lParam)
-	return ptr
+	_ = "STUB: not implemented"
+	return 0
 }
 
 func sendMouseEvent(hwnd HWND, uMsg uint32, wParam, lParam uintptr) (lResult uintptr) {
-	e := mouse.Event{
-		X:         float32(_GET_X_LPARAM(lParam)),
-		Y:         float32(_GET_Y_LPARAM(lParam)),
-		Modifiers: keyModifiers(),
-	}
-
-	switch uMsg {
-	case _WM_MOUSEMOVE:
-		e.Direction = mouse.DirNone
-	case _WM_LBUTTONDOWN, _WM_MBUTTONDOWN, _WM_RBUTTONDOWN:
-		e.Direction = mouse.DirPress
-	case _WM_LBUTTONUP, _WM_MBUTTONUP, _WM_RBUTTONUP:
-		e.Direction = mouse.DirRelease
-	case _WM_MOUSEWHEEL:
-		// TODO: On a trackpad, a scroll can be a drawn-out affair with a
-		// distinct beginning and end. Should the intermediate events be
-		// DirNone?
-		e.Direction = mouse.DirStep
-
-		x, y, _ := ScreenToClient(hwnd, int(e.X), int(e.Y))
-		e.X = float32(x)
-		e.Y = float32(y)
-	default:
-		panic("sendMouseEvent() called on non-mouse message")
-	}
-
-	switch uMsg {
-	case _WM_MOUSEMOVE:
-		// No-op.
-	case _WM_LBUTTONDOWN, _WM_LBUTTONUP:
-		e.Button = mouse.ButtonLeft
-	case _WM_MBUTTONDOWN, _WM_MBUTTONUP:
-		e.Button = mouse.ButtonMiddle
-	case _WM_RBUTTONDOWN, _WM_RBUTTONUP:
-		e.Button = mouse.ButtonRight
-	case _WM_MOUSEWHEEL:
-		// TODO: handle horizontal scrolling
-		delta := _GET_WHEEL_DELTA_WPARAM(wParam) / _WHEEL_DELTA
-		switch {
-		case delta > 0:
-			e.Button = mouse.ButtonWheelUp
-		case delta < 0:
-			e.Button = mouse.ButtonWheelDown
-			delta = -delta
-		default:
-			return
-		}
-		for delta > 0 {
-			MouseEvent(hwnd, e)
-			delta--
-		}
-		return
-	}
-
-	MouseEvent(hwnd, e)
-
+	_ = "STUB: not implemented"
 	return 0
 }
 
-// Precondition: this is called in immediate response to the message that triggered the event (so not after w.Send).
-func keyModifiers() (m key.Modifiers) {
-	down := func(x int32) bool {
-		// GetKeyState gets the key state at the time of the message, so this is what we want.
-		return _GetKeyState(x)&0x80 != 0
-	}
+// TODO: On a trackpad, a scroll can be a drawn-out affair with a
+// distinct beginning and end. Should the intermediate events be
+// DirNone?
 
-	if down(_VK_CONTROL) {
-		m |= key.ModControl
-	}
-	if down(_VK_MENU) {
-		m |= key.ModAlt
-	}
-	if down(_VK_SHIFT) {
-		m |= key.ModShift
-	}
-	if down(_VK_LWIN) || down(_VK_RWIN) {
-		m |= key.ModMeta
-	}
-	return m
-}
+// No-op.
+
+// TODO: handle horizontal scrolling
+
+// Precondition: this is called in immediate response to the message that triggered the event (so not after w.Send).
+func keyModifiers() (m key.Modifiers) { _ = "STUB: not implemented"; return *new(key.Modifiers) }
+
+// GetKeyState gets the key state at the time of the message, so this is what we want.
 
 var (
 	MouseEvent     func(hwnd HWND, e mouse.Event)
@@ -303,44 +151,20 @@ var (
 )
 
 func sendPaint(hwnd HWND, uMsg uint32, wParam, lParam uintptr) (lResult uintptr) {
-	PaintEvent(hwnd, paint.Event{})
-	lResult, _ = DefWindowProc(hwnd, uMsg, wParam, lParam)
-	return lResult
+	_ = "STUB: not implemented"
+	return 0
 }
 
 var screenMsgs = map[uint32]func(hwnd HWND, uMsg uint32, wParam, lParam uintptr) (lResult uintptr){}
 
 func AddScreenMsg(fn func(hwnd HWND, uMsg uint32, wParam, lParam uintptr)) uint32 {
-	uMsg := currentUserWM.next()
-	screenMsgs[uMsg] = func(hwnd HWND, uMsg uint32, wParam, lParam uintptr) uintptr {
-		fn(hwnd, uMsg, wParam, lParam)
-		return 0
-	}
-	return uMsg
+	_ = "STUB: not implemented"
+	return 0
 }
 
 func screenWindowWndProc(hwnd HWND, uMsg uint32, wParam uintptr, lParam uintptr) (lResult uintptr) {
-	switch uMsg {
-	case msgCreateWindow:
-		p := (*newWindowParams)(unsafe.Pointer(lParam))
-		p.w, p.err = newWindow(p.opts, p.class)
-	case msgQuit:
-		_PostQuitMessage(0)
-	}
-	callbacksLock.RLock()
-	if callback, ok := callbacks[uMsg]; ok {
-		go func() {
-			callback()
-			SendScreenMessage(hwnd, msgQuit, 0, 0)
-		}()
-	}
-	callbacksLock.RUnlock()
-	fn := screenMsgs[uMsg]
-	if fn != nil {
-		return fn(hwnd, uMsg, wParam, lParam)
-	}
-	lResult, _ = DefWindowProc(hwnd, uMsg, wParam, lParam)
-	return lResult
+	_ = "STUB: not implemented"
+	return 0
 }
 
 //go:uintptrescapes
@@ -348,7 +172,8 @@ func screenWindowWndProc(hwnd HWND, uMsg uint32, wParam uintptr, lParam uintptr)
 // SendScreenMessage is a perhaps poorly named wrapper for SendMessage where we know that lParam has a pointer in its call.
 // Ends up calling https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-sendmessagew so thats cool.
 func SendScreenMessage(screen HWND, uMsg uint32, wParam uintptr, lParam uintptr) (lResult uintptr) {
-	return SendMessage(screen, uMsg, wParam, lParam)
+	_ = "STUB: not implemented"
+	return 0
 }
 
 var windowMsgs = map[uint32]func(hwnd HWND, uMsg uint32, wParam, lParam uintptr) (lResult uintptr){
@@ -377,12 +202,8 @@ var windowMsgs = map[uint32]func(hwnd HWND, uMsg uint32, wParam, lParam uintptr)
 // AddWindowMsg stores a given window manipulator so it can be accessed via syscalls.
 // Stores a reference to the reference argument for the the given id.
 func AddWindowMsg(fn func(hwnd HWND, uMsg uint32, wParam, lParam uintptr)) uint32 {
-	uMsg := currentUserWM.next()
-	windowMsgs[uMsg] = func(hwnd HWND, uMsg uint32, wParam, lParam uintptr) uintptr {
-		fn(hwnd, uMsg, wParam, lParam)
-		return 0
-	}
-	return uMsg
+	_ = "STUB: not implemented"
+	return 0
 }
 
 // src: https://wiki.winehq.org/List_Of_Windows_Messages
@@ -407,14 +228,11 @@ func AddWindowMsg(fn func(hwnd HWND, uMsg uint32, wParam, lParam uintptr)) uint3
 // }
 
 func windowWndProc(hwnd HWND, uMsg uint32, wParam uintptr, lParam uintptr) (lResult uintptr) {
-	fn := windowMsgs[uMsg]
-	if fn != nil {
-		return fn(hwnd, uMsg, wParam, lParam)
-	}
-	//fmt.Printf("unused message %d, 0x%x, %v\n", uMsg, uMsg, unusedMessages[uMsg])
-	lResult, _ = DefWindowProc(hwnd, uMsg, wParam, lParam)
-	return lResult
+	_ = "STUB: not implemented"
+	return 0
 }
+
+//fmt.Printf("unused message %d, 0x%x, %v\n", uMsg, uMsg, unusedMessages[uMsg])
 
 type newWindowParams struct {
 	opts  screen.WindowGenerator
@@ -427,69 +245,15 @@ var nextWindow = new(int32)
 
 // NewWindow attempts to register a screen on the given handle.
 func NewWindow(screenHWND HWND, opts screen.WindowGenerator) (HWND, error) {
-	var p newWindowParams
-	p.opts = opts
-	p.class = "shiny_Window" + strconv.Itoa(int(atomic.AddInt32(nextWindow, 1)))
-	err := initWindowClass(p.class)
-	if err != nil {
-		return 0, fmt.Errorf("failed to register window: %w", err)
-	}
-
-	SendScreenMessage(screenHWND, msgCreateWindow, 0, uintptr(unsafe.Pointer(&p)))
-	return p.w, p.err
+	_ = "STUB: not implemented"
+	return *new(HWND), nil
 }
 
-func initWindowClass(class string) (err error) {
-	wcname, err := syscall.UTF16PtrFromString(class)
-	if err != nil {
-		return err
-	}
-	_, err = RegisterClass(&_WNDCLASS{
-		LpszClassName: wcname,
-		LpfnWndProc:   syscall.NewCallback(windowWndProc),
-		HIcon:         hDefaultIcon,
-		HCursor:       hDefaultCursor,
-		HInstance:     hThisInstance,
-		HbrBackground: COLOR_BTNSHADOW,
-	})
-	return err
-}
+func initWindowClass(class string) (err error) { _ = "STUB: not implemented"; return nil }
 
 var nextScreenWindow = new(int32)
 
-func initScreenWindow() (HWND, error) {
-	screenWindowClass := "shiny_ScreenWindow" + strconv.Itoa(int(atomic.AddInt32(nextScreenWindow, 1)))
-	swc, err := syscall.UTF16PtrFromString(screenWindowClass)
-	if err != nil {
-		return 0, err
-	}
-	emptyString, err := syscall.UTF16PtrFromString("")
-	if err != nil {
-		return 0, err
-	}
-	wc := _WNDCLASS{
-		LpszClassName: swc,
-		LpfnWndProc:   syscall.NewCallback(screenWindowWndProc),
-		HIcon:         hDefaultIcon,
-		HCursor:       hDefaultCursor,
-		HInstance:     hThisInstance,
-		HbrBackground: HWND(COLOR_BTNSHADOW),
-	}
-	_, err = RegisterClass(&wc)
-	if err != nil {
-		return 0, err
-	}
-	screenHWND, err = CreateWindowEx(0,
-		swc, emptyString,
-		windowStyle,
-		_CW_USEDEFAULT, _CW_USEDEFAULT,
-		_CW_USEDEFAULT, _CW_USEDEFAULT,
-		HWND_MESSAGE, 0, hThisInstance, 0)
-	if err != nil {
-		return 0, err
-	}
-	return screenHWND, nil
-}
+func initScreenWindow() (HWND, error) { _ = "STUB: not implemented"; return *new(HWND), nil }
 
 var (
 	windowStyle uint32 = WS_OVERLAPPEDWINDOW
@@ -503,18 +267,9 @@ var (
 
 // initCommon attempts to set up some standard icons.
 // TODO: Consider running this only once if successful.
-func initCommon() (err error) {
-	hDefaultIcon, err = LoadIcon(0, IDI_APPLICATION)
-	if err != nil {
-		return err
-	}
-	hDefaultCursor, err = LoadCursor(0, IDC_ARROW)
-	if err != nil {
-		return err
-	}
-	// TODO(andlabs) hThisInstance
-	return nil
-}
+func initCommon() (err error) { _ = "STUB: not implemented"; return nil }
+
+// TODO(andlabs) hThisInstance
 
 // Todo: this (and other globals) forces this package to only be able to run one window.
 // Can we change this?
@@ -524,51 +279,20 @@ var (
 )
 
 // NewScreen sets up common infos and then attempts to create a new window.
-func NewScreen() (HWND, error) {
-	if err := initCommon(); err != nil {
-		return 0, fmt.Errorf("init common failed: %w", err)
-	}
+func NewScreen() (HWND, error) { _ = "STUB: not implemented"; return *new(HWND), nil }
 
-	screenHWND, err := initScreenWindow()
-	if err != nil {
-		return 0, fmt.Errorf("init screen window failed: %w", err)
-	}
+func Main(screenHWND HWND, f func()) error { _ = "STUB: not implemented"; return nil }
 
-	return screenHWND, nil
-}
+// TODO(andlabs): log an error if this fails?
 
-func Main(screenHWND HWND, f func()) error {
-	keyboardLayout = _GetKeyboardLayout(0)
-	defer func() {
-		// TODO(andlabs): log an error if this fails?
-		DestroyWindow(screenHWND)
-		// TODO(andlabs): unregister window class
-	}()
-	// It does not matter which OS thread we are on.
-	// All that matters is that we confine all UI operations
-	// to the thread that created the respective window.
-	runtime.LockOSThread()
+// TODO(andlabs): unregister window class
 
-	cb := atomic.AddUint32(msgCallbacks, 1)
-	// Prime the pump.
-	callbacksLock.Lock()
-	callbacks[cb] = f
-	callbacksLock.Unlock()
-	PostMessage(screenHWND, cb, 0, 0)
+// It does not matter which OS thread we are on.
+// All that matters is that we confine all UI operations
+// to the thread that created the respective window.
 
-	// Main message pump.
-	var m MSG
-	for {
-		done, err := GetMessage(&m, 0, 0, 0)
-		if err != nil {
-			return fmt.Errorf("win32 GetMessage failed: %v %d", err, uintptr(err.(syscall.Errno)))
-		}
-		if done == 0 { // WM_QUIT
-			break
-		}
-		TranslateMessage(&m)
-		DispatchMessage(&m)
-	}
+// Prime the pump.
 
-	return nil
-}
+// Main message pump.
+
+// WM_QUIT

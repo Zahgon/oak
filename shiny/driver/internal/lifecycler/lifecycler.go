@@ -26,53 +26,22 @@ type State struct {
 	visible bool
 }
 
-func (s *State) SetDead(b bool) {
-	s.mu.Lock()
-	s.dead = b
-	s.mu.Unlock()
-}
+func (s *State) SetDead(b bool) { _ = "STUB: not implemented"; return }
 
-func (s *State) SetFocused(b bool) {
-	s.mu.Lock()
-	s.focused = b
-	s.mu.Unlock()
-}
+func (s *State) SetFocused(b bool) { _ = "STUB: not implemented"; return }
 
-func (s *State) SetVisible(b bool) {
-	s.mu.Lock()
-	s.visible = b
-	s.mu.Unlock()
-}
+func (s *State) SetVisible(b bool) { _ = "STUB: not implemented"; return }
 
-func (s *State) SendEvent(r Sender, drawContext interface{}) {
-	s.mu.Lock()
-	from, to := s.stage, lifecycle.StageAlive
-	// The order of these if's is important. For example, once a window becomes
-	// StageDead, it should never change stage again.
-	//
-	// Similarly, focused trumps visible. It's hard to imagine a situation
-	// where a window is focused and not visible on screen, but in that
-	// unlikely case, StageFocused seems the most appropriate stage.
-	if s.dead {
-		to = lifecycle.StageDead
-	} else if s.focused {
-		to = lifecycle.StageFocused
-	} else if s.visible {
-		to = lifecycle.StageVisible
-	}
-	s.stage = to
-	s.mu.Unlock()
+func (s *State) SendEvent(r Sender, drawContext interface{}) { _ = "STUB: not implemented"; return }
 
-	if from != to {
-		r.Send(lifecycle.Event{
-			From: from,
-			To:   to,
+// The order of these if's is important. For example, once a window becomes
+// StageDead, it should never change stage again.
+//
+// Similarly, focused trumps visible. It's hard to imagine a situation
+// where a window is focused and not visible on screen, but in that
+// unlikely case, StageFocused seems the most appropriate stage.
 
-			// TODO: does shiny use this at all?
-			DrawContext: drawContext,
-		})
-	}
-}
+// TODO: does shiny use this at all?
 
 // Sender is who to send the lifecycle event to.
 type Sender interface {

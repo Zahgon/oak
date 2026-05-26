@@ -1,9 +1,5 @@
 package oakerr
 
-import (
-	"strings"
-)
-
 // Language configures the language of returned error strings
 type Language int
 
@@ -13,20 +9,7 @@ var (
 )
 
 // SetLanguageString parses a string as a language
-func SetLanguageString(language string) error {
-	language = strings.ToUpper(language)
-	switch language {
-	case "EN", "ENGLISH":
-		CurrentLanguage = ENG
-	case "DE", "GERMAN", "DEUTSCH":
-		CurrentLanguage = DEU
-	case "JP", "JAPANESE", "日本語":
-		CurrentLanguage = JPN
-	default:
-		return InvalidInput{InputName: language}
-	}
-	return nil
-}
+func SetLanguageString(language string) error { _ = "STUB: not implemented"; return nil }
 
 // Valid languages, uppercase ISO 639-2
 const (

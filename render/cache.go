@@ -24,66 +24,31 @@ type Cache struct {
 }
 
 // NewCache returns an empty Cache
-func NewCache() *Cache {
-	return &Cache{
-		loadedImages: make(map[string]*image.RGBA),
-		loadedSheets: make(map[string]*Sheet),
-		loadedFonts:  make(map[string]*truetype.Font),
-	}
-}
+func NewCache() *Cache { _ = "STUB: not implemented"; return nil }
 
 // ClearAll will remove all elements from a Cache
-func (c *Cache) ClearAll() {
-	c.imageLock.Lock()
-	c.sheetLock.Lock()
-	c.fontLock.Lock()
-	c.loadedImages = make(map[string]*image.RGBA)
-	c.loadedSheets = make(map[string]*Sheet)
-	c.loadedFonts = make(map[string]*truetype.Font)
-	c.fontLock.Unlock()
-	c.sheetLock.Unlock()
-	c.imageLock.Unlock()
-}
+func (c *Cache) ClearAll() { _ = "STUB: not implemented"; return }
 
 // Clear will remove elements matching the given key from the Cache.
-func (c *Cache) Clear(key string) {
-	c.imageLock.Lock()
-	c.sheetLock.Lock()
-	c.fontLock.Lock()
-	delete(c.loadedImages, key)
-	delete(c.loadedSheets, key)
-	delete(c.loadedFonts, key)
-	c.fontLock.Unlock()
-	c.sheetLock.Unlock()
-	c.imageLock.Unlock()
-}
+func (c *Cache) Clear(key string) { _ = "STUB: not implemented"; return }
 
 // GetSprite calls GetSprite on the Default Cache.
-func GetSprite(file string) (*Sprite, error) {
-	return DefaultCache.GetSprite(file)
-}
+func GetSprite(file string) (*Sprite, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // LoadSprite calls LoadSprite on the Default Cache.
-func LoadSprite(file string) (*Sprite, error) {
-	return DefaultCache.LoadSprite(file)
-}
+func LoadSprite(file string) (*Sprite, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // GetSheet calls GetSheet on the Default Cache.
-func GetSheet(file string) (*Sheet, error) {
-	return DefaultCache.GetSheet(file)
-}
+func GetSheet(file string) (*Sheet, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // LoadSheet calls LoadSheet on the Default Cache.
 func LoadSheet(file string, cellSize intgeom.Point2) (*Sheet, error) {
-	return DefaultCache.LoadSheet(file, cellSize)
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 // GetFont calls GetFont on the Default Cache.
-func GetFont(file string) (*truetype.Font, error) {
-	return DefaultCache.GetFont(file)
-}
+func GetFont(file string) (*truetype.Font, error) { _ = "STUB: not implemented"; return nil, nil }
 
 // LoadFont calls LoadFont on the Default Cache.
-func LoadFont(file string) (*truetype.Font, error) {
-	return DefaultCache.LoadFont(file)
-}
+func LoadFont(file string) (*truetype.Font, error) { _ = "STUB: not implemented"; return nil, nil }

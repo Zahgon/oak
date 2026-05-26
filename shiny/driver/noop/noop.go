@@ -10,27 +10,23 @@ import (
 	"github.com/oakmound/oak/v4/shiny/screen"
 )
 
-func Main(f func(screen.Screen)) {
-	f(screenImpl{})
-}
+func Main(f func(screen.Screen)) { _ = "STUB: not implemented"; return }
 
 type screenImpl struct{}
 
 func (screenImpl) NewImage(size image.Point) (screen.Image, error) {
-	return imageImpl{
-		size: size,
-		rgba: image.NewRGBA(image.Rect(0, 0, size.X, size.Y)),
-	}, nil
+	_ = "STUB: not implemented"
+	return *new(screen.Image), nil
 }
 
 func (screenImpl) NewTexture(size image.Point) (screen.Texture, error) {
-	return textureImpl{
-		size: size,
-	}, nil
+	_ = "STUB: not implemented"
+	return *new(screen.Texture), nil
 }
 
 func (screenImpl) NewWindow(opts screen.WindowGenerator) (screen.Window, error) {
-	return &Window{}, nil
+	_ = "STUB: not implemented"
+	return *new(screen.Window), nil
 }
 
 type imageImpl struct {
@@ -38,42 +34,50 @@ type imageImpl struct {
 	rgba *image.RGBA
 }
 
-func (ii imageImpl) Size() image.Point {
-	return ii.size
-}
+func (ii imageImpl) Size() image.Point { _ = "STUB: not implemented"; return *new(image.Point) }
 
 func (ii imageImpl) Bounds() image.Rectangle {
-	return image.Rect(0, 0, ii.size.X, ii.size.Y)
+	_ = "STUB: not implemented"
+	return *new(image.Rectangle)
 }
 
-func (imageImpl) Release() {}
+func (imageImpl) Release() { _ = "STUB: not implemented"; return }
 
-func (ii imageImpl) RGBA() *image.RGBA {
-	return ii.rgba
-}
+func (ii imageImpl) RGBA() *image.RGBA { _ = "STUB: not implemented"; return nil }
 
 type textureImpl struct {
 	size image.Point
 }
 
-func (ti textureImpl) Size() image.Point {
-	return ti.size
-}
+func (ti textureImpl) Size() image.Point { _ = "STUB: not implemented"; return *new(image.Point) }
 
 func (ti textureImpl) Bounds() image.Rectangle {
-	return image.Rect(0, 0, ti.size.X, ti.size.Y)
+	_ = "STUB: not implemented"
+	return *new(image.Rectangle)
 }
 
-func (textureImpl) Upload(dp image.Point, src screen.Image, sr image.Rectangle) {}
-func (textureImpl) Fill(dr image.Rectangle, src color.Color, op draw.Op)        {}
-func (textureImpl) Release()                                                    {}
+func (textureImpl) Upload(dp image.Point, src screen.Image, sr image.Rectangle) {
+	_ = "STUB: not implemented"
+	return
+}
+func (textureImpl) Fill(dr image.Rectangle, src color.Color, op draw.Op) {
+	_ = "STUB: not implemented"
+	return
+}
+func (textureImpl) Release() { _ = "STUB: not implemented"; return }
 
 type Window struct {
 	event.Deque
 }
 
-func (*Window) Release()                                                                     {}
-func (*Window) Scale(dr image.Rectangle, src screen.Texture, sr image.Rectangle, op draw.Op) {}
-func (*Window) Upload(dp image.Point, src screen.Image, sr image.Rectangle)                  {}
+func (*Window) Release() { _ = "STUB: not implemented"; return }
+func (*Window) Scale(dr image.Rectangle, src screen.Texture, sr image.Rectangle, op draw.Op) {
+	_ = "STUB: not implemented"
+	return
+}
+func (*Window) Upload(dp image.Point, src screen.Image, sr image.Rectangle) {
+	_ = "STUB: not implemented"
+	return
+}
 
-func (*Window) Publish() {}
+func (*Window) Publish() { _ = "STUB: not implemented"; return }
